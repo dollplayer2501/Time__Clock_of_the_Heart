@@ -72,6 +72,8 @@ And [./conky_sub_parse.lua](./conky_sub_parse.lua), `Commands.Special.login`.
 
 ## TODO
 
+- [ ] Creating a theme configuration file for public release
+- [ ] It looks too flat, so I’ll add some touches to give the text a three-dimensional appearance—much like creating drop-shadow lettering.
 - Display the following information on a 24-hour clock:
     - [ ] Sunrise, sunset, and lunar data, retrieved via the *U.S. Naval Observatory* API, implemented in Python
     - [ ] Upcoming scheduled jobs, obtained using `systemctl list-timers --all` and/or `systemctl --user list-timers --all`, implemented in Python
