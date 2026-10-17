@@ -52,7 +52,7 @@ See the 4th and 5th rows in the figure below.
 
 <img src="./Chandanna_EndeavourOS_Qtile-my-local_2026-10-17_10-04-47.png" width=400 /><br clear="all" />
 
-<u>These are entirely dependent on my environment,</u> I would like to standardize the display format for normalized dates.
+**These are entirely dependent on my environment**, I would like to standardize the display format for normalized dates.
 
 First:  
 For time normalization, I have implemented a separate Python routine as shown below.
