@@ -38,7 +38,9 @@ To enable this, you must set the flag for `Info.Text.Other.Other_display_flag` a
 
 #### 2.1. Displaying the total number of packages and the number of packages currently available for update.
 
-<img src="./Chandanna_EndeavourOS_Qtile-my-local_2026-10-17_10-04-29.png" width=300 /><br clear="all" />
+See the 3rd row in the figure below.
+
+<img src="./Chandanna_EndeavourOS_Qtile-my-local_2026-10-17_10-04-29.png" width=400 /><br clear="all" />
 
 In my case, since I am using *EndeavourOS*, this applies to *Arch Linux*.  
 See [./conky_sub_parse.lua](./conky_sub_parse.lua), `Packages.checkupdates` and `Packages.checkupdates.packman_Q`.
@@ -46,18 +48,23 @@ See [./conky_sub_parse.lua](./conky_sub_parse.lua), `Packages.checkupdates` and 
 
 #### 2.2. **Important:** Time elapsed since the PC was started, and time elapsed since the current login.  
 
-<img src="./Chandanna_EndeavourOS_Qtile-my-local_2026-10-17_10-04-47.png" width=300 /><br clear="all" />
+See the 4th and 5th rows in the figure below.
+
+<img src="./Chandanna_EndeavourOS_Qtile-my-local_2026-10-17_10-04-47.png" width=400 /><br clear="all" />
 
 <u>These are entirely dependent on my environment,</u> I would like to standardize the display format for normalized dates.
 
-First, for time normalization, I have implemented a separate Python routine as shown below.
+First:  
+For time normalization, I have implemented a separate Python routine as shown below.
 Provide a number of seconds to this Python script, it will return a normalized time.  
 See [my_python_sec_to_regular_time.py](https://github.com/dollplayer2501/dotfiles_ver3_terminal/blob/main/_bin/my_python_sec_to_regular_time.py)
 
-Next, the number of seconds elapsed since the PC was booted is obtained by processing `/proc/uptime` with `awk` and passing the result to the aforementioned Python script.  
+Next:  
+The number of seconds elapsed since the PC was booted is obtained by processing `/proc/uptime` with `awk` and passing the result to the aforementioned Python script.  
 See [./conky_sub_parse.lua](./conky_sub_parse.lua), `Commands.Special.uptime`.
 
-Additionally, the time elapsed since login is retrieved using the following Fish shell function that I created.
+Additionally:  
+The time elapsed since login is retrieved using the following Fish shell function that I created.
 In other words, it obtains information from `last -1 -F $USER`.  
 See [my_login_elapsed.fish](https://github.com/dollplayer2501/dotfiles_ver3_terminal/blob/main/fish/functions/my_login_elapsed.fish)  
 And [./conky_sub_parse.lua](./conky_sub_parse.lua), `Commands.Special.login`.
