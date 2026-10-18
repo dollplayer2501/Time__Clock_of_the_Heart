@@ -1,6 +1,17 @@
 # Conky theme, "Time_Clock_of_the_Heart"
 
+Conky theme, a 24-hour clock that uses the entire display. I also use Fish shell scripts and Python scripts that I have created.
+
 <img src="./Chandanna_EndeavourOS_Qtile-my-local_2026-10-17_10-03-40.png" width=500 />
+
+
+## How to start
+
+It is possible that things may not work exactly as shown in the screenshots here; however, if you still wish to run it, please follow the steps below:
+
+1. Download the source code found here to your local PC in some way. There are no subdirectories.
+1. Rename `./conky_my_config.SAMPLE.lua` to `./conky_my_config.lua`
+1. Run `sh ./start.sh`
 
 
 ## Notes on using this theme

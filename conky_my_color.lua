@@ -4,63 +4,45 @@
 
 function get_color()
 
-  --
-  --  #08052B #FF7F7F #7F3FBF #CC3980 #7FBAFF #7F3FBF #7F7FFF #CDCCDB
-  --  #7FBAFF #FF7F7F #9999CC #FF7F7F #7F7FFF #7F3FBF #7F7FFF #E3E3EA
-  --
-  -- #08052B #221F45 #3B385E #555278 #6E6B91 #8784AA
-  -- https://www.colors.tools/lighten-and-darken/
-
-  local one_color = '#00ff00'
-  local sub_color = '#00aa00'
-
---  local one_color = '#ff00ff'
---  local sub_color = '#aa00aa'
-
---  local one_color = '#ff7f7f'
---  local sub_color = '#7f7fff'
+  local main1_color = '#00ff00'
+  local main2_color = '#00aa00'
+  local sub1_color  = '#888888'
+  local sub2_color  = '#cccccc'
 
   return {
     Hand = {
-      Marks                         = setting_color_hex_to_rgba(sub_color, 0.6),
-      Text                          = setting_color_hex_to_rgba(one_color, 1.0),
+      Marks                         = setting_color_hex_to_rgba(sub2_color, 0.8),
     },
     Clock24 ={
       Hour24 = {
         Marks = {
-          Now                       = setting_color_hex_to_rgba(sub_color, 0.8),
-          Next                      = setting_color_hex_to_rgba(sub_color, 0.8),
-          Normal                    = setting_color_hex_to_rgba(sub_color, 0.8),
+          Now                       = setting_color_hex_to_rgba(main2_color, 1.0),
+          Next                      = setting_color_hex_to_rgba(sub1_color, 0.8),
+          Normal                    = setting_color_hex_to_rgba(sub1_color, 0.8),
         },
         Number = {
-          Now                       = setting_color_hex_to_rgba(one_color, 0.6),
-          Next                      = setting_color_hex_to_rgba(one_color, 0.8),
-          Normal                    = setting_color_hex_to_rgba(sub_color, 0.8),
+          Now                       = setting_color_hex_to_rgba(main1_color, 0.9),
+          Next                      = setting_color_hex_to_rgba(main1_color, 0.9),
+          Normal                    = setting_color_hex_to_rgba(main1_color, 0.9),
         },
       },
-      Minutes = {
-        Number                      = setting_color_hex_to_rgba(one_color, 1.0),
-      },
-      Seconds = {
-        Number                      = setting_color_hex_to_rgba(one_color, 1.0),
-      },
       Minutes30 = {
-        Marks                       = setting_color_hex_to_rgba(sub_color, 0.8),
+        Marks                       = setting_color_hex_to_rgba(sub1_color, 0.8),
       },
       Minutes10 = {
-        Marks                       = setting_color_hex_to_rgba(sub_color, 0.8),
+        Marks                       = setting_color_hex_to_rgba(sub1_color, 0.8),
       },
       Minutes05 = {
-        Marks                       = setting_color_hex_to_rgba(sub_color, 0.8),
+        Marks                       = setting_color_hex_to_rgba(sub1_color, 0.8),
       },
       Minutes01 = {
-        Marks                       = setting_color_hex_to_rgba(sub_color, 0.8),
+        Marks                       = setting_color_hex_to_rgba(sub1_color, 0.8),
       },
     },
     Info = {
-      Point                         = setting_color_hex_to_rgba(sub_color, 1.0),
-      Line                          = setting_color_hex_to_rgba(sub_color, 0.9),
-      Text                          = setting_color_hex_to_rgba(one_color, 1.0),
+      Point                         = setting_color_hex_to_rgba(sub2_color, 1.0),
+      Line                          = setting_color_hex_to_rgba(sub2_color, 1.0),
+      Text                          = setting_color_hex_to_rgba(main1_color, 1.0),
     },
     Debug                           = setting_color_hex_to_rgba('#ff00ff', 0.7),
   }

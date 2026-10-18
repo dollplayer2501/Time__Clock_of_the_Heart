@@ -1,5 +1,6 @@
 --
---
+-- If the filename of this file is `conky_my_config.SAMPLE.lua`,
+-- it must be renamed to `conky_my_config.lua` before use.
 --
 
 function get_config(_gConst)
@@ -49,7 +50,7 @@ function get_config(_gConst)
               From             = -200,
               To               = 100,
             },
-            Width              = 2,
+            Width              = 4,
           },
           Next = {
             Radius = {
