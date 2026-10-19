@@ -83,8 +83,9 @@ And [./conky_sub_parse.lua](./conky_sub_parse.lua), `Commands.Special.login`.
 
 ## TODO
 
-- [ ] Creating a theme configuration file for public release
-- [ ] It looks too flat, so I’ll add some touches to give the text a three-dimensional appearance—much like creating drop-shadow lettering.
+- [x] Creating a theme configuration file for public release
+- [x] It looks too flat, so I’ll add some touches to give the text a three-dimensional appearance—much like creating drop-shadow lettering.  
+    I had a hunch, but I did a quick check. Since this theme uses unnecessarily large text—which would likely lead to a slight increase in CPU load—I’m going to mark this as "pending" and consider it closed.
 - Display the following information on a 24-hour clock:
     - [ ] Sunrise, sunset, and lunar data, retrieved via the *U.S. Naval Observatory* API, implemented in Python
     - [ ] Upcoming scheduled jobs, obtained using `systemctl list-timers --all` and/or `systemctl --user list-timers --all`, implemented in Python
@@ -108,9 +109,7 @@ The design calls for a graph that follows the circular path of a clock face, ext
 
 The environment I am actually using is as follows.
 
-<img src="./screenshot..sub..01.png" width=300 />
-<img src="./screenshot..sub..02.png" width=300 />
-<img src="./screenshot..sub..03.png" width=300 />
+<img src="./screenshot..sub..01.png" width=300 /> <img src="./screenshot..sub..02.png" width=300 /> <img src="./screenshot..sub..03.png" width=300 />
 
 In practice, I rely on the Qtile widgets (located on the bottom bar) to keep track of the current time, the number of available package updates, and the CPU load.
 In other words, no issues will arise even if this theme is not displayed.
