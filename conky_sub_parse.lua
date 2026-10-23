@@ -20,8 +20,6 @@ function get_conky_parse()
       month_number       = os.date('%m'),  -- 01..12
       year               = os.date('%Y'),  -- 1970..
 
-      -- US: Mon., Oct. 5, 2026
-      -- UK: Mon., 5 Oct. 2026
       date_full          = conky_parse('${time %A, %B %-d, %Y}'),
       date_short         = conky_parse('${time %a, %b %-d, %Y}'),
       time_full          = conky_parse('${time %H:%M:%S}'),

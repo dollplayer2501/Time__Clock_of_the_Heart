@@ -24,9 +24,7 @@ The following three types of fonts are used:
 - [Ptolemy Font](https://www.1001fonts.com/ptolemy-font.html)  
   Used for the dial of a 24-hour clock
 - [Bernardo Moda Font](https://www.1001fonts.com/bernardo-moda-font.html)  
-  Used for the current time display at the top of the screen
-- [Embolism Spark Font](https://www.1001fonts.com/embolism-spark-font.html)  
-  Used in other text
+  Used for the current time display at the top of the screen and other text.
 
 If the font is changed, I suspect some fine-tuning will likely be required.
 With this in mind, I have implemented certain aspects as external parameters or parameter values; however, I am not entirely certain how effective this approach will prove to be.

@@ -32,9 +32,6 @@ function get_const()
         Ptolemy = {
           Regular                       = 'Ptolemy',
         },
-        Embolism_Spark = {
-          Regular                       = 'Embolism Spark',
-        },
         -- NOTE: This font, Raleway is not being used.
         Raleway = {
           Thin                          = 'Raleway Thin',

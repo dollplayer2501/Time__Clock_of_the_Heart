@@ -180,7 +180,6 @@ function get_config(_gConst)
           Adjust_xx            = 20,
           First_gap_yy         = 120,
           Second_gap_yy        = 40,
-          Face                 = _gConst.Font.Face.Embolism_Spark.Regular,
           Size                 = 50,
         },
       },

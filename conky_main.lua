@@ -205,7 +205,7 @@ function conky_main()
   if true == gConfig.Info.Text.Other.Other_display_flag then
     --
     -- Package update info
-    --   MEMO:
+    --   NOTE:
     --     I use EndeavourOS, in other words, it is based on Arch Linux.
     --
 
