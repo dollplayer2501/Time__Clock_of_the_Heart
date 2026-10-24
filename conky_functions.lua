@@ -78,7 +78,29 @@ function drawing_line(_context,
 end
 
 
+--
+-- get text width
+--
+function getting_text_width(_cr, _const_font_slant, _const_font_weight,
+    _font_size, _font_face, _display_string)
 
+  cairo_set_font_size(_cr, _font_size)
+  cairo_select_font_face(_cr, _font_face, _const_font_slant, _const_font_weight)
+
+  local tmp_extents = cairo_text_extents_t:create()
+  cairo_text_extents(_cr, _display_string, tmp_extents)
+
+-- NOTE:
+--   local width = te.width
+--   local height = te.height
+--   local x_advance = te.x_advance  -- The amount of displacement in the X direction to the position where the next character is to be drawn
+--                                   -- 次の文字を描画する位置までのX方向の移動量
+--   local x_bearing = te.x_bearing  -- Distance from the left edge to the outline of the character
+--                                   -- 左端から文字の輪郭までの距離
+--   local y_bearing = te.y_bearing  -- Distance from the top edge to the outline of the characters
+--                                   -- 上端から文字の輪郭までの距離
+  return tmp_extents
+end
 
 
 
@@ -98,23 +120,6 @@ function _setting_text_extents(_context, _extents,
 end
 ]]
 
---
--- get text width
---
---[[
-function getting_text_width(_context,
-      _text,
-      _font_size, _font_face, _font_slant, _font_weight)
-
-    local extents = cairo_text_extents_t:create()
-
-    _setting_text_extents(_context, extents,
-        _font_size,
-        _text, _font_face, _font_slant, _font_weight)
-
-    return extents.width + extents.x_bearing
-end
-]]
 
 --
 -- draw text
