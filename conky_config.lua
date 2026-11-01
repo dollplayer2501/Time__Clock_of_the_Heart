@@ -71,7 +71,7 @@ conky.config = {
   uppercase = false,                        -- uppercase or not
   use_spacer = 'none',                      -- adds spaces around certain objects to align - default none
   use_xft = true,                           -- xft font - anti-aliased font
-  xftalpha = 1,                             -- alpha of the xft font - between 0-1
+  text_alpha = 1,                           -- alpha of the xft font - between 0-1
 
   -- Windows
 
@@ -79,7 +79,7 @@ conky.config = {
   -- own_window_argb_value = 255,           -- real transparency - composite manager required 0-255
   -- own_window_argb_visual = true,         -- use ARGB - composite manager required
   own_window_class = 'Conky',               -- manually set the WM_CLASS name for use with xprop
-  own_window_colour = '#00000000',            -- set colour if own_window_transparent no
+  own_window_color = '#00000000',           -- set colour if own_window_transparent no
   own_window_hints = 'undecorated,below,above,sticky,skip_taskbar,skip_pager',
                                             -- if own_window true - just hints - own_window_type sets it
   -- own_window_transparent = true,         -- if own_window_argb_visual is true sets background opacity 0%
@@ -89,10 +89,8 @@ conky.config = {
   -- Others
 
   default_color = '#ff00ff',
-  out_to_console = false,
-  out_to_ncurses = false,
   out_to_stderr = false,
-  out_to_x = true,
+  output_backend = { 'x11', },
   show_graph_scale = false,
   show_graph_range = false,
 
