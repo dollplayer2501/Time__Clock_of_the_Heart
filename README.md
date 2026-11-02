@@ -1,5 +1,10 @@
 # Conky theme, "Time_Clock_of_the_Heart"
 
+
+> [!NOTE]
+> There may be slight differences between the images shown here and the results produced by the latest source code.
+
+
 Conky theme, a 24-hour clock that uses the entire display. I also use Fish shell scripts and Python scripts that I have created.
 
 <img src="./screenshot..main..01.png" width=500 />
@@ -49,7 +54,7 @@ To enable this, you must set the flag for `Info.Text.Other.Other_display_flag` a
 
 See the 3rd row in the figure below.
 
-<img src="./screenshot..main..02.png" width=400 />
+<img src="./screenshot..main..03.png" width=400 />
 
 In my case, since I am using *EndeavourOS*, this applies to *Arch Linux*.  
 See [./conky_sub_parse.lua](./conky_sub_parse.lua), `Packages.checkupdates` and `Packages.checkupdates.packman_Q`.
@@ -59,7 +64,7 @@ See [./conky_sub_parse.lua](./conky_sub_parse.lua), `Packages.checkupdates` and 
 
 See the 4th and 5th rows in the figure below.
 
-<img src="./screenshot..main..03.png" width=400 />
+<img src="./screenshot..main..04.png" width=400 />
 
 **These are entirely dependent on my environment**, I would like to standardize the display format for normalized dates.
 
