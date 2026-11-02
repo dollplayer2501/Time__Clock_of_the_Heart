@@ -8,12 +8,12 @@
 Conky theme, a 24-hour clock that uses the entire display. I also use Fish shell scripts and Python scripts that I have created.
 
 1. Normal mode  
-`Info.Display_flag` is `true`, default.  
-<img src="./screenshot/main..01.png" width=500 />
+  `Info.Display_flag` is `true`, default.  
+  <img src="./screenshot/main..01.png" width=500 />
 1. Very simple mode  
-`Info.Display_flag` is `false`  
-<img src="./screenshot/main..02.png" width=500 />  
-(Self-reflection) I’m starting to think that maybe this is fine as it is…
+  `Info.Display_flag` is `false`  
+  <img src="./screenshot/main..02.png" width=500 />  
+  (Self-reflection) I’m starting to think that maybe this is fine as it is…
 
 
 ## How to start
