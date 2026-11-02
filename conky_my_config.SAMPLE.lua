@@ -133,6 +133,7 @@ function get_config(_gConst)
     },
 
     Info = {
+      Display_flag             = true,
       Update_interval          = 5,
       Point_size               = 4,
       Info = {

@@ -7,7 +7,13 @@
 
 Conky theme, a 24-hour clock that uses the entire display. I also use Fish shell scripts and Python scripts that I have created.
 
-<img src="./screenshot..main..01.png" width=500 />
+1. Normal mode  
+`Info.Display_flag` is `true`, default.  
+<img src="./screenshot/screenshot..main..01.png" width=500 />
+1. Very simple mode  
+`Info.Display_flag` is `false`  
+<img src="./screenshot/screenshot..main..02.png" width=500 />  
+(Self-reflection) I’m starting to think that maybe this is fine as it is…
 
 
 ## How to start
@@ -54,7 +60,7 @@ To enable this, you must set the flag for `Info.Text.Other.Other_display_flag` a
 
 See the 3rd row in the figure below.
 
-<img src="./screenshot..main..03.png" width=400 />
+<img src="./screenshot/screenshot..main..03.png" width=400 />
 
 In my case, since I am using *EndeavourOS*, this applies to *Arch Linux*.  
 See [./conky_sub_parse.lua](./conky_sub_parse.lua), `Packages.checkupdates` and `Packages.checkupdates.packman_Q`.
@@ -64,7 +70,7 @@ See [./conky_sub_parse.lua](./conky_sub_parse.lua), `Packages.checkupdates` and 
 
 See the 4th and 5th rows in the figure below.
 
-<img src="./screenshot..main..04.png" width=400 />
+<img src="./screenshot/screenshot..main..04.png" width=400 />
 
 **These are entirely dependent on my environment**, I would like to standardize the display format for normalized dates.
 
@@ -112,7 +118,7 @@ The design calls for a graph that follows the circular path of a clock face, ext
 
 The environment I am actually using is as follows.
 
-<img src="./screenshot..sub..01.png" width=300 /> <img src="./screenshot..sub..02.png" width=300 /> <img src="./screenshot..sub..03.png" width=300 />
+<img src="./screenshot/screenshot..sub..01.png" width=300 /> <img src="./screenshot/screenshot..sub..02.png" width=300 /> <img src="./screenshot/screenshot..sub..03.png" width=300 />
 
 In practice, I rely on the Qtile widgets (located on the bottom bar) to keep track of the current time, the number of available package updates, and the CPU load.
 In other words, no issues will arise even if this theme is not displayed.

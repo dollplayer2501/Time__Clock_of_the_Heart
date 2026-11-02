@@ -151,101 +151,105 @@ function conky_main()
   }
 
   -- Draw Line and Point
-  draw_line_info(cr, const_line_cap,
-    gConfig.Clock24.Center, gConfig.Clock24.Radius,
-    info_point_i, info_point_h, info_point_m,
-    gConfig.Info.Point_size, gConfig.Info.Line.Width,
-    gColor.Info.Point, gColor.Info.Line)
+  if true == gConfig.Info.Display_flag then
+    draw_line_info(cr, const_line_cap,
+      gConfig.Clock24.Center, gConfig.Clock24.Radius,
+      info_point_i, info_point_h, info_point_m,
+      gConfig.Info.Point_size, gConfig.Info.Line.Width,
+      gColor.Info.Point, gColor.Info.Line)
+  end
 
 
   --
   -- Draw Text, Information
   --
 
-  cairo_save(cr)
+  if true == gConfig.Info.Display_flag then
+    cairo_save(cr)
 
 
-  -- Time, HH:MM
+    -- Time, HH:MM
 
-  local tmp_string = gParse.Now.time_short
-  local extents_hhmm = draw_text_time_hhmm(cr, const_font_slant, const_font_weight,
-    gConfig.Info.Text.Time_hhmm.Size, gConfig.Info.Text.Face, tmp_string,
-    info_point_i, local_degree_radian(gConfig.Info.Text.Angle_degree),
-    gConfig.Info.Text.Time_hhmm.Adjust, gColor.Info.Text)
+    local tmp_string = gParse.Now.time_short
+    local extents_hhmm = draw_text_time_hhmm(cr, const_font_slant, const_font_weight,
+      gConfig.Info.Text.Time_hhmm.Size, gConfig.Info.Text.Face, tmp_string,
+      info_point_i, local_degree_radian(gConfig.Info.Text.Angle_degree),
+      gConfig.Info.Text.Time_hhmm.Adjust, gColor.Info.Text)
 
-  -- Time, SS
+    -- Time, SS
 
-  local tmp_string = string.format(':%02d', gParse.Now.Second)
-  draw_text_time_ss(cr,
-    gConfig.Info.Text.Time_ss.Size, tmp_string,
-    gConfig.Info.Text.Time_hhmm.Adjust, extents_hhmm.x_advance, gConfig.Info.Text.Time_ss.Adjust)
+    local tmp_string = string.format(':%02d', gParse.Now.Second)
+    draw_text_time_ss(cr,
+      gConfig.Info.Text.Time_ss.Size, tmp_string,
+      gConfig.Info.Text.Time_hhmm.Adjust, extents_hhmm.x_advance, gConfig.Info.Text.Time_ss.Adjust)
 
-  --
-
-  local tmp_gap_yy = (-1 * extents_hhmm.y_bearing / 2) + gConfig.Info.Text.Full_date.Adjust.yy
-
-  -- Full date
-
-  local tmp_string = gParse.Now.date_full
-  draw_text_full_date(cr,
-    gConfig.Info.Text.Full_date.Size, tmp_string,
-    gConfig.Info.Text.Time_hhmm.Adjust.xx, gConfig.Info.Text.Full_date.Adjust, tmp_gap_yy)
-
-  --
-  -- Many font settings are carried over as-is from the previous section, so they have not been explicitly specified here.
-  --
-
-  if true == gConfig.Info.Text.Other.Other_display_flag then
-    --
-    -- Package update info
-    --   NOTE:
-    --     I use EndeavourOS, in other words, it is based on Arch Linux.
     --
 
-    local tmp_string = string.format('All packages are %d, no need to update!', gParse.Packages.packman_Q)
-    if 0 < gParse.Packages.checkupdates then
-      tmp_string = string.format('%d out of %d packages require updating.', gParse.Packages.checkupdates, gParse.Packages.packman_Q)
+    local tmp_gap_yy = (-1 * extents_hhmm.y_bearing / 2) + gConfig.Info.Text.Full_date.Adjust.yy
+
+    -- Full date
+
+    local tmp_string = gParse.Now.date_full
+    draw_text_full_date(cr,
+      gConfig.Info.Text.Full_date.Size, tmp_string,
+      gConfig.Info.Text.Time_hhmm.Adjust.xx, gConfig.Info.Text.Full_date.Adjust, tmp_gap_yy)
+
+    --
+    -- Many font settings are carried over as-is from the previous section, so they have not been explicitly specified here.
+    --
+
+    if true == gConfig.Info.Text.Other.Other_display_flag then
+      --
+      -- Package update info
+      --   NOTE:
+      --     I use EndeavourOS, in other words, it is based on Arch Linux.
+      --
+
+      local tmp_string = string.format('All packages are %d, no need to update!', gParse.Packages.packman_Q)
+      if 0 < gParse.Packages.checkupdates then
+        tmp_string = string.format('%d out of %d packages require updating.', gParse.Packages.checkupdates, gParse.Packages.packman_Q)
+      end
+      tmp_gap_yy = tmp_gap_yy + gConfig.Info.Text.Other.First_gap_yy
+
+      draw_text_others(cr,
+        gConfig.Info.Text.Other.Size, tmp_string,
+        gConfig.Info.Text.Full_date.Adjust.xx, gConfig.Info.Text.Other.Adjust_xx,
+        tmp_gap_yy)
     end
-    tmp_gap_yy = tmp_gap_yy + gConfig.Info.Text.Other.First_gap_yy
 
-    draw_text_others(cr,
-      gConfig.Info.Text.Other.Size, tmp_string,
-      gConfig.Info.Text.Full_date.Adjust.xx, gConfig.Info.Text.Other.Adjust_xx,
-      tmp_gap_yy)
+
+    --
+    -- **This is dangerous territory.**
+    -- The reason is that I am running Fish shell functions and Python scripts that I created myself.
+    --
+
+    if true == gConfig.Info.Text.Other.Other_display_flag and true == gConfig.Info.Text.Other.Special_display_flag then
+
+      -- Time elapsed since the PC was started
+
+      local tmp_string = string.format('%s, %s uptime.', gParse.Commands.Special.uptime, local_triming(gParse.Commands.Normal.hostname))
+      tmp_gap_yy = tmp_gap_yy + gConfig.Info.Text.Other.Second_gap_yy
+
+      draw_text_others(cr,
+        gConfig.Info.Text.Other.Size, tmp_string,
+        gConfig.Info.Text.Full_date.Adjust.xx, gConfig.Info.Text.Other.Adjust_xx,
+        tmp_gap_yy)
+
+      -- Time elapsed since login
+
+      local tmp_string = string.format('%s, %s login.', gParse.Commands.Special.login, local_triming(gParse.Commands.Normal.whoami))
+      tmp_gap_yy = tmp_gap_yy + gConfig.Info.Text.Other.Second_gap_yy
+
+      draw_text_others(cr,
+        gConfig.Info.Text.Other.Size, tmp_string,
+        gConfig.Info.Text.Full_date.Adjust.xx, gConfig.Info.Text.Other.Adjust_xx,
+        tmp_gap_yy)
+    end
+
+    --
+
+    cairo_restore(cr)
   end
-
-
-  --
-  -- **This is dangerous territory.**
-  -- The reason is that I am running Fish shell functions and Python scripts that I created myself.
-  --
-
-  if true == gConfig.Info.Text.Other.Other_display_flag and true == gConfig.Info.Text.Other.Special_display_flag then
-
-    -- Time elapsed since the PC was started
-
-    local tmp_string = string.format('%s, %s uptime.', gParse.Commands.Special.uptime, local_triming(gParse.Commands.Normal.hostname))
-    tmp_gap_yy = tmp_gap_yy + gConfig.Info.Text.Other.Second_gap_yy
-
-    draw_text_others(cr,
-      gConfig.Info.Text.Other.Size, tmp_string,
-      gConfig.Info.Text.Full_date.Adjust.xx, gConfig.Info.Text.Other.Adjust_xx,
-      tmp_gap_yy)
-
-    -- Time elapsed since login
-
-    local tmp_string = string.format('%s, %s login.', gParse.Commands.Special.login, local_triming(gParse.Commands.Normal.whoami))
-    tmp_gap_yy = tmp_gap_yy + gConfig.Info.Text.Other.Second_gap_yy
-
-    draw_text_others(cr,
-      gConfig.Info.Text.Other.Size, tmp_string,
-      gConfig.Info.Text.Full_date.Adjust.xx, gConfig.Info.Text.Other.Adjust_xx,
-      tmp_gap_yy)
-  end
-
-  --
-
-  cairo_restore(cr)
 
 
   --
