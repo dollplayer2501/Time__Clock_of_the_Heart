@@ -117,7 +117,7 @@ function conky_main()
 
 
   --
-  -- Draw Hand
+  -- Draw Line, Hand
   --
 
   draw_line_hand(cr, const_line_cap,
@@ -127,7 +127,7 @@ function conky_main()
 
 
   --
-  -- Draw Line, Information
+  -- Draw Line and Point, Information
   --
 
   local tmp_point_random = math.floor(gParse.Now.Second / gConfig.Info.Update_interval) * 1
@@ -150,19 +150,12 @@ function conky_main()
     yy = gConfig.Clock24.Center.yy - ((math.cos(hand_radian) * gConfig.Clock24.Radius) + gConfig.Info.Middle.Adjust.yy),
   }
 
-  drawing_point(cr, info_point_i.xx, info_point_i.yy, gConfig.Info.Point_size, gColor.Info.Point)
-  drawing_point(cr, info_point_h.xx, info_point_h.yy, gConfig.Info.Point_size, gColor.Info.Point)
-  drawing_point(cr, info_point_m.xx, info_point_m.yy, gConfig.Info.Point_size, gColor.Info.Point)
-
-  drawing_line(cr,
-    info_point_h.xx, info_point_h.yy, info_point_m.xx, info_point_m.yy,
-    gConfig.Info.Line.Width, const_line_cap,
-    gColor.Info.Line)
-
-  drawing_line(cr,
-    info_point_m.xx, info_point_m.yy, info_point_i.xx, info_point_i.yy,
-    gConfig.Info.Line.Width, const_line_cap,
-    gColor.Info.Line)
+  -- Draw Line and Point
+  draw_line_info(cr, const_line_cap,
+    gConfig.Clock24.Center, gConfig.Clock24.Radius,
+    info_point_i, info_point_h, info_point_m,
+    gConfig.Info.Point_size, gConfig.Info.Line.Width,
+    gColor.Info.Point, gColor.Info.Line)
 
 
   --

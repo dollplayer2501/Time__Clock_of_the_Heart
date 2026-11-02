@@ -17,14 +17,21 @@ end
 
 function draw_line_info(_cr, _const_line_cap,
     _Clock24_Center_, _Clock24_Radius,
-    _hand_radian,
-    _info_point_, _Info_Width, _Info_Color)
+    _info_point_i_, _info_point_h_, _info_point_m_,
+    _Info_point_size, _Info_Width,
+    _Info_Color_point, _Info_Color_line)
+
+  drawing_point(_cr, _info_point_i_.xx, _info_point_i_.yy, _Info_point_size, _Info_Color_point)
+  drawing_point(_cr, _info_point_m_.xx, _info_point_m_.yy, _Info_point_size, _Info_Color_point)
+  drawing_point(_cr, _info_point_h_.xx, _info_point_h_.yy, _Info_point_size, _Info_Color_point)
 
   drawing_line(_cr,
-    _info_point_.xx, _info_point_.yy,
-    _Clock24_Center_.xx + (math.sin(_hand_radian) * _Clock24_Radius),
-    _Clock24_Center_.yy - (math.cos(_hand_radian) * _Clock24_Radius),
-    _Info_Width, _const_line_cap, _Info_Color)
+    _info_point_i_.xx, _info_point_i_.yy, _info_point_m_.xx, _info_point_m_.yy,
+    _Info_Width, _const_line_cap, _Info_Color_line)
+
+  drawing_line(_cr,
+    _info_point_m_.xx, _info_point_m_.yy, _info_point_h_.xx, _info_point_h_.yy,
+    _Info_Width, _const_line_cap, _Info_Color_line)
 end
 
 
