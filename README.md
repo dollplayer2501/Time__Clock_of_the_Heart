@@ -5,18 +5,25 @@
 > There may be slight differences between the images shown here and the results produced by the latest source code.
 
 
+## 1. Overview
+
 Conky theme, a 24-hour clock that uses the entire display. I also use Fish shell scripts and Python scripts that I have created.
 
-1. Normal mode  
-  `Info.Display_flag` is `true`, default.  
-  <img src="./screenshot/main..01.png" width=500 />
-1. Very simple mode  
-  `Info.Display_flag` is `false`  
-  <img src="./screenshot/main..02.png" width=500 />  
-  (Self-reflection) I’m starting to think that maybe this is fine as it is…
+### 1.1. Normal mode
+
+`Info.Display_flag` is `true`, default.
+
+<img src="./screenshot/main..01.png" width=500 />
+
+### 1.2. Very simple mode
+
+`Info.Display_flag` is `false`.  
+(Self-reflection) I’m starting to think that maybe this is fine as it is…
+
+<img src="./screenshot/main..02.png" width=500 />
 
 
-## How to start
+## 2. How to start
 
 It is possible that things may not work exactly as shown in the screenshots here; however, if you still wish to run it, please follow the steps below:
 
@@ -25,10 +32,10 @@ It is possible that things may not work exactly as shown in the screenshots here
 1. Run `sh ./start.sh`
 
 
-## Notes on using this theme
+## 3. Notes on using this theme
 
 
-### 1. Regarding the fonts used
+### 3.1. Regarding the fonts used
 
 The following three types of fonts are used:
 
@@ -46,7 +53,7 @@ With this in mind, I have implemented certain aspects as external parameters or 
   Settings for the fonts used in various components. I have endeavored to define literal values ​​here as much as possible.
 
 
-### 2. **Important:** Regarding versatility
+### 3.2. **Important:** Regarding versatility
 
 I have **NOT** taken into account the kind of versatility that would allow the product to be used by a wide range of people.
 The reason is that the following is the theme I am actually using.  
@@ -56,7 +63,7 @@ To enable this, activate the following flag for [./conky_my_config.lua](./conky_
 To enable this, you must set the flag for `Info.Text.Other.Other_display_flag` and/or `Info.Text.Other.Special_display_flag` within this file.
 
 
-#### 2.1. Displaying the total number of packages and the number of packages currently available for update.
+#### 3.2.1. Displaying the total number of packages and the number of packages currently available for update.
 
 See the 3rd row in the figure below.
 
@@ -66,7 +73,7 @@ In my case, since I am using *EndeavourOS*, this applies to *Arch Linux*.
 See [./conky_sub_parse.lua](./conky_sub_parse.lua), `Packages.checkupdates` and `Packages.checkupdates.packman_Q`.
 
 
-#### 2.2. **Important:** Time elapsed since the PC was started, and time elapsed since the current login.  
+#### 3.2.2. **Important:** Time elapsed since the PC was started, and time elapsed since the current login.  
 
 See the 4th and 5th rows in the figure below.
 
@@ -90,7 +97,7 @@ See [my_login_elapsed.fish](https://github.com/dollplayer2501/dotfiles_ver3_term
 And [./conky_sub_parse.lua](./conky_sub_parse.lua), `Commands.Special.login`.
 
 
-## TODO
+## 4. TODO
 
 - [x] Creating a theme configuration file for public release
 - [x] It looks too flat, so I’ll add some touches to give the text a three-dimensional appearance—much like creating drop-shadow lettering.  
