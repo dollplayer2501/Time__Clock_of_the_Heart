@@ -98,12 +98,12 @@ conky.config = {
 
   lua_load =
 
-    ' ./conky_main.lua ' ..
-    ' ./conky_global_const.lua ' ..
-    ' ./conky_functions.lua ' ..
-    ' ./conky_sub_parse.lua ' ..
-    ' ./conky_sub_line.lua ' ..
-    ' ./conky_sub_text.lua ' ..
+    ' ./lua/conky_main.lua ' ..
+    ' ./lua/conky_global_const.lua ' ..
+    ' ./lua/conky_functions.lua ' ..
+    ' ./lua/conky_sub_parse.lua ' ..
+    ' ./lua/conky_sub_line.lua ' ..
+    ' ./lua/conky_sub_text.lua ' ..
     ' ./conky_my_config.lua ' ..
     ' ./conky_my_color.lua ' ..
 

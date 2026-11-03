@@ -5,11 +5,11 @@
 require 'cairo'
 require 'cairo_xlib'
 
-require './conky_global_const'
-require './conky_functions'
-require './conky_sub_parse'
-require './conky_sub_line'
-require './conky_sub_text'
+require './lua/conky_global_const'
+require './lua/conky_functions'
+require './lua/conky_sub_parse'
+require './lua/conky_sub_line'
+require './lua/conky_sub_text'
 
 require './conky_my_config'
 
