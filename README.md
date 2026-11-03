@@ -47,7 +47,7 @@ The following three types of fonts are used:
 If the font is changed, I suspect some fine-tuning will likely be required.
 With this in mind, I have implemented certain aspects as external parameters or parameter values; however, I am not entirely certain how effective this approach will prove to be.
 
-1. [./conky_global_const.lua](./conky_global_const.lua)  
+1. [./lua/const.lua](./lua/const.lua)  
   Definition of the font(s) used for this theme.
 1. [./conky_my_config.lua](./conky_my_config.lua)  
   Settings for the fonts used in various components. I have endeavored to define literal values ​​here as much as possible.
@@ -70,7 +70,7 @@ See the 3rd row in the figure below.
 <img src="./screenshot/main..03.png" width=400 />
 
 In my case, since I am using *EndeavourOS*, this applies to *Arch Linux*.  
-See [./conky_sub_parse.lua](./conky_sub_parse.lua), `Packages.checkupdates` and `Packages.checkupdates.packman_Q`.
+See [./lua/sub_parse.lua](./lua/sub_parse.lua), `Packages.checkupdates` and `Packages.checkupdates.packman_Q`.
 
 
 #### 3.2.2. **Important:** Time elapsed since the PC was started, and time elapsed since the current login.  
@@ -88,13 +88,13 @@ See [my_python_sec_to_regular_time.py](https://github.com/dollplayer2501/dotfile
 
 Next:  
 The number of seconds elapsed since the PC was booted is obtained by processing `/proc/uptime` with `awk` and passing the result to the aforementioned Python script.  
-See [./conky_sub_parse.lua](./conky_sub_parse.lua), `Commands.Special.uptime`.
+See [./lua/sub_parse.lua](./lua/sub_parse.lua), `Commands.Special.uptime`.
 
 Additionally:  
 The time elapsed since login is retrieved using the following Fish shell function that I created.
 In other words, it obtains information from `last -1 -F $USER`.  
 See [my_login_elapsed.fish](https://github.com/dollplayer2501/dotfiles_ver3_terminal/blob/main/fish/functions/my_login_elapsed.fish)  
-And [./conky_sub_parse.lua](./conky_sub_parse.lua), `Commands.Special.login`.
+And [./lua/sub_parse.lua](./lua/sub_parse.lua), `Commands.Special.login`.
 
 
 ## 4. TODO
