@@ -11,7 +11,7 @@ require './lua/sub_parse'
 require './lua/sub_line'
 require './lua/sub_text'
 
-require './config/conky_my_config'
+require './config/config_default'
 require './config/color_default'
 
 

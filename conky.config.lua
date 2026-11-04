@@ -107,7 +107,9 @@ conky.config = {
     ' ./lua/sub_parse.lua ' ..
     ' ./lua/sub_line.lua ' ..
     ' ./lua/sub_text.lua ' ..
-    ' ./config/conky_my_config.lua ' ..
+
+    ' ./config/config_default.lua ' ..
+    ' ./config/config_me.lua ' ..
     ' ./config/color_default.lua ' ..
     ' ./config/color_me.lua ' ..
 
