@@ -46,7 +46,10 @@ In this case—as I will explain later—there is a possibility that the fonts, 
 
 ### 2.2. (After trying out this theme) I see—I get it now. I want to customize it.
 
-I have prepared various configuration settings—such as color schemes and visibility toggles—that I have not yet documented.
+I have prepared various configuration settings—such as color schemes and visibility toggles—that I have not yet documented.  
+In terms of the logic for this theme, the default [`./config/color_default.lua`](./config/color_default.lua) and [`./config/config_default.lua`](./config/config_default.lua) are assumed to always exist;  
+however, if `./config/color_me.lua` and/or `./config/config_me.lua` are present, it will be loaded instead, and the default items will not be loaded.
+
 
 #### 2.2.1. Adjusting the color scheme
 
@@ -127,7 +130,8 @@ And [`./lua/sub_parse.lua`](./lua/sub_parse.lua), `Commands.Special.login`.
 ## 4. TODO
 
 - [x] [HIGH] A review of the script `require` mechanism, along with a major overhaul of how user-specific configurations and color scheme files are set up.
-- [ ] Should I also include the Python scripts used within this script?
+- [ ] Should I also include the Python scripts used within this script?  
+      **Unfortunately**, this also included a Fish shell script function that I had created. I’m not yet sure how to handle this; it would be a hassle to rewrite it from a Fish shell script into Python just for this one thing.
 - [x] Creating a theme configuration file for public release
 - [x] It looks too flat, so I’ll add some touches to give the text a three-dimensional appearance—much like creating drop-shadow lettering.  
       I had a hunch, but I did a quick check. Since this theme uses unnecessarily large text—which would likely lead to a slight increase in CPU load—I’m going to mark this as "pending" and consider it closed.
