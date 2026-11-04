@@ -1,5 +1,7 @@
 --
---
+-- While `conky.config` is the standard, conventional filename,
+-- the file is actually written in Lua; I have opted to use the `.lua` file extension instead,
+-- primarily to ensure proper syntax highlighting.
 --
 
 local resolution_xx = 1920
