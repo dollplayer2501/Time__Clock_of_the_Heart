@@ -1,5 +1,10 @@
 # Conky theme, "Time_Clock_of_the_Heart"
 
+> [!WARNING]
+> Currently (as of 2026-11-04),  
+> changes are being made to the file structure, the methods for loading files, and other related aspects.  
+> - Updates to this README file will be delayed.
+> - The file name and location will change.
 
 > [!NOTE]
 > There may be slight differences between the images shown here and the results produced by the latest source code.
@@ -25,10 +30,14 @@ Conky theme, a 24-hour clock that uses the entire display. I also use Fish shell
 
 ## 2. How to start
 
+> [!NOTE]
+> This mechanism is not elegant; it is slated for revision—for instance,
+> to allow for user-defined configurations and color schemes, 2026-11-04.
+
 It is possible that things may not work exactly as shown in the screenshots here; however, if you still wish to run it, please follow the steps below:
 
 1. Download the source code found here to your local PC in some way. There are no subdirectories.
-1. Rename `./conky_my_config.SAMPLE.lua` to `./conky_my_config.lua`
+1. Rename `./config/conky_my_config.SAMPLE.lua` to `./config/conky_my_config.lua`
 1. Run `sh ./start.sh`
 
 
@@ -59,7 +68,7 @@ I have **NOT** taken into account the kind of versatility that would allow the p
 The reason is that the following is the theme I am actually using.  
 
 **The following features are not enabled unless the configuration file is modified.**  
-To enable this, activate the following flag for [./conky_my_config.lua](./conky_my_config.lua).
+To enable this, activate the following flag for [./config/conky_my_config.lua](./config/conky_my_config.lua).
 To enable this, you must set the flag for `Info.Text.Other.Other_display_flag` and/or `Info.Text.Other.Special_display_flag` within this file.
 
 
@@ -99,11 +108,14 @@ And [./lua/sub_parse.lua](./lua/sub_parse.lua), `Commands.Special.login`.
 
 ## 4. TODO
 
+- [ ] [HIGH] A review of the script `require` mechanism, along with a major overhaul of how user-specific configurations and color scheme files are set up.
+- [ ] Should I also include the Python scripts used within this script?
 - [x] Creating a theme configuration file for public release
 - [x] It looks too flat, so I’ll add some touches to give the text a three-dimensional appearance—much like creating drop-shadow lettering.  
       I had a hunch, but I did a quick check. Since this theme uses unnecessarily large text—which would likely lead to a slight increase in CPU load—I’m going to mark this as "pending" and consider it closed.
 - Display the following information on a 24-hour clock:
-    - [ ] Sunrise, sunset, and lunar data, retrieved via the *U.S. Naval Observatory* API, implemented in Python
+    - [ ] Sunrise, sunset, and lunar data, retrieved via the *U.S. Naval Observatory* API, implemented in Python  
+          **Using 'astral', a Python library for solar and astronomical calculations.**
     - [ ] Upcoming scheduled jobs, obtained using `systemctl list-timers --all` and/or `systemctl --user list-timers --all`, implemented in Python
 - [ ] Information regarding the historical graph for CPU load:  
       The design calls for a graph that follows the circular path of a clock face, extending inward from the 24-hour hand toward the center.
@@ -112,6 +124,7 @@ And [./lua/sub_parse.lua](./lua/sub_parse.lua), `Commands.Special.login`.
 - [ ] I would like to modify the system so that it can start using only the default configuration file I provide.   
       If a user creates a copy and modifies it, those custom keys and values ​​should take precedence.
 - [ ] Represent 24 hours a day or 365 days a year using an arc.
+- [ ] Once development has reached a relatively stable state, move management to GitHub issues.
 
 
 - - -

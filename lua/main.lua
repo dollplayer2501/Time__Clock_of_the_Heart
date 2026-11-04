@@ -11,7 +11,7 @@ require './lua/sub_parse'
 require './lua/sub_line'
 require './lua/sub_text'
 
-require './conky_my_config'
+require './config/conky_my_config'
 
 
 --
@@ -164,6 +164,7 @@ function conky_main()
   -- Draw Text, Information
   --
 
+  -- TODO: This logic is inelegant. How about splitting the file?
   if true == gConfig.Info.Display_flag then
     cairo_save(cr)
 

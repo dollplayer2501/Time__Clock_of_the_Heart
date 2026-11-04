@@ -98,6 +98,7 @@ conky.config = {
 
   -- Lua
 
+  -- TODO: In the future, this will be reduced to just ./lua/main.lua
   lua_load =
 
     ' ./lua/main.lua ' ..
@@ -106,8 +107,8 @@ conky.config = {
     ' ./lua/sub_parse.lua ' ..
     ' ./lua/sub_line.lua ' ..
     ' ./lua/sub_text.lua ' ..
-    ' ./conky_my_config.lua ' ..
-    ' ./conky_my_color.lua ' ..
+    ' ./config/conky_my_config.lua ' ..
+    ' ./config/conky_my_color.lua ' ..
 
     ' ' , -- this section's last is conmma
 
