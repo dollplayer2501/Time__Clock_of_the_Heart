@@ -12,6 +12,7 @@ require './lua/sub_line'
 require './lua/sub_text'
 
 require './config/conky_my_config'
+require './config/color_default'
 
 
 --
@@ -27,7 +28,7 @@ function conky_main()
   local gConfig = get_config(gConst)
   local gParse = get_conky_parse()
 
-  dofile(gConfig.Color_scheme)
+  -- dofile(gConfig.Color_scheme)
   local gColor = get_color()
 
   if conky_window == nil then
