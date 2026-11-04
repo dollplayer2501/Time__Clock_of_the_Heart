@@ -5,14 +5,60 @@
 require 'cairo'
 require 'cairo_xlib'
 
+
+--
+-- Load various files, retrieving the package path
+--
+
+-- This file itself is located in the `./lua/` directory.
+-- The directory one level above this serves as the base directory for this theme.
+-- Therefore, I will use that as our reference point.
+local tmp_str_1 = debug.getinfo(1, "S").source:gsub("^@", "")
+local tmp_str_2 = tmp_str_1:match("^(.*[/\\])") or "./"
+local current_path = tmp_str_2:match("^(.*[/\\])[^/\\]+[/\\]$") or tmp_str_2
+-- print("\27[32m Current directory:" .. current_path .."\27[0m")
+
+package.path = current_path .. 'lua/?.lua;'
+            .. current_path .. 'config/?.lua;'
+            .. package.path
+-- print("\27[32m Package directory:" .. package.path .."\27[0m")
+
+
+--
+--
+--
+
 require './lua/const'
 require './lua/functions'
 require './lua/sub_parse'
 require './lua/sub_line'
 require './lua/sub_text'
 
+--
+
 require './config/config_default'
+
+local file = io.open(current_path .. 'config/config_me.lua', 'r')
+if file then
+  file:close()
+  require './config/config_me'
+  -- print("\27[32m The user's configuration file, `./config/config_me.lua`, exists. \27[0m")
+else
+  -- print("\27[32m The user's configuration file, `./config/config_me.lua`, does not exist. \27[0m")
+end
+
+--
+
 require './config/color_default'
+
+local file = io.open(current_path .. 'config/color_me.lua', 'r')
+if file then
+  file:close()
+  require './config/color_me'
+  -- print("\27[32m The user's color scheme file, `./config/color_me.lua`, exists. \27[0m")
+else
+  -- print("\27[32m The user's color scheme file, `./config/color_me.lua`, does not exist. \27[0m")
+end
 
 
 --
@@ -25,11 +71,14 @@ function conky_main()
   --
 
   local gConst = get_const()
-  local gConfig = get_config(gConst)
   local gParse = get_conky_parse()
-
-  -- dofile(gConfig.Color_scheme)
+  local gConfig = get_config(gConst)
   local gColor = get_color()
+
+
+  --
+  -- Something like a good-luck charm.
+  --
 
   if conky_window == nil then
     return

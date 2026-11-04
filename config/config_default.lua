@@ -10,8 +10,6 @@ function get_config(_gConst)
 
   return {
 
-    Color_scheme               = 'conky_my_color.lua',
-
     Environment = {
       Resolusion = {
         xx                     = resolution_xx,

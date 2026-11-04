@@ -98,22 +98,16 @@ conky.config = {
 
   -- Lua
 
-  -- TODO: In the future, this will be reduced to just ./lua/main.lua
-  lua_load =
+  -- NOTE:
+  --   Using the approach below allows you to avoid the issue;
+  --   however, if the file does not exist, the process will continue but an error will occur.
+  --     lua_load =
+  --       ' ./lua/main.lua ' ..
+  --       ' ./config/config_default.lua ' ..
+  --       ' ./config/color_default.lua ' ..
+  --       ' ' ,
 
-    ' ./lua/main.lua ' ..
-    ' ./lua/const.lua ' ..
-    ' ./lua/functions.lua ' ..
-    ' ./lua/sub_parse.lua ' ..
-    ' ./lua/sub_line.lua ' ..
-    ' ./lua/sub_text.lua ' ..
-
-    ' ./config/config_default.lua ' ..
-    ' ./config/config_me.lua ' ..
-    ' ./config/color_default.lua ' ..
-    ' ./config/color_me.lua ' ..
-
-    ' ' , -- this section's last is conmma
+  lua_load = './lua/main.lua',
 
   lua_draw_hook_post = 'main',
 
