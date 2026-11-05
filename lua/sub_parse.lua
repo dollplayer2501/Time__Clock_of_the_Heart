@@ -3,6 +3,9 @@
 --
 
 function get_conky_parse()
+
+  local hoge = get_current_path()
+
   return {
 
     Now = {
