@@ -4,7 +4,19 @@
 
 function get_conky_parse()
 
-  local hoge = get_current_path()
+  local current_path = get_current_path()
+
+  local python_time = current_path .. 'python/sec_to_regular_time.py'
+  local python_login = current_path .. 'python/login_elapsed.py'
+
+  --
+  -- NOTE:
+  --   While a Python script with execution permissions would also be a viable option,
+  --   I deliberately chose this approach instead.
+  --
+  local exec_uptime = "awk '{print $1}' /proc/uptime | python3 " .. python_time
+  local exec_elapsed = "python3 " .. python_login .. " | python3 " .. python_time
+
 
   return {
 
@@ -38,8 +50,8 @@ function get_conky_parse()
         whoami           = conky_parse('${execi 600 whoami}'),
       },
       Special = {
-        uptime           = conky_parse("${execi 10 awk '{print $1}' /proc/uptime | my_python_sec_to_regular_time.py --vshort}"),
-        login            = conky_parse("${execi 10 fish -c 'my_login_elapsed --second | my_python_sec_to_regular_time.py --vshort' }"),
+        uptime           = conky_parse("${execi 10 " .. exec_uptime .. "}"),
+        login            = conky_parse("${execi 10 " .. exec_elapsed.. "}"),
       },
     },
 
