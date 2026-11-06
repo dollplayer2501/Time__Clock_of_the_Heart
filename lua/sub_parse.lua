@@ -53,11 +53,10 @@ function get_conky_parse()
         uptime           = conky_parse("${execi 10 " .. exec_uptime .. "}"),
         login            = conky_parse("${execi 10 " .. exec_elapsed.. "}"),
       },
-    },
-
-    Packages = {
-      checkupdates       = tonumber(conky_parse('${execi 600 checkupdates | wc -l}')),
-      packman_Q          = tonumber(conky_parse('${execi 600 pacman -Q | wc -l}')),
+      Packages = {
+        checkupdates     = tonumber(conky_parse('${execi 600 checkupdates | wc -l}')),
+        packman_Q        = tonumber(conky_parse('${execi 600 pacman -Q | wc -l}')),
+      },
     },
   }
 end

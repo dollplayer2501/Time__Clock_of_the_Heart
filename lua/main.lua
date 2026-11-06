@@ -287,9 +287,10 @@ function conky_main()
       --     I use EndeavourOS, in other words, it is based on Arch Linux.
       --
 
-      local tmp_string = string.format('All packages are %d, no need to update!', gParse.Packages.packman_Q)
-      if 0 < gParse.Packages.checkupdates then
-        tmp_string = string.format('%d out of %d packages require updating.', gParse.Packages.checkupdates, gParse.Packages.packman_Q)
+      local tmp_string = string.format('All packages are %d, no need to update!', gParse.Commands.Packages.packman_Q)
+      if 0 < gParse.Commands.Packages.checkupdates then
+        tmp_string = string.format('%d out of %d packages require updating.',
+          gParse.Commands.Packages.checkupdates, gParse.Commands.Packages.packman_Q)
       end
       tmp_gap_yy = tmp_gap_yy + gConfig.Info.Text.Other.First_gap_yy
 
