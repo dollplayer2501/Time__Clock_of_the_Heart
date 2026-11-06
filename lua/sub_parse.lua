@@ -49,13 +49,13 @@ function get_conky_parse()
         hostname         = conky_parse('${execi 600 hostname}'),
         whoami           = conky_parse('${execi 600 whoami}'),
       },
-      Special = {
-        uptime           = conky_parse("${execi 10 " .. exec_uptime .. "}"),
-        login            = conky_parse("${execi 10 " .. exec_elapsed.. "}"),
-      },
       Packages = {
         checkupdates     = tonumber(conky_parse('${execi 600 checkupdates | wc -l}')),
         packman_Q        = tonumber(conky_parse('${execi 600 pacman -Q | wc -l}')),
+      },
+      Special = {
+        uptime           = conky_parse("${execi 10 " .. exec_uptime .. "}"),
+        login            = conky_parse("${execi 10 " .. exec_elapsed.. "}"),
       },
     },
   }

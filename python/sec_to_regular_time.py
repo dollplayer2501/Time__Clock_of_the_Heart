@@ -2,7 +2,7 @@
 
 """
 Convert seconds into a time format.
-Use a short-form time notation.
+Using a short-form time notation.
 For example, "1wk 1d 1hr 1min".
 """
 

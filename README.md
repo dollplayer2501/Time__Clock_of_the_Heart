@@ -1,10 +1,5 @@
 # Conky theme, "Time_Clock_of_the_Heart"
 
-> [!WARNING]
-> ~~Currently (as of 2026-11-04),~~  
-> ~~changes are being made to the file structure, the methods for loading files, and other related aspects.~~  
-> - ~~Updates to this README file will be delayed.~~
-> - ~~The file name and location will change.~~
 
 > [!NOTE]
 > There may be slight differences between the images shown here and the results produced by the latest source code.
@@ -12,54 +7,56 @@
 
 ## 1. Overview
 
-Conky theme, a 24-hour clock that uses the entire display. I also use Fish shell scripts and Python scripts that I have created.
+Conky theme, a 24-hour clock that uses the entire display.
+It is not the hands of the clock that rotate; **the dial rotates**.
+
 
 ### 1.1. Normal mode
 
-In [`./config/config_default.lua`](./config/config_default.lua), at `Info.Display_flag` is `true`, default.
-
 <img src="./screenshot/main..01.png" width=500 />
+
+In `./config/config_me.lua` (or [`./config/config_default.lua`][config_default.lua]) at `Info.Display_flag` is `true`, default setting.
+
 
 ### 1.2. Very simple mode
 
+<img src="./screenshot/main..02.png" width=500 />
+
 As with the above, `Info.Display_flag` is `false`.  
 (Self-reflection) I’m starting to think that maybe this is fine as it is…
-
-<img src="./screenshot/main..02.png" width=500 />
 
 
 ## 2. How to start
 
 
-> [!NOTE]
-> ~~This mechanism is not elegant; it is slated for revision—for instance,~~
-> ~~to allow for user-defined configurations and color schemes, 2026-11-04.~~
-
-
-### 2.1 I just want to get it up and running as soon as possible.
+### 2.1. For those who want to get things up and running quickly.
 
 In this case—as I will explain later—there is a possibility that the fonts, in particular, may not display as I intended.
 
 1. Download the source code found here to your local PC in some way.
-1. [`sh ./start.sh`](./start.sh)
+1. `sh `[`./start.sh`][start.sh]
 
 
-### 2.2. (After trying out this theme) I see—I get it now. I want to customize it.
+### 2.2. (Operation has been verified.) For those who wish to customize this theme.
 
 I have prepared various configuration settings—such as color schemes and visibility toggles—that I have not yet documented.  
-In terms of the logic for this theme, the default [`./config/color_default.lua`](./config/color_default.lua) and [`./config/config_default.lua`](./config/config_default.lua) are assumed to always exist;  
-however, if `./config/color_me.lua` and/or `./config/config_me.lua` are present, it will be loaded instead, and the default items will not be loaded.
+In terms of the logic for this theme, the default [`./config/color_default.lua`][color_default.lua] and [`./config/config_default.lua`][config_default.lua] are assumed to always exist;  
+If `./config/color_me.lua` and/or `./config/config_me.lua` are present, it will be loaded instead, and the default items will not be loaded.
 
 
 #### 2.2.1. Adjusting the color scheme
 
-Copy and rename [`./config/color_default.lua`](./config/color_default.lua) to `./config/color_me.lua` (the filename is fixed), then modify `./config/color_me.lua`.
+Copy and rename [`./config/color_default.lua`][color_default.lua] to `./config/color_me.lua` (the filename is fixed), then modify `./config/color_me.lua`.
+
 
 #### 2.2.2. Customization other than color schemes
 
-Copy and rename [`./config/config_default.lua`](./config/config_default.lua) to `./config/config_me.lua` (the filename is fixed), then modify `./config/config_me.lua`.  
+Copy and rename [`./config/config_default.lua`][config_default.lua] to `./config/config_me.lua` (the filename is fixed), then modify `./config/config_me.lua`.  
 However, changing the font settings might be a bit complicated (more on this later).
 And I’ve made it possible to configure a rather excessive number of detailed settings, but I’m afraid I have no plans to document them…
+
+> [!NOTE]
+> The following explanation assumes that `./config/color_me.lua` and `./config/config_me.lua` exist.
 
 
 ## 3. Notes on using this theme
@@ -67,70 +64,75 @@ And I’ve made it possible to configure a rather excessive number of detailed s
 
 ### 3.1. Regarding the fonts used
 
-The following three types of fonts are used:
+The following two types of fonts are used:
 
-- [Ptolemy Font](https://www.1001fonts.com/ptolemy-font.html)  
-  Used for the dial of a 24-hour clock
-- [Bernardo Moda Font](https://www.1001fonts.com/bernardo-moda-font.html)  
-  Used for the current time display at the top of the screen and other text.
+1. [Ptolemy Font](https://www.1001fonts.com/ptolemy-font.html)  
+   Used for the dial of a 24-hour clock
+1. [Bernardo Moda Font](https://www.1001fonts.com/bernardo-moda-font.html)  
+   Used for the current time display at the top of the screen and other text.
 
 If the font is changed, I suspect some fine-tuning will likely be required.
 With this in mind, I have implemented certain aspects as external parameters or parameter values; however, I am not entirely certain how effective this approach will prove to be.
 
-1. [`./lua/const.lua`](./lua/const.lua)  
+1. [`./lua/const.lua`][const.lua]  
   Definition of the font(s) used for this theme.
-1. [`./config/config_default.lua`](./config/config_default.lua)  
-  Settings for the fonts used in various components. I have endeavored to define literal values ​​here as much as possible.
+1. `./config/config_me.lua`  
+  Settings for the fonts used in various components.
 
 
 ### 3.2. **Important:** Regarding versatility
 
-I have **NOT** taken into account the kind of versatility that would allow the product to be used by a wide range of people.
-The reason is that the following is the theme I am actually using.  
-
+I have **NOT** taken into account the kind of versatility that would allow the product to be used by a wide range of people.  
 **The following features are not enabled unless the configuration file is modified.**  
-To enable this, activate the following flag for [`./config/config_default.lua`](./config/config_default.lua).
-To enable this, you must set the flag for `Info.Text.Other.Other_display_flag` and/or `Info.Text.Other.Special_display_flag` within this file.
+Whether or not to display the item is toggled based on the `true`/`false` status of `Info.Text.Other.Other_display_flag` and/or `Info.Text.Other.Special_display_flag` in the `./config/config_me.lua`.
 
 
 #### 3.2.1. Displaying the total number of packages and the number of packages currently available for update.
 
 See the 3rd row in the figure below.
+Set `Info.Text.Other.Other_display_flag` to `true` in `./config/config_me.lua`.
 
 <img src="./screenshot/main..03.png" width=400 />
 
 In my case, since I am using *EndeavourOS*, this applies to *Arch Linux*.  
-See [`./lua/sub_parse.lua`](./lua/sub_parse.lua), `Packages.checkupdates` and `Packages.checkupdates.packman_Q`.
+See [`./lua/sub_parse.lua`][sub_parse.lua], `Packages.checkupdates` and `Packages.checkupdates.packman_Q`.
+Here, the following command is being executed.
+
+- `checkupdates | wc -l`
+- `pacman -Q | wc -l`
 
 
-#### 3.2.2. **Important:** Time elapsed since the PC was started, and time elapsed since the current login.  
+#### 3.2.2. Time elapsed since the PC was started and time elapsed since the current login
 
 See the 4th and 5th rows in the figure below.
+Set `Info.Text.Other.Other_display_flag` and `Info.Text.Other.Special_display_flag` to `true` in `./config/config_me.lua`.
 
 <img src="./screenshot/main..04.png" width=400 />
 
-**These are entirely dependent on my environment**, I would like to standardize the display format for normalized dates.
+**These work in my environment, but I’m not sure whether or not they will work in yours.**  
+The 4th and 5th rows use a custom Python script that is included with this theme.
+These Python scripts have not been granted execution permissions.
+They are being run using `python3 <full path>`.
+See [`./lua/sub_parse.lua`][sub_parse.lua].
 
-First:  
-For time normalization, I have implemented a separate Python routine as shown below.
-Provide a number of seconds to this Python script, it will return a normalized time.  
-See [`my_python_sec_to_regular_time.py`](https://github.com/dollplayer2501/dotfiles_ver3_terminal/blob/main/_bin/my_python_sec_to_regular_time.py)
+- [`./python/login_elapsed.py`][login_elapsed.py]  
+  Use the `last` command to display the number of seconds that have elapsed since login.
+- [`./python/sec_to_regular_time.py`][sec_to_regular_time.py]  
+  Convert seconds into a time format. Using a short-form time notation. For example, "1wk 1d 1hr 1min".
 
-Next:  
-The number of seconds elapsed since the PC was booted is obtained by processing `/proc/uptime` with `awk` and passing the result to the aforementioned Python script.  
-See [`./lua/sub_parse.lua`](./lua/sub_parse.lua), `Commands.Special.uptime`.
+The general processing steps for the 4th and 5th rows:
 
-Additionally:  
-The time elapsed since login is retrieved using the following Fish shell function that I created.
-In other words, it obtains information from `last -1 -F $USER`.  
-See [`my_login_elapsed.fish`](https://github.com/dollplayer2501/dotfiles_ver3_terminal/blob/main/fish/functions/my_login_elapsed.fish)  
-And [`./lua/sub_parse.lua`](./lua/sub_parse.lua), `Commands.Special.login`.
+1. The 4th row, time elapsed since the PC was started  
+   Execute `awk '{print $1}' /proc/uptime` from the command line and piping its output to [`./python/login_elapsed.py`][login_elapsed.py].
+1. The 5th row, time elapsed since the current login  
+   In Python, execute `last -1 -F $USER | awk 'NR==1{print $4, $5, $6, $7, $8}'` and calculate the resulting duration in seconds.
+   This result is being piped to [`./python/login_elapsed.py`][login_elapsed.py].
 
 
 ## 4. TODO
 
 - [x] [HIGH] A review of the script `require` mechanism, along with a major overhaul of how user-specific configurations and color scheme files are set up.
-- [ ] Should I also include the Python scripts used within this script?  
+- [x] Should I also include the Python scripts used within this script?  
       **Unfortunately**, this also included a Fish shell script function that I had created. I’m not yet sure how to handle this; it would be a hassle to rewrite it from a Fish shell script into Python just for this one thing.
 - [x] Creating a theme configuration file for public release
 - [x] It looks too flat, so I’ll add some touches to give the text a three-dimensional appearance—much like creating drop-shadow lettering.  
@@ -173,3 +175,13 @@ See also the following—specifically, my "dotfiles":
 - [dotfiles_ver3_terminal](https://github.com/dollplayer2501/dotfiles_ver3_terminal)
 - [dotfiles_ver3_window-manager](https://github.com/dollplayer2501/dotfiles_ver3_window-manager)
 
+
+
+
+[config_default.lua]: ./config/config_default.lua
+[color_default.lua]: ./config/color_default.lua
+[start.sh]: ./start.sh
+[const.lua]: ./lua/const.lua
+[sub_parse.lua]: ./lua/sub_parse.lua
+[login_elapsed.py]: ./python/login_elapsed.py
+[sec_to_regular_time.py]: ./python/sec_to_regular_time.py
