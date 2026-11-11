@@ -114,7 +114,7 @@ conky.config = {
   --
   -- I still can't use this feature properly.
   --
-  lua_mouse_hook = '',
+  lua_mouse_hook = 'on_mouse',
   lua_shutdown_hook = '',
   lua_startup_hook = '',
 }

@@ -4,14 +4,22 @@
 
 function draw_line_hand(_cr, _const_line_cap,
     _Clock24_Center_, _Clock24_Radius,
-    _Hand_Radius_, _hand_radian, _Hand_Width, _Hand_Color)
+    _Hand_Radius_, _hand_radian, _Hand_Width, _Point_size, _Hand_Color)
+
+  local tmp_xx = _Clock24_Center_.xx + (math.sin(_hand_radian) * (_Clock24_Radius + _Hand_Radius_.From))
+  local tmp_yy = _Clock24_Center_.yy - (math.cos(_hand_radian) * (_Clock24_Radius + _Hand_Radius_.From))
+
+  drawing_point(_cr,
+    tmp_xx, tmp_yy,
+    _Point_size, _Hand_Color)
 
   drawing_line(_cr,
-    _Clock24_Center_.xx + (math.sin(_hand_radian) * (_Clock24_Radius + _Hand_Radius_.From)),
-    _Clock24_Center_.yy - (math.cos(_hand_radian) * (_Clock24_Radius + _Hand_Radius_.From)),
+    tmp_xx, tmp_yy,
     _Clock24_Center_.xx + (math.sin(_hand_radian) * (_Clock24_Radius + _Hand_Radius_.To)),
     _Clock24_Center_.yy - (math.cos(_hand_radian) * (_Clock24_Radius + _Hand_Radius_.To)),
     _Hand_Width, _const_line_cap, _Hand_Color)
+
+  return tmp_xx, tmp_yy, _Point_size
 end
 
 

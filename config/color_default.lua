@@ -5,7 +5,7 @@
 function get_color()
 
   local main1_color = '#00ff00'
-  local main2_color = '#008800'
+  local main2_color = '#006600'
   local sub1_color  = '#888888'
   local sub2_color  = '#dddddd'
 
@@ -23,7 +23,7 @@ function get_color()
         Number = {
           Now                       = setting_color_hex_to_rgba(main1_color, 0.9),
           Next                      = setting_color_hex_to_rgba(main1_color, 0.9),
-          Normal                    = setting_color_hex_to_rgba(main2_color, 0.9),
+          Normal                    = setting_color_hex_to_rgba(sub1_color, 0.9),
         },
       },
       Minutes30 = {

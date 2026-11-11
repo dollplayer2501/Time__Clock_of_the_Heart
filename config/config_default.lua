@@ -32,6 +32,7 @@ function get_config(_gConst)
         From                   = -400,
         To                     = 200,
       },
+      Point_size               = 20,
       Width                    = 4,
     },
 
@@ -75,7 +76,7 @@ function get_config(_gConst)
             },
           },
           Next = {
-            Size               = 140,
+            Size               = 300,
             Face               = _gConst.Font.Face.Ptolemy.Regular,
             Adjust = {
               xx               = 0,
@@ -131,7 +132,6 @@ function get_config(_gConst)
     },
 
     Info = {
-      Display_flag             = true,
       Update_interval          = 5,
       Point_size               = 4,
       Info = {

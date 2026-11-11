@@ -6,6 +6,15 @@ require 'cairo'
 require 'cairo_xlib'
 
 
+--
+-- Global settings for capturing mouse events
+--
+local hand_pos_xx = -1
+local hand_pos_yy = -1
+local hand_radius = -1
+local display_flag = false
+
+
 function get_current_path()
   --
   -- NOTE:
@@ -50,6 +59,7 @@ require './lua/functions'
 require './lua/sub_parse'
 require './lua/sub_line'
 require './lua/sub_text'
+require './lua/sub_special'
 
 
 --
@@ -92,9 +102,9 @@ else
 end
 
 
+-- -----------------------------------------------------------
 --
---
---
+-- -----------------------------------------------------------
 function conky_main()
 
   --
@@ -125,20 +135,6 @@ function conky_main()
   -- Anonymous functions
   --
 
-  local local_hhmmss_to_sec = function(_hour24, _minutes, _seconds)
-    _seconds = tonumber(_seconds) or 0
-    return (_hour24 * 60 * 60) + (_minutes * 60) + _seconds
-  end
-
-  local local_degree_radian = function(_degree)
-    local tmp_degree = (360 == _degree) and 0 or _degree
-    return math.rad(tmp_degree)
-  end
-
-  local local_triming = function(_str)
-    return (string.gsub(_str, '^%s*(.-)%s*$', '%1'))
-  end
-
   local local_change_angle_of_radian = function(_now_radian, _change_degree)
     local tmp_deg = math.deg(_now_radian)
     tmp_deg = tmp_deg - _change_degree
@@ -167,19 +163,23 @@ function conky_main()
   -- Calculate Hand
   --
 
-  local tmp_seconds = local_hhmmss_to_sec(gConfig.Hand.Marks.Hour24, gConfig.Hand.Marks.Minutes, gConfig.Hand.Marks.Seconds)
-  local hand_radian = local_degree_radian(360 * (tmp_seconds / const_one_day_seconds))
+  local tmp_seconds = hhmmss_to_sec(gConfig.Hand.Marks.Hour24, gConfig.Hand.Marks.Minutes, gConfig.Hand.Marks.Seconds)
+  local hand_radian = degree_to_radian(360 * (tmp_seconds / const_one_day_seconds))
 
 
   --
   -- Where does the current time fall on a 24-hour clock?
   --
+  -- NOTE:
+  --   - If seconds were included, the clock would be in a state of constant motion.
+  --     To avoid this, the calculation is intentionally limited to the minute level.
+  --   - Lua array indices are 1-based, not 0-based.
+  --
 
-  local tmp_seconds = local_hhmmss_to_sec(gParse.Now.Hour24, gParse.Now.Minute)
-  local now_radian = local_degree_radian(360 * (tmp_seconds / const_one_day_seconds))
+  local tmp_seconds = hhmmss_to_sec(gParse.Now.Hour24, gParse.Now.Minute)
+  local now_radian = degree_to_radian(360 * (tmp_seconds / const_one_day_seconds))
 
   local array_times = {}
-  array_times = {}
   for idx_hour24 = 0, 23, 1 do
     array_times[idx_hour24 + 1] = {}
 
@@ -187,8 +187,8 @@ function conky_main()
       array_times[idx_hour24 + 1][idx_minutes + 1] = {}
 
       for idx_seconds = 0, 59, 1 do
-        local tmp_seconds = local_hhmmss_to_sec(idx_hour24, idx_minutes)
-        local tmp_radian = local_degree_radian(360 * (tmp_seconds / const_one_day_seconds))
+        local tmp_seconds = hhmmss_to_sec(idx_hour24, idx_minutes)
+        local tmp_radian = degree_to_radian(360 * (tmp_seconds / const_one_day_seconds))
         array_times[idx_hour24 + 1][idx_minutes + 1][idx_seconds + 1] = {
           radian = tmp_radian - now_radian + hand_radian,
         }
@@ -201,142 +201,28 @@ function conky_main()
   -- Draw Line, Hand
   --
 
-  draw_line_hand(cr, const_line_cap,
+  hand_pos_xx, hand_pos_yy, hand_radius = draw_line_hand(cr, const_line_cap,
     gConfig.Clock24.Center, gConfig.Clock24.Radius,
     gConfig.Hand.Radius, hand_radian,
-    gConfig.Hand.Width, gColor.Hand.Marks)
+    gConfig.Hand.Width, gConfig.Hand.Point_size, gColor.Hand.Marks)
 
 
   --
   -- Draw Line and Point, Information
   --
 
-  local tmp_point_random = math.floor(gParse.Now.Second / gConfig.Info.Update_interval) * 1
-
-  -- Starting point of the information display area
-  local info_point_i = {
-    xx = gConfig.Info.Info.Point.xx + tmp_point_random,
-    yy = gConfig.Info.Info.Point.yy + tmp_point_random,
-  }
-
-  -- The intersection of hand and the clock frame. In other words, the current time.
-  local info_point_h = {
-    xx = gConfig.Clock24.Center.xx + (math.sin(hand_radian) * gConfig.Clock24.Radius),
-    yy = gConfig.Clock24.Center.yy - (math.cos(hand_radian) * gConfig.Clock24.Radius),
-  }
-
-  -- The superfluous point midway between the above.
-  local info_point_m = {
-    xx = gConfig.Clock24.Center.xx + ((math.sin(hand_radian) * gConfig.Clock24.Radius) + gConfig.Info.Middle.Adjust.xx),
-    yy = gConfig.Clock24.Center.yy - ((math.cos(hand_radian) * gConfig.Clock24.Radius) + gConfig.Info.Middle.Adjust.yy),
-  }
-
-  -- Draw Line and Point
-  if true == gConfig.Info.Display_flag then
-    draw_line_info(cr, const_line_cap,
-      gConfig.Clock24.Center, gConfig.Clock24.Radius,
-      info_point_i, info_point_h, info_point_m,
-      gConfig.Info.Point_size, gConfig.Info.Line.Width,
-      gColor.Info.Point, gColor.Info.Line)
-  end
-
-
-  --
-  -- Draw Text, Information
-  --
-
-  -- TODO: This logic is inelegant. How about splitting the file?
-  if true == gConfig.Info.Display_flag then
-    cairo_save(cr)
-
-
-    -- Time, HH:MM
-
-    local tmp_string = gParse.Now.time_short
-    local extents_hhmm = draw_text_time_hhmm(cr, const_font_slant, const_font_weight,
-      gConfig.Info.Text.Time_hhmm.Size, gConfig.Info.Text.Face, tmp_string,
-      info_point_i, local_degree_radian(gConfig.Info.Text.Angle_degree),
-      gConfig.Info.Text.Time_hhmm.Adjust, gColor.Info.Text)
-
-    -- Time, SS
-
-    local tmp_string = string.format(':%02d', gParse.Now.Second)
-    draw_text_time_ss(cr,
-      gConfig.Info.Text.Time_ss.Size, tmp_string,
-      gConfig.Info.Text.Time_hhmm.Adjust, extents_hhmm.x_advance, gConfig.Info.Text.Time_ss.Adjust)
-
-    --
-
-    local tmp_gap_yy = (-1 * extents_hhmm.y_bearing / 2) + gConfig.Info.Text.Full_date.Adjust.yy
-
-    -- Full date
-
-    local tmp_string = gParse.Now.date_full
-    draw_text_full_date(cr,
-      gConfig.Info.Text.Full_date.Size, tmp_string,
-      gConfig.Info.Text.Time_hhmm.Adjust.xx, gConfig.Info.Text.Full_date.Adjust, tmp_gap_yy)
-
-    --
-    -- Many font settings are carried over as-is from the previous section, so they have not been explicitly specified here.
-    --
-
-    if true == gConfig.Info.Text.Other.Other_display_flag then
-      --
-      -- Package update info
-      --   NOTE:
-      --     I use EndeavourOS, in other words, it is based on Arch Linux.
-      --
-
-      local tmp_string = string.format('All packages are %d, no need to update!', gParse.Commands.Packages.packman_Q)
-      if 0 < gParse.Commands.Packages.checkupdates then
-        tmp_string = string.format('%d out of %d packages require updating.',
-          gParse.Commands.Packages.checkupdates, gParse.Commands.Packages.packman_Q)
-      end
-      tmp_gap_yy = tmp_gap_yy + gConfig.Info.Text.Other.First_gap_yy
-
-      draw_text_others(cr,
-        gConfig.Info.Text.Other.Size, tmp_string,
-        gConfig.Info.Text.Full_date.Adjust.xx, gConfig.Info.Text.Other.Adjust_xx,
-        tmp_gap_yy)
-    end
-
-
-    --
-    -- **This is dangerous territory.**
-    -- The reason is that I am running Fish shell functions and Python scripts that I created myself.
-    --
-
-    if true == gConfig.Info.Text.Other.Other_display_flag and true == gConfig.Info.Text.Other.Special_display_flag then
-
-      -- Time elapsed since the PC was started
-
-      local tmp_string = string.format('%s, %s uptime.', gParse.Commands.Special.uptime, local_triming(gParse.Commands.Normal.hostname))
-      tmp_gap_yy = tmp_gap_yy + gConfig.Info.Text.Other.Second_gap_yy
-
-      draw_text_others(cr,
-        gConfig.Info.Text.Other.Size, tmp_string,
-        gConfig.Info.Text.Full_date.Adjust.xx, gConfig.Info.Text.Other.Adjust_xx,
-        tmp_gap_yy)
-
-      -- Time elapsed since login
-
-      local tmp_string = string.format('%s, %s login.', gParse.Commands.Special.login, local_triming(gParse.Commands.Normal.whoami))
-      tmp_gap_yy = tmp_gap_yy + gConfig.Info.Text.Other.Second_gap_yy
-
-      draw_text_others(cr,
-        gConfig.Info.Text.Other.Size, tmp_string,
-        gConfig.Info.Text.Full_date.Adjust.xx, gConfig.Info.Text.Other.Adjust_xx,
-        tmp_gap_yy)
-    end
-
-    --
-
-    cairo_restore(cr)
+  if true == display_flag then
+    sub_special_func(cr, gConst, gParse, gConfig, gColor,
+      const_line_cap, const_font_slant, const_font_weight,
+      hand_radian)
   end
 
 
   --
   -- Marks and Numbers
+  --
+  -- TODO: 2026-11-12
+  --   This logic will be moved elsewhere?
   --
 
   for idx_hour24 = 1, 24, 1 do
@@ -493,4 +379,34 @@ function conky_main()
   cairo_destroy(cr)
   cairo_surface_destroy(cs)
   cr = nil
+end
+
+
+-- -----------------------------------------------------------
+--
+-- -----------------------------------------------------------
+function conky_on_mouse(event)
+
+  --
+  -- TODO: 2026-11-12
+  --   Should a mouse click toggle the color of this circle?
+  --
+
+  if event.type == "button_down" and event.button == "left" then
+    -- print("clicked at " .. event.x .. ", " .. event.y)
+
+    local dx = event.x - hand_pos_xx
+    local dy = event.y - hand_pos_yy
+
+    if (dx * dx + dy * dy) <= (hand_radius * hand_radius) then
+      if true == display_flag then
+        display_flag = false
+      else
+        display_flag = true
+      end
+    end
+    return true
+  end
+
+  return false
 end
