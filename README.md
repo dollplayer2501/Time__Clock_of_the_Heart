@@ -140,9 +140,9 @@ The general processing steps for the 4th and 5th rows:
 - [ ] Information regarding the historical graph for CPU load:  
       The design calls for a graph that follows the circular path of a clock face, extending inward from the 24-hour hand toward the center.
 - [ ] Use *Pywal* to automatically change the color scheme for this theme?
-- [x] Nothing is decided yet, but perhaps adding some kind of feature triggered by a *mouse hover*?
+- [x] Nothing is decided yet, but perhaps adding some kind of feature triggered by a *mouse hover*?  
       It is unclear whether *mouse hover* events can be detected in Conky/Lua; *mouse clicks*, however, can be detected.
-- [ ] I would like to modify the system so that it can start using only the default configuration file I provide.   
+- [x] I would like to modify the system so that it can start using only the default configuration file I provide.   
       If a user creates a copy and modifies it, those custom keys and values ​​should take precedence.
 - [ ] Represent 24 hours a day or 365 days a year using an arc.
 - [ ] Once development has reached a relatively stable state, move management to GitHub issues.
