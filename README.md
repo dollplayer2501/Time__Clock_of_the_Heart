@@ -10,20 +10,16 @@
 Conky theme, a 24-hour clock that uses the entire display.
 It is not the hands of the clock that rotate; **the dial rotates**.
 
-
-### 1.1. Normal mode
+This is the screen that appears when you first launch this Conky theme.
+Note, however, that the fonts used in this theme are highly unlikely to display correctly—for reasons explained later.
 
 <img src="./screenshot/main..01.png" width=500 />
 
-In `./config/config_me.lua` (or [`./config/config_default.lua`][config_default.lua]) at `Info.Display_flag` is `true`, default setting.
-
-
-### 1.2. Very simple mode
+Left-click the white circle in the center of the screen.
+Doing so will result in the view shown in the image below.
+Left-clicking toggles the visibility of information such as the current time and today's date.
 
 <img src="./screenshot/main..02.png" width=500 />
-
-As with the above, `Info.Display_flag` is `false`.  
-(Self-reflection) I’m starting to think that maybe this is fine as it is…
 
 
 ## 2. How to start
@@ -144,7 +140,8 @@ The general processing steps for the 4th and 5th rows:
 - [ ] Information regarding the historical graph for CPU load:  
       The design calls for a graph that follows the circular path of a clock face, extending inward from the 24-hour hand toward the center.
 - [ ] Use *Pywal* to automatically change the color scheme for this theme?
-- [ ] Nothing is decided yet, but perhaps adding some kind of feature triggered by a *mouse hover*?
+- [x] Nothing is decided yet, but perhaps adding some kind of feature triggered by a *mouse hover*?
+      It is unclear whether *mouse hover* events can be detected in Conky/Lua; *mouse clicks*, however, can be detected.
 - [ ] I would like to modify the system so that it can start using only the default configuration file I provide.   
       If a user creates a copy and modifies it, those custom keys and values ​​should take precedence.
 - [ ] Represent 24 hours a day or 365 days a year using an arc.
@@ -170,7 +167,7 @@ The environment I am actually using is as follows.
 In practice, I rely on the Qtile widgets (located on the bottom bar) to keep track of the current time, the number of available package updates, and the CPU load.
 In other words, no issues will arise even if this theme is not displayed.
 
-See also the following—specifically, my "dotfiles":
+See also the following—specifically, my *dotfiles*:
 
 - [dotfiles_ver3_terminal](https://github.com/dollplayer2501/dotfiles_ver3_terminal)
 - [dotfiles_ver3_window-manager](https://github.com/dollplayer2501/dotfiles_ver3_window-manager)
