@@ -59,6 +59,7 @@ require './lua/functions'
 require './lua/sub_parse'
 require './lua/sub_line'
 require './lua/sub_text'
+require './lua/sub_clock'
 require './lua/sub_special'
 
 
@@ -129,21 +130,6 @@ function conky_main()
   if not surface then return end
   local cr = cairo_create(surface)
   cairo_rotate(cr, gConfig.Environment.Angle * (math.pi / 180))
-
-
-  --
-  -- Anonymous functions
-  --
-
-  local local_change_angle_of_radian = function(_now_radian, _change_degree)
-    local tmp_deg = math.deg(_now_radian)
-    tmp_deg = tmp_deg - _change_degree
-
-    if tmp_deg < 0 then tmp_deg = tmp_deg + 360 end
-    if tmp_deg >= 360 then tmp_deg = tmp_deg - 360 end
-
-    return math.rad(tmp_deg)
-  end
 
 
   --
@@ -221,155 +207,10 @@ function conky_main()
   --
   -- Marks and Numbers
   --
-  -- TODO: 2026-11-12
-  --   This logic will be moved elsewhere?
-  --
 
-  for idx_hour24 = 1, 24, 1 do
-
-    --
-    -- 24 Hours Marks
-    --
-    if idx_hour24 - 1 == hour24_now_hour then
-      --
-      -- 24 Hours Marks, now
-      --
-      draw_line_marks(cr, const_line_cap,
-        gConfig.Clock24.Center, gConfig.Clock24.Radius, array_times[idx_hour24][1][1].radian,
-        gConfig.Clock24.Hour24.Marks.Now.Radius, gConfig.Clock24.Hour24.Marks.Now.Width,
-        gColor.Clock24.Hour24.Marks.Now)
-
-    elseif idx_hour24 - 1 == hour24_next_hour then
-      --
-      -- 24 Hours Marks, next
-      --
-      draw_line_marks(cr, const_line_cap,
-        gConfig.Clock24.Center, gConfig.Clock24.Radius, array_times[idx_hour24][1][1].radian,
-        gConfig.Clock24.Hour24.Marks.Next.Radius, gConfig.Clock24.Hour24.Marks.Next.Width,
-        gColor.Clock24.Hour24.Marks.Next)
-
-    else
-      --
-      -- 24 Hours Marks, normal
-      --
-      draw_line_marks(cr, const_line_cap,
-        gConfig.Clock24.Center, gConfig.Clock24.Radius, array_times[idx_hour24][1][1].radian,
-        gConfig.Clock24.Hour24.Marks.Normal.Radius, gConfig.Clock24.Hour24.Marks.Normal.Width,
-        gColor.Clock24.Hour24.Marks.Normal)
-    end
-
-
-    --
-    -- 30 Minutes Marks
-    --
-
-    draw_line_marks(cr, const_line_cap,
-      gConfig.Clock24.Center, gConfig.Clock24.Radius, array_times[idx_hour24][30 + 1][1].radian,
-      gConfig.Clock24.Minutes30.Marks.Radius, gConfig.Clock24.Minutes30.Marks.Width,
-      gColor.Clock24.Minutes30.Marks)
-
-
-    --
-    -- 10 Minutes Marks
-    --
-
-    tmp_array = {10, 20, 40, 50}
-    for ii = 1, #tmp_array, 1 do
-      draw_line_marks(cr, const_line_cap,
-        gConfig.Clock24.Center, gConfig.Clock24.Radius, array_times[idx_hour24][tmp_array[ii] + 1][1].radian,
-        gConfig.Clock24.Minutes10.Marks.Radius, gConfig.Clock24.Minutes10.Marks.Width,
-        gColor.Clock24.Minutes10.Marks)
-    end
-
-
-    --
-    -- 5 Minutes Marks
-    --
-
-    tmp_array = {5, 15, 25, 35, 45, 55}
-    for ii = 1, #tmp_array, 1 do
-      draw_line_marks(cr, const_line_cap,
-        gConfig.Clock24.Center, gConfig.Clock24.Radius, array_times[idx_hour24][tmp_array[ii] + 1][1].radian,
-        gConfig.Clock24.Minutes05.Marks.Radius, gConfig.Clock24.Minutes05.Marks.Width,
-        gColor.Clock24.Minutes05.Marks)
-    end
-
-
-    --
-    -- 1 Minute Marks
-    --
-
-    tmp_array = {
-       1,  2,  3,  4,  6,  7,  8 , 9,
-      11, 12, 13, 14, 16, 17, 18, 19,
-      21, 22, 23, 24, 26, 27, 28, 29,
-      31, 32, 33, 34, 36, 37, 38, 39,
-      41, 42, 43, 44, 46, 47, 48, 49,
-      51, 52, 53, 54, 56, 57, 58, 59,
-    }
-    for ii = 1, #tmp_array, 1 do
-      draw_line_marks(cr, const_line_cap,
-        gConfig.Clock24.Center, gConfig.Clock24.Radius, array_times[idx_hour24][tmp_array[ii] + 1][1].radian,
-        gConfig.Clock24.Minutes01.Marks.Radius, gConfig.Clock24.Minutes01.Marks.Width,
-        gColor.Clock24.Minutes01.Marks)
-    end
-
-
-    --
-    -- 24 Hours Numbers
-    --
-
-    -- Get display angle
-    local hour24_radian_base = array_times[idx_hour24][1][1].radian
-    local hour24_radian_adjust = local_change_angle_of_radian(hour24_radian_base, 90)
-
-    -- Get display position
-    local hour24_position = {
-        xx = gConfig.Clock24.Center.xx + (math.sin(hour24_radian_base) * gConfig.Clock24.Radius),
-        yy = gConfig.Clock24.Center.yy - (math.cos(hour24_radian_base) * gConfig.Clock24.Radius),
-      }
-
-
-    cairo_save(cr)
-
-    if idx_hour24 - 1 == hour24_now_hour then
-
-      --
-      -- Now
-      --
-      draw_text_hour24(cr, const_font_slant, const_font_weight,
-        gConfig.Clock24.Hour24.Number.Now.Size, gConfig.Clock24.Hour24.Number.Now.Face,
-        string.format("%02d", idx_hour24 - 1),
-        hour24_position, hour24_radian_adjust, gConfig.Clock24.Hour24.Number.Now.Adjust,
-        gColor.Clock24.Hour24.Number.Now)
-
-    elseif idx_hour24 - 1 == hour24_next_hour then
-
-      --
-      -- Next
-      --
-      draw_text_hour24(cr, const_font_slant, const_font_weight,
-        gConfig.Clock24.Hour24.Number.Next.Size, gConfig.Clock24.Hour24.Number.Next.Face,
-        string.format("%02d", idx_hour24 - 1),
-        hour24_position, hour24_radian_adjust, gConfig.Clock24.Hour24.Number.Next.Adjust,
-        gColor.Clock24.Hour24.Number.Next)
-
-    else
-
-      --
-      -- Normal
-      --
-      draw_text_hour24(cr, const_font_slant, const_font_weight,
-        gConfig.Clock24.Hour24.Number.Normal.Size, gConfig.Clock24.Hour24.Number.Normal.Face,
-        string.format("%02d", idx_hour24 - 1),
-        hour24_position, hour24_radian_adjust, gConfig.Clock24.Hour24.Number.Normal.Adjust,
-        gColor.Clock24.Hour24.Number.Normal)
-
-    end
-
-    cairo_restore(cr)
-
-  end
+  sub_clock_func(cr, gConst, gParse, gConfig, gColor,
+    const_line_cap, const_font_slant, const_font_weight,
+    hour24_now_hour, hour24_next_hour, array_times)
 
 
   --

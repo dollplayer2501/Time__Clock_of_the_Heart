@@ -16,18 +16,18 @@ function get_color()
     Clock24 ={
       Hour24 = {
         Marks = {
-          Now                       = setting_color_hex_to_rgba(main1_color, 1.0),
+          Now                       = setting_color_hex_to_rgba(main2_color, 1.0),
           Next                      = setting_color_hex_to_rgba(main2_color, 0.8),
           Normal                    = setting_color_hex_to_rgba(sub1_color, 0.8),
         },
         Number = {
-          Now                       = setting_color_hex_to_rgba(main1_color, 0.9),
-          Next                      = setting_color_hex_to_rgba(main1_color, 0.9),
+          Now                       = setting_color_hex_to_rgba(main1_color, 0.8),
+          Next                      = setting_color_hex_to_rgba(main1_color, 0.8),
           Normal                    = setting_color_hex_to_rgba(sub1_color, 0.9),
         },
       },
       Minutes30 = {
-        Marks                       = setting_color_hex_to_rgba(sub1_color, 0.8),
+        Marks                       = setting_color_hex_to_rgba(main2_color, 0.8),
       },
       Minutes10 = {
         Marks                       = setting_color_hex_to_rgba(sub1_color, 0.8),
