@@ -205,7 +205,7 @@ function conky_main()
 
 
   --
-  -- Marks and Numbers
+  -- 24 hour clock, Marks and Numbers
   --
 
   sub_clock_func(cr, gConst, gParse, gConfig, gColor,
@@ -224,13 +224,18 @@ end
 
 
 -- -----------------------------------------------------------
---
+-- NOTE:
+--   Lua: Mouse Events · brndnmtthws/conky Wiki
+--   https://github.com/brndnmtthws/conky/wiki/Lua:-Mouse-Events
 -- -----------------------------------------------------------
 function conky_on_mouse(event)
 
   --
   -- TODO: 2026-11-12
   --   Should a mouse click toggle the color of this circle?
+  --
+  -- TODO: 2026-11-14
+  --   Adding behavior triggered by mouse hover
   --
 
   if event.type == "button_down" and event.button == "left" then

@@ -27,7 +27,16 @@ function get_color()
         },
       },
       Minutes30 = {
-        Marks                       = setting_color_hex_to_rgba(main2_color, 0.8),
+        Marks = {
+          Now                       = setting_color_hex_to_rgba(main2_color, 0.8),
+          Other                     = setting_color_hex_to_rgba(sub1_color, 0.8),
+        },
+      },
+      Minutes15 = {
+        Marks = {
+          Now                       = setting_color_hex_to_rgba(main2_color, 0.8),
+          Other                     = setting_color_hex_to_rgba(sub1_color, 0.8),
+        },
       },
       Minutes10 = {
         Marks                       = setting_color_hex_to_rgba(sub1_color, 0.8),

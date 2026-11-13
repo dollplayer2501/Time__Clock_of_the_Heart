@@ -56,11 +56,33 @@ function sub_clock_func(_cr, _gConst, _gParse, _gConfig, _gColor,
     -- 30 Minutes Marks
     --
 
+    local tmp_color = _gColor.Clock24.Minutes30.Marks.Other
+    if idx_hour24 - 1 == _hour24_now_hour then
+      tmp_color = _gColor.Clock24.Minutes30.Marks.Now
+    end
+
     draw_line_marks(_cr, _const_line_cap,
       _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][30 + 1][1].radian,
       _gConfig.Clock24.Minutes30.Marks.Radius, _gConfig.Clock24.Minutes30.Marks.Width,
-      _gColor.Clock24.Minutes30.Marks)
+      tmp_color)
 
+
+    --
+    -- 15 Minutes Marks
+    --
+
+    local tmp_color = _gColor.Clock24.Minutes15.Marks.Other
+    if idx_hour24 - 1 == _hour24_now_hour then
+      tmp_color = _gColor.Clock24.Minutes15.Marks.Now
+    end
+
+    tmp_array = {15, 45}
+    for ii = 1, #tmp_array, 1 do
+      draw_line_marks(_cr, _const_line_cap,
+        _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1][1].radian,
+        _gConfig.Clock24.Minutes15.Marks.Radius, _gConfig.Clock24.Minutes15.Marks.Width,
+        tmp_color)
+    end
 
     --
     -- 10 Minutes Marks
@@ -79,7 +101,7 @@ function sub_clock_func(_cr, _gConst, _gParse, _gConfig, _gColor,
     -- 5 Minutes Marks
     --
 
-    tmp_array = {5, 15, 25, 35, 45, 55}
+    tmp_array = {5, 25, 35, 55}
     for ii = 1, #tmp_array, 1 do
       draw_line_marks(_cr, _const_line_cap,
         _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1][1].radian,

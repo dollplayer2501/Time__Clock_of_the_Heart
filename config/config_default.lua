@@ -102,6 +102,16 @@ function get_config(_gConst)
           Width                = 2,
         },
       },
+      Minutes15 = {
+        -- NOTE: Let’s use Minutes05 as a reference point, NOT Minutes10
+        Marks = {
+          Radius = {
+            From               = -12,
+            To                 = 12,
+          },
+          Width                = 2,
+        },
+      },
       Minutes10 = {
         Marks = {
           Radius = {
