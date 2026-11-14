@@ -67,16 +67,17 @@ function sub_special_func(_cr, _gConst, _gParse, _gConfig, _gColor,
 
   -- Time, SS
 
-  --
-  -- TODO: 2026-11-14
-  --   Make the display of seconds (on/off) configurable.
-  --   Since the text is quite large and updates every second, the display of seconds occasionally skips a beat.
-  --
-
-  local tmp_string = string.format(':%02d', _gParse.Now.Second)
-  draw_text_time_ss(_cr,
-    _gConfig.Info.Text.Time_ss.Size, tmp_string,
-    _gConfig.Info.Text.Time_hhmm.Adjust, extents_hhmm.x_advance, _gConfig.Info.Text.Time_ss.Adjust)
+  if true == _gConfig.Info.Text.Time_ss.Display_flag then
+    --
+    -- NOTE:
+    --   Since the text is quite large font size and updates every second,
+    --   the display of seconds occasionally skips a beat.
+    --
+    local tmp_string = string.format(':%02d', _gParse.Now.Second)
+    draw_text_time_ss(_cr,
+      _gConfig.Info.Text.Time_ss.Size, tmp_string,
+      _gConfig.Info.Text.Time_hhmm.Adjust, extents_hhmm.x_advance, _gConfig.Info.Text.Time_ss.Adjust)
+  end
 
   --
 

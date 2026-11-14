@@ -185,6 +185,7 @@ function get_config(_gConst)
           },
         },
         Time_ss = {
+          Display_flag         = true,
           Size                 = 160,
           Adjust = {
             xx                 = 10,
