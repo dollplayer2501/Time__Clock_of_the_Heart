@@ -197,6 +197,10 @@ function get_config(_gConst)
             xx                 = 10,
             yy                 = 50,
           },
+          Japanese_calendar = {
+            Display_flag       = false,
+            Font_size          = 55,
+          },
         },
         Other = {
           Other_display_flag   = false,

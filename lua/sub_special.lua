@@ -84,18 +84,23 @@ function sub_special_func(_cr, _gConst, _gParse, _gConfig, _gColor,
 
   -- Full date
 
-  --
-  -- TODO: 2026-11-14
-  --   For me—since I am Japanese—I would like a flag to toggle the display of the Japanese era name.
-  --   It should be displayed as: "Saturday, November 14, 2026/R8"
-  --   I think it would be fine for the "R8" part to be displayed in a smaller font.
-  --   Given this, it might be necessary to shift this section slightly to the left.
-  --
-
   local tmp_string = _gParse.Now.date_full
   draw_text_full_date(_cr,
     _gConfig.Info.Text.Full_date.Size, tmp_string,
     _gConfig.Info.Text.Time_hhmm.Adjust.xx, _gConfig.Info.Text.Full_date.Adjust, tmp_gap_yy)
+
+  --
+  -- NOTE:
+  --   This might be a feature that only I, as a Japanese person, need.
+  --   In Japanese, this is called the "Japanese calendar system" (*wareki*).
+  --
+  if true == _gConfig.Info.Text.Full_date.Japanese_calendar.Display_flag then
+    local tmp_string = string.format('/R%d', _gParse.Now.year - 2018)
+
+    cairo_set_font_size(_cr, _gConfig.Info.Text.Full_date.Japanese_calendar.Font_size)
+    cairo_show_text(_cr, tmp_string)
+  end
+
 
   --
   -- Many font settings are carried over as-is from the previous section, so they have not been explicitly specified here.
