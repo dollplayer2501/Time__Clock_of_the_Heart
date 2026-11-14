@@ -33,7 +33,7 @@ function get_config(_gConst)
         To                     = 200,
       },
       Point_size               = 20,
-      Width                    = 4,
+      Width                    = 2,
     },
 
     Clock24 = {
@@ -56,7 +56,7 @@ function get_config(_gConst)
               From             = -100,
               To               = 100,
             },
-            Width              = 2,
+            Width              = 4,
           },
           Normal = {
             Radius = {
@@ -96,38 +96,50 @@ function get_config(_gConst)
       Minutes30 = {
         Marks = {
           Radius = {
-            From               = -40,
-            To                 = 40,
+            From               = -60,
+            To                 = 60,
           },
-          Width                = 2,
+          Width = {
+            Now                = 4,
+            Other              = 2,
+          },
         },
       },
       Minutes15 = {
         -- NOTE: Let’s use Minutes05 as a reference point, NOT Minutes10
         Marks = {
           Radius = {
-            From               = -12,
-            To                 = 12,
+            From               = -15,
+            To                 = 15,
           },
-          Width                = 2,
+          Width = {
+            Now                = 4,
+            Other              = 2,
+          },
         },
       },
       Minutes10 = {
         Marks = {
           Radius = {
-            From               = -15,
-            To                 = 15,
+            From               = -30,
+            To                 = 30,
           },
-          Width                = 2,
+          Width = {
+            Now                = 4,
+            Other              = 2,
+          },
         },
       },
       Minutes05 = {
         Marks = {
           Radius = {
-            From               = -10,
-            To                 = 10,
+            From               = -15,
+            To                 = 15,
           },
-          Width                = 2,
+          Width = {
+            Now                = 4,
+            Other              = 2,
+          },
         },
       },
       Minutes01 = {
@@ -136,7 +148,10 @@ function get_config(_gConst)
             From               = -5,
             To                 = 5,
           },
-          Width                = 2,
+          Width = {
+            Now                = 4,
+            Other              = 2,
+          },
         },
       },
     },

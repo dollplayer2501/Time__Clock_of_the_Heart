@@ -34,7 +34,7 @@ function get_color()
       },
       Minutes15 = {
         Marks = {
-          Now                       = setting_color_hex_to_rgba(sub1_color, 1.0),
+          Now                       = setting_color_hex_to_rgba(main2_color, 1.0),
           Other                     = setting_color_hex_to_rgba(sub1_color, 1.0),
         },
       },
@@ -46,12 +46,15 @@ function get_color()
       },
       Minutes05 = {
         Marks ={
-          Now                       = setting_color_hex_to_rgba(sub1_color, 1.0),
+          Now                       = setting_color_hex_to_rgba(main2_color, 1.0),
           Other                     = setting_color_hex_to_rgba(sub1_color, 1.0),
         },
       },
       Minutes01 = {
-        Marks                       = setting_color_hex_to_rgba(sub1_color, 1.0),
+        Marks ={
+          Now                       = setting_color_hex_to_rgba(main2_color, 1.0),
+          Other                     = setting_color_hex_to_rgba(sub1_color, 1.0),
+        },
       },
     },
     Info = {

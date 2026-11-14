@@ -67,6 +67,12 @@ function sub_special_func(_cr, _gConst, _gParse, _gConfig, _gColor,
 
   -- Time, SS
 
+  --
+  -- TODO: 2026-11-14
+  --   Make the display of seconds (on/off) configurable.
+  --   Since the text is quite large and updates every second, the display of seconds occasionally skips a beat.
+  --
+
   local tmp_string = string.format(':%02d', _gParse.Now.Second)
   draw_text_time_ss(_cr,
     _gConfig.Info.Text.Time_ss.Size, tmp_string,
@@ -77,6 +83,14 @@ function sub_special_func(_cr, _gConst, _gParse, _gConfig, _gColor,
   local tmp_gap_yy = (-1 * extents_hhmm.y_bearing / 2) + _gConfig.Info.Text.Full_date.Adjust.yy
 
   -- Full date
+
+  --
+  -- TODO: 2026-11-14
+  --   For me—since I am Japanese—I would like a flag to toggle the display of the Japanese era name.
+  --   It should be displayed as: "Saturday, November 14, 2026/R8"
+  --   I think it would be fine for the "R8" part to be displayed in a smaller font.
+  --   Given this, it might be necessary to shift this section slightly to the left.
+  --
 
   local tmp_string = _gParse.Now.date_full
   draw_text_full_date(_cr,

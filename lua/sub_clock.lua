@@ -49,13 +49,16 @@ function sub_clock_func(_cr, _gConst, _gParse, _gConfig, _gColor,
 
     draw_line_marks(_cr, _const_line_cap,
       _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][1][1].radian,
-      tmp_radius, tmp_width,
-      tmp_color)
+      tmp_radius, tmp_width, tmp_color)
 
 
     --
     -- 30 Minutes Marks
     --
+
+    local tmp_width = idx_hour24 - 1 == _hour24_now_hour
+      and _gConfig.Clock24.Minutes30.Marks.Width.Now
+      or  _gConfig.Clock24.Minutes30.Marks.Width.Other
 
     local tmp_color = idx_hour24 - 1 == _hour24_now_hour
       and _gColor.Clock24.Minutes30.Marks.Now
@@ -63,13 +66,16 @@ function sub_clock_func(_cr, _gConst, _gParse, _gConfig, _gColor,
 
     draw_line_marks(_cr, _const_line_cap,
       _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][30 + 1][1].radian,
-      _gConfig.Clock24.Minutes30.Marks.Radius, _gConfig.Clock24.Minutes30.Marks.Width,
-      tmp_color)
+      _gConfig.Clock24.Minutes30.Marks.Radius, tmp_width, tmp_color)
 
 
     --
     -- 15 Minutes Marks
     --
+
+    local tmp_width = idx_hour24 - 1 == _hour24_now_hour
+      and _gConfig.Clock24.Minutes15.Marks.Width.Now
+      or  _gConfig.Clock24.Minutes15.Marks.Width.Other
 
     local tmp_color = idx_hour24 - 1 == _hour24_now_hour
       and _gColor.Clock24.Minutes15.Marks.Now
@@ -79,13 +85,16 @@ function sub_clock_func(_cr, _gConst, _gParse, _gConfig, _gColor,
     for ii = 1, #tmp_array, 1 do
       draw_line_marks(_cr, _const_line_cap,
         _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1][1].radian,
-        _gConfig.Clock24.Minutes15.Marks.Radius, _gConfig.Clock24.Minutes15.Marks.Width,
-        tmp_color)
+        _gConfig.Clock24.Minutes15.Marks.Radius, tmp_width, tmp_color)
     end
 
     --
     -- 10 Minutes Marks
     --
+
+    local tmp_width = idx_hour24 - 1 == _hour24_now_hour
+      and _gConfig.Clock24.Minutes10.Marks.Width.Now
+      or  _gConfig.Clock24.Minutes10.Marks.Width.Other
 
     local tmp_color = idx_hour24 - 1 == _hour24_now_hour
       and _gColor.Clock24.Minutes10.Marks.Now
@@ -95,14 +104,17 @@ function sub_clock_func(_cr, _gConst, _gParse, _gConfig, _gColor,
     for ii = 1, #tmp_array, 1 do
       draw_line_marks(_cr, _const_line_cap,
         _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1][1].radian,
-        _gConfig.Clock24.Minutes10.Marks.Radius, _gConfig.Clock24.Minutes10.Marks.Width,
-        tmp_color)
+        _gConfig.Clock24.Minutes10.Marks.Radius, tmp_width, tmp_color)
     end
 
 
     --
     -- 5 Minutes Marks
     --
+
+    local tmp_width = idx_hour24 - 1 == _hour24_now_hour
+      and _gConfig.Clock24.Minutes05.Marks.Width.Now
+      or  _gConfig.Clock24.Minutes05.Marks.Width.Other
 
     local tmp_color = idx_hour24 - 1 == _hour24_now_hour
       and _gColor.Clock24.Minutes05.Marks.Now
@@ -112,14 +124,21 @@ function sub_clock_func(_cr, _gConst, _gParse, _gConfig, _gColor,
     for ii = 1, #tmp_array, 1 do
       draw_line_marks(_cr, _const_line_cap,
         _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1][1].radian,
-        _gConfig.Clock24.Minutes05.Marks.Radius, _gConfig.Clock24.Minutes05.Marks.Width,
-        tmp_color)
+        _gConfig.Clock24.Minutes05.Marks.Radius, tmp_width, tmp_color)
     end
 
 
     --
     -- 1 Minute Marks
     --
+
+    local tmp_width = idx_hour24 - 1 == _hour24_now_hour
+      and _gConfig.Clock24.Minutes01.Marks.Width.Now
+      or  _gConfig.Clock24.Minutes01.Marks.Width.Other
+
+    local tmp_color = idx_hour24 - 1 == _hour24_now_hour
+      and _gColor.Clock24.Minutes01.Marks.Now
+      or  _gColor.Clock24.Minutes01.Marks.Other
 
     tmp_array = {
        1,  2,  3,  4,  6,  7,  8 , 9,
@@ -132,8 +151,7 @@ function sub_clock_func(_cr, _gConst, _gParse, _gConfig, _gColor,
     for ii = 1, #tmp_array, 1 do
       draw_line_marks(_cr, _const_line_cap,
         _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1][1].radian,
-        _gConfig.Clock24.Minutes01.Marks.Radius, _gConfig.Clock24.Minutes01.Marks.Width,
-        _gColor.Clock24.Minutes01.Marks)
+        _gConfig.Clock24.Minutes01.Marks.Radius, tmp_width, tmp_color)
     end
 
 
