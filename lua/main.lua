@@ -15,6 +15,12 @@ local hand_radius = -1
 local display_flag = false
 
 
+--
+-- TODO: 2026-11-14
+--   I will move the file-selection logic currently in place into a function that can be called from `conky.config.lua`.
+--   It is extremely inconvenient that the configuration doesn't reload automatically when the file is updated.
+--
+
 function get_current_path()
   --
   -- NOTE:

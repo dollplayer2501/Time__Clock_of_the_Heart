@@ -23,43 +23,43 @@ function sub_clock_func(_cr, _gConst, _gParse, _gConfig, _gColor,
     --
     -- 24 Hours Marks
     --
+
+    -- 24 Hours Marks, normal setting
+
+    local tmp_radius = _gConfig.Clock24.Hour24.Marks.Normal.Radius
+    local tmp_width = _gConfig.Clock24.Hour24.Marks.Normal.Width
+    local tmp_color = _gColor.Clock24.Hour24.Marks.Normal
+
     if idx_hour24 - 1 == _hour24_now_hour then
-      --
-      -- 24 Hours Marks, now
-      --
-      draw_line_marks(_cr, _const_line_cap,
-        _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][1][1].radian,
-        _gConfig.Clock24.Hour24.Marks.Now.Radius, _gConfig.Clock24.Hour24.Marks.Now.Width,
-        _gColor.Clock24.Hour24.Marks.Now)
+
+      -- 24 Hours Marks, now setting
+
+      tmp_radius = _gConfig.Clock24.Hour24.Marks.Now.Radius
+      tmp_width = _gConfig.Clock24.Hour24.Marks.Now.Width
+      tmp_color = _gColor.Clock24.Hour24.Marks.Now
 
     elseif idx_hour24 - 1 == _hour24_next_hour then
-      --
-      -- 24 Hours Marks, next
-      --
-      draw_line_marks(_cr, _const_line_cap,
-        _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][1][1].radian,
-        _gConfig.Clock24.Hour24.Marks.Next.Radius, _gConfig.Clock24.Hour24.Marks.Next.Width,
-        _gColor.Clock24.Hour24.Marks.Next)
 
-    else
-      --
-      -- 24 Hours Marks, normal
-      --
-      draw_line_marks(_cr, _const_line_cap,
-        _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][1][1].radian,
-        _gConfig.Clock24.Hour24.Marks.Normal.Radius, _gConfig.Clock24.Hour24.Marks.Normal.Width,
-        _gColor.Clock24.Hour24.Marks.Normal)
+      -- 24 Hours Marks, next setting
+
+      tmp_radius = _gConfig.Clock24.Hour24.Marks.Next.Radius
+      tmp_width = _gConfig.Clock24.Hour24.Marks.Next.Width
+      tmp_color = _gColor.Clock24.Hour24.Marks.Next
     end
+
+    draw_line_marks(_cr, _const_line_cap,
+      _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][1][1].radian,
+      tmp_radius, tmp_width,
+      tmp_color)
 
 
     --
     -- 30 Minutes Marks
     --
 
-    local tmp_color = _gColor.Clock24.Minutes30.Marks.Other
-    if idx_hour24 - 1 == _hour24_now_hour then
-      tmp_color = _gColor.Clock24.Minutes30.Marks.Now
-    end
+    local tmp_color = idx_hour24 - 1 == _hour24_now_hour
+      and _gColor.Clock24.Minutes30.Marks.Now
+      or  _gColor.Clock24.Minutes30.Marks.Other
 
     draw_line_marks(_cr, _const_line_cap,
       _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][30 + 1][1].radian,
@@ -71,10 +71,9 @@ function sub_clock_func(_cr, _gConst, _gParse, _gConfig, _gColor,
     -- 15 Minutes Marks
     --
 
-    local tmp_color = _gColor.Clock24.Minutes15.Marks.Other
-    if idx_hour24 - 1 == _hour24_now_hour then
-      tmp_color = _gColor.Clock24.Minutes15.Marks.Now
-    end
+    local tmp_color = idx_hour24 - 1 == _hour24_now_hour
+      and _gColor.Clock24.Minutes15.Marks.Now
+      or  _gColor.Clock24.Minutes15.Marks.Other
 
     tmp_array = {15, 45}
     for ii = 1, #tmp_array, 1 do
@@ -88,12 +87,16 @@ function sub_clock_func(_cr, _gConst, _gParse, _gConfig, _gColor,
     -- 10 Minutes Marks
     --
 
+    local tmp_color = idx_hour24 - 1 == _hour24_now_hour
+      and _gColor.Clock24.Minutes10.Marks.Now
+      or  _gColor.Clock24.Minutes10.Marks.Other
+
     tmp_array = {10, 20, 40, 50}
     for ii = 1, #tmp_array, 1 do
       draw_line_marks(_cr, _const_line_cap,
         _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1][1].radian,
         _gConfig.Clock24.Minutes10.Marks.Radius, _gConfig.Clock24.Minutes10.Marks.Width,
-        _gColor.Clock24.Minutes10.Marks)
+        tmp_color)
     end
 
 
@@ -101,12 +104,16 @@ function sub_clock_func(_cr, _gConst, _gParse, _gConfig, _gColor,
     -- 5 Minutes Marks
     --
 
+    local tmp_color = idx_hour24 - 1 == _hour24_now_hour
+      and _gColor.Clock24.Minutes05.Marks.Now
+      or  _gColor.Clock24.Minutes05.Marks.Other
+
     tmp_array = {5, 25, 35, 55}
     for ii = 1, #tmp_array, 1 do
       draw_line_marks(_cr, _const_line_cap,
         _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1][1].radian,
         _gConfig.Clock24.Minutes05.Marks.Radius, _gConfig.Clock24.Minutes05.Marks.Width,
-        _gColor.Clock24.Minutes05.Marks)
+        tmp_color)
     end
 
 
@@ -147,40 +154,40 @@ function sub_clock_func(_cr, _gConst, _gParse, _gConfig, _gColor,
 
     cairo_save(_cr)
 
+
+    -- 24 Hours Numbers, normal setting
+
+    local tmp_size = _gConfig.Clock24.Hour24.Number.Normal.Size
+    local tmp_face = _gConfig.Clock24.Hour24.Number.Normal.Face
+    local tmp_adjust = _gConfig.Clock24.Hour24.Number.Normal.Adjust
+    local tmp_color = _gColor.Clock24.Hour24.Number.Normal
+
     if idx_hour24 - 1 == _hour24_now_hour then
 
-      --
-      -- Now
-      --
-      draw_text_hour24(_cr, _const_font_slant, _const_font_weight,
-        _gConfig.Clock24.Hour24.Number.Now.Size, _gConfig.Clock24.Hour24.Number.Now.Face,
-        string.format("%02d", idx_hour24 - 1),
-        hour24_position, hour24_radian_adjust, _gConfig.Clock24.Hour24.Number.Now.Adjust,
-        _gColor.Clock24.Hour24.Number.Now)
+      -- 24 Hours Numbers, now setting
+
+      tmp_size = _gConfig.Clock24.Hour24.Number.Now.Size
+      tmp_face = _gConfig.Clock24.Hour24.Number.Now.Face
+      tmp_adjust = _gConfig.Clock24.Hour24.Number.Now.Adjust
+      tmp_color = _gColor.Clock24.Hour24.Number.Now
 
     elseif idx_hour24 - 1 == _hour24_next_hour then
 
-      --
-      -- Next
-      --
-      draw_text_hour24(_cr, _const_font_slant, _const_font_weight,
-        _gConfig.Clock24.Hour24.Number.Next.Size, _gConfig.Clock24.Hour24.Number.Next.Face,
-        string.format("%02d", idx_hour24 - 1),
-        hour24_position, hour24_radian_adjust, _gConfig.Clock24.Hour24.Number.Next.Adjust,
-        _gColor.Clock24.Hour24.Number.Next)
+      -- 24 Hours Numbers, next setting
 
-    else
-
-      --
-      -- Normal
-      --
-      draw_text_hour24(_cr, _const_font_slant, _const_font_weight,
-        _gConfig.Clock24.Hour24.Number.Normal.Size, _gConfig.Clock24.Hour24.Number.Normal.Face,
-        string.format("%02d", idx_hour24 - 1),
-        hour24_position, hour24_radian_adjust, _gConfig.Clock24.Hour24.Number.Normal.Adjust,
-        _gColor.Clock24.Hour24.Number.Normal)
+      tmp_size = _gConfig.Clock24.Hour24.Number.Next.Size
+      tmp_face = _gConfig.Clock24.Hour24.Number.Next.Face
+      tmp_adjust = _gConfig.Clock24.Hour24.Number.Next.Adjust
+      tmp_color = _gColor.Clock24.Hour24.Number.Next
 
     end
+
+    draw_text_hour24(_cr, _const_font_slant, _const_font_weight,
+      tmp_size, tmp_face,
+      string.format("%02d", idx_hour24 - 1),
+      hour24_position, hour24_radian_adjust, tmp_adjust,
+      tmp_color)
+
 
     cairo_restore(_cr)
 

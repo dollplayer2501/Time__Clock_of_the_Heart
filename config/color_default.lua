@@ -17,7 +17,7 @@ function get_color()
       Hour24 = {
         Marks = {
           Now                       = setting_color_hex_to_rgba(main2_color, 1.0),
-          Next                      = setting_color_hex_to_rgba(main2_color, 0.8),
+          Next                      = setting_color_hex_to_rgba(main2_color, 1.0),
           Normal                    = setting_color_hex_to_rgba(sub1_color, 0.8),
         },
         Number = {
@@ -28,24 +28,30 @@ function get_color()
       },
       Minutes30 = {
         Marks = {
-          Now                       = setting_color_hex_to_rgba(main2_color, 0.8),
-          Other                     = setting_color_hex_to_rgba(sub1_color, 0.8),
+          Now                       = setting_color_hex_to_rgba(main2_color, 1.0),
+          Other                     = setting_color_hex_to_rgba(sub1_color, 1.0),
         },
       },
       Minutes15 = {
         Marks = {
-          Now                       = setting_color_hex_to_rgba(main2_color, 0.8),
-          Other                     = setting_color_hex_to_rgba(sub1_color, 0.8),
+          Now                       = setting_color_hex_to_rgba(sub1_color, 1.0),
+          Other                     = setting_color_hex_to_rgba(sub1_color, 1.0),
         },
       },
       Minutes10 = {
-        Marks                       = setting_color_hex_to_rgba(sub1_color, 0.8),
+        Marks ={
+          Now                       = setting_color_hex_to_rgba(main2_color, 1.0),
+          Other                     = setting_color_hex_to_rgba(sub1_color, 1.0),
+        },
       },
       Minutes05 = {
-        Marks                       = setting_color_hex_to_rgba(sub1_color, 0.8),
+        Marks ={
+          Now                       = setting_color_hex_to_rgba(sub1_color, 1.0),
+          Other                     = setting_color_hex_to_rgba(sub1_color, 1.0),
+        },
       },
       Minutes01 = {
-        Marks                       = setting_color_hex_to_rgba(sub1_color, 0.8),
+        Marks                       = setting_color_hex_to_rgba(sub1_color, 1.0),
       },
     },
     Info = {
