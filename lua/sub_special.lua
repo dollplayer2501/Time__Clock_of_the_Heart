@@ -67,7 +67,7 @@ function sub_special_func(_cr, _gConst, _gParse, _gConfig, _gColor,
 
   -- Time, SS
 
-  if true == _gConfig.Info.Text.Time_ss.Display_flag then
+  if true == _gConfig.Info.Text.Time_ss.Disp_flg then
     --
     -- NOTE:
     --   Since the text is quite large font size and updates every second,
@@ -95,7 +95,7 @@ function sub_special_func(_cr, _gConst, _gParse, _gConfig, _gColor,
   --   This might be a feature that only I, as a Japanese person, need.
   --   In Japanese, this is called the "Japanese calendar system" (*wareki*).
   --
-  if true == _gConfig.Info.Text.Full_date.Japanese_calendar.Display_flag then
+  if true == _gConfig.Info.Text.Full_date.Japanese_calendar.Disp_flg then
     local tmp_string = string.format('/R%d', _gParse.Now.year - 2018)
 
     cairo_set_font_size(_cr, _gConfig.Info.Text.Full_date.Japanese_calendar.Font_size)
@@ -107,7 +107,7 @@ function sub_special_func(_cr, _gConst, _gParse, _gConfig, _gColor,
   -- Many font settings are carried over as-is from the previous section, so they have not been explicitly specified here.
   --
 
-  if true == _gConfig.Info.Text.Other.Other_display_flag then
+  if true == _gConfig.Info.Text.Other.Other_disp_flg then
     --
     -- Package update info
     --   NOTE:
@@ -127,7 +127,7 @@ function sub_special_func(_cr, _gConst, _gParse, _gConfig, _gColor,
       tmp_gap_yy)
   end
 
-  if true == _gConfig.Info.Text.Other.Other_display_flag and true == _gConfig.Info.Text.Other.Special_display_flag then
+  if true == _gConfig.Info.Text.Other.Other_disp_flg and true == _gConfig.Info.Text.Other.Special_disp_flg then
 
     -- Time elapsed since the PC was started
 

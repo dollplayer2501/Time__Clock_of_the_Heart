@@ -44,7 +44,7 @@ end
 local hand_pos_xx = -1
 local hand_pos_yy = -1
 local hand_radius = -1
-local display_flag = false
+local info_disp_flg = false
 
 
 -- -----------------------------------------------------------
@@ -70,7 +70,7 @@ function conky_main()
     return
   end
 
-  local start_ms = measure_start(gConfig.Measurement.Display_flag)
+  local start_ms = measure_start(gConfig.Measurement.Disp_flg)
 
   local surface = conky_surface()
   if not surface then return end
@@ -148,7 +148,7 @@ function conky_main()
   -- Draw Line and Point, Information
   --
 
-  if true == display_flag then
+  if true == info_disp_flg then
     sub_special_func(cr, gConst, gParse, gConfig, gColor,
       const_line_cap, const_font_slant, const_font_weight,
       hand_radian)
@@ -166,8 +166,8 @@ function conky_main()
 
   --
 
-  elapsed_ms = measure_stop(gConfig.Measurement.Display_flag, start_ms)
-  measure_display(gConfig.Measurement.Display_flag, cr, elapsed_ms)
+  elapsed_ms = measure_stop(gConfig.Measurement.Disp_flg, start_ms)
+  measure_display(gConfig.Measurement.Disp_flg, cr, elapsed_ms)
 
 
   --
@@ -205,10 +205,10 @@ function conky_on_mouse(event)
     local dy = event.y - hand_pos_yy
 
     if (dx * dx + dy * dy) <= (hand_radius * hand_radius) then
-      if true == display_flag then
-        display_flag = false
+      if true == info_disp_flg then
+        info_disp_flg = false
       else
-        display_flag = true
+        info_disp_flg = true
       end
     end
     return true

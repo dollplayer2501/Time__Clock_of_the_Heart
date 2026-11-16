@@ -3,8 +3,8 @@
 --   In my environment, it’s around 20ms.
 --
 
-function measure_start(_display_flag)
-  if true == _display_flag then
+function measure_start(_disp_flg)
+  if true == _disp_flg then
     return os.clock()
   end
 
@@ -12,8 +12,8 @@ function measure_start(_display_flag)
 end
 
 
-function measure_stop(_display_flag, _start_ms)
-  if true == _display_flag then
+function measure_stop(_disp_flg, _start_ms)
+  if true == _disp_flg then
     return (os.clock() - _start_ms) * 1000
   end
 
@@ -21,8 +21,8 @@ function measure_stop(_display_flag, _start_ms)
 end
 
 
-function measure_display(_display_flag, _cr, _elapsed_ms)
-  if true == _display_flag then
+function measure_display(_disp_flg, _cr, _elapsed_ms)
+  if true == _disp_flg then
     --
     -- NOTE:
     --   Deliberately chosen not to handle this using a common function.

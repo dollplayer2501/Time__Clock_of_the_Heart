@@ -80,13 +80,13 @@ With this in mind, I have implemented certain aspects as external parameters or 
 
 I have **NOT** taken into account the kind of versatility that would allow the product to be used by a wide range of people.  
 **The following features are not enabled unless the configuration file is modified.**  
-Whether or not to display the item is toggled based on the `true`/`false` status of `Info.Text.Other.Other_display_flag` and/or `Info.Text.Other.Special_display_flag` in the `./config/config_me.lua`.
+Whether or not to display the item is toggled based on the `true`/`false` status of `Info.Text.Other.Other_disp_flg` and/or `Info.Text.Other.Special_disp_flg` in the `./config/config_me.lua`.
 
 
 #### 3.2.1. Displaying the total number of packages and the number of packages currently available for update.
 
 See the 3rd row in the figure below.
-Set `Info.Text.Other.Other_display_flag` to `true` in `./config/config_me.lua`.
+Set `Info.Text.Other.Other_disp_flg` to `true` in `./config/config_me.lua`.
 
 <img src="./screenshot/main..03.png" width=400 />
 
@@ -101,7 +101,7 @@ Here, the following command is being executed.
 #### 3.2.2. Time elapsed since the PC was started and time elapsed since the current login
 
 See the 4th and 5th rows in the figure below.
-Set `Info.Text.Other.Other_display_flag` and `Info.Text.Other.Special_display_flag` to `true` in `./config/config_me.lua`.
+Set `Info.Text.Other.Other_disp_flg` and `Info.Text.Other.Special_disp_flg` to `true` in `./config/config_me.lua`.
 
 <img src="./screenshot/main..04.png" width=400 />
 

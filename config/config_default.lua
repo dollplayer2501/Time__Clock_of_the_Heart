@@ -187,7 +187,7 @@ function get_config(_gConst)
           },
         },
         Time_ss = {
-          Display_flag         = true,
+          Disp_flg             = true,
           Size                 = 160,
           Adjust = {
             xx                 = 10,
@@ -201,13 +201,13 @@ function get_config(_gConst)
             yy                 = 50,
           },
           Japanese_calendar = {
-            Display_flag       = false,
+            Disp_flg           = false,
             Font_size          = 55,
           },
         },
         Other = {
-          Other_display_flag   = false,
-          Special_display_flag = false,
+          Other_disp_flg       = false,
+          Special_disp_flg     = false,
           Adjust_xx            = 20,
           First_gap_yy         = 120,
           Second_gap_yy        = 40,
@@ -217,7 +217,7 @@ function get_config(_gConst)
     },
 
     Measurement = {
-      Display_flag             = true,
+      Disp_flg                 = false,
     },
   }
 end
