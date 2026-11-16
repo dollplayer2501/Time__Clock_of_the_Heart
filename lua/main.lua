@@ -14,6 +14,7 @@ require './lua/sub_line'
 require './lua/sub_text'
 require './lua/sub_clock'
 require './lua/sub_special'
+require './lua/main_measure'
 
 --
 -- Make a decision between
@@ -68,6 +69,8 @@ function conky_main()
   if conky_window == nil then
     return
   end
+
+  local start_ms = measure_start(gConfig.Measurement.Display_flag)
 
   local surface = conky_surface()
   if not surface then return end
@@ -159,6 +162,12 @@ function conky_main()
   sub_clock_func(cr, gConst, gParse, gConfig, gColor,
     const_line_cap, const_font_slant, const_font_weight,
     hour24_now_hour, hour24_next_hour, array_times)
+
+
+  --
+
+  elapsed_ms = measure_stop(gConfig.Measurement.Display_flag, start_ms)
+  measure_display(gConfig.Measurement.Display_flag, cr, elapsed_ms)
 
 
   --

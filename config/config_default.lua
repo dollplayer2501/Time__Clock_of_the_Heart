@@ -215,5 +215,9 @@ function get_config(_gConst)
         },
       },
     },
+
+    Measurement = {
+      Display_flag             = true,
+    },
   }
 end
