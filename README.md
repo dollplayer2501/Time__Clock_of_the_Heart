@@ -146,6 +146,7 @@ The general processing steps for the 4th and 5th rows:
       If a user creates a copy and modifies it, those custom keys and values ​​should take precedence.
 - [ ] Represent 24 hours a day or 365 days a year using an arc.
 - [ ] Once development has reached a relatively stable state, move management to GitHub issues.
+- [ ] Improved response, cache surfaces (created via `cairo_image_surface_create`) separately.
 
 
 - - -

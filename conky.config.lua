@@ -1,7 +1,18 @@
 --
--- While `conky.config` is the standard, conventional filename,
--- the file is actually written in Lua; I have opted to use the `.lua` file extension instead,
--- primarily to ensure proper syntax highlighting.
+-- NOTE:
+--   While `conky.config` is the standard, conventional filename,
+--   the file is actually written in Lua; I have opted to use the `.lua` file extension instead,
+--   primarily to ensure proper syntax highlighting.
+--
+
+--
+-- TODO: 2026-11-16
+--   I am currently determining the filenames for the configuration and color scheme files
+--   to be required in `main`.
+--   (Specifically, deciding whether these files are provided by the developer or by the user.)
+--   Perhaps it would be better to make this determination at this stage.
+--   Including these filenames in `lua_load` enables live reloading—a feature
+--   that is quite essential to have.
 --
 
 local resolution_xx = 1920
@@ -22,6 +33,11 @@ conky.config = {
   text_buffer_size = 2048,                  -- size of buffer for display of content of large variables - default 256
   imlib_cache_size = 0,                     -- disable image cache to get a new spotify cover per song
 
+  --
+  -- NOTE:
+  --   It is currently set to 1.00, but with this setting,
+  --   the displayed second count can sometimes skip values.
+  --
   update_interval = 1.00,                   -- update interval
 
   -- Placement

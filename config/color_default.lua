@@ -23,7 +23,7 @@ function get_color()
         Number = {
           Now                       = setting_color_hex_to_rgba(main1_color, 0.8),
           Next                      = setting_color_hex_to_rgba(main1_color, 0.8),
-          Normal                    = setting_color_hex_to_rgba(sub1_color, 0.9),
+          Normal                    = setting_color_hex_to_rgba(sub1_color, 1.0),
         },
       },
       Minutes30 = {

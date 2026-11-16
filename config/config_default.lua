@@ -26,6 +26,8 @@ function get_config(_gConst)
         -- at what specific time—hours, minutes, and seconds—should the current time be set?
         Hour24                 = 12,
         Minutes                = 43,
+        -- TODO: 2026-11-16
+        --   Seconds might not be necessary.
         Seconds                = 0,
       },
       Radius = {

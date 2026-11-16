@@ -5,59 +5,6 @@
 require 'cairo'
 require 'cairo_xlib'
 
-
---
--- Global settings for capturing mouse events
---
-local hand_pos_xx = -1
-local hand_pos_yy = -1
-local hand_radius = -1
-local display_flag = false
-
-
---
--- TODO: 2026-11-14
---   I will move the file-selection logic currently in place into a function that can be called from `conky.config.lua`.
---   It is extremely inconvenient that the configuration doesn't reload automatically when the file is updated.
---
-
-function get_current_path()
-  --
-  -- NOTE:
-  --   This file itself is located in the `./lua/` directory.
-  --   The directory one level above this serves as the base directory for this theme.
-  --   Therefore, I will use that as our reference point.
-  --
-  local tmp_str_1 = debug.getinfo(1, "S").source:gsub("^@", "")
-  local tmp_str_2 = tmp_str_1:match("^(.*[/\\])") or "./"
-  return tmp_str_2:match("^(.*[/\\])[^/\\]+[/\\]$") or tmp_str_2
-end
-
-
-local display_message_green = function(_message)
-  --
-  -- NOTE:
-  --   Output is suppressed via environment variables set at the time Conky is launched.
-  --
-  local tmp_str = os.getenv('DEBUG_MESSAGE') or 'false'
-  if 'true' == string.lower(tmp_str) then
-    print("\27[32m" .. _message .."\27[0m")
-  end
-end
-
-
---
--- Load various files, retrieving the package path
---
-
-local current_path = get_current_path()
-display_message_green(' Current directory:' .. current_path)
-
-package.path = current_path .. 'lua/?.lua;'
-            .. current_path .. 'config/?.lua;'
-            .. package.path
-display_message_green(' Package directory:' .. package.path)
-
 --
 
 require './lua/const'
@@ -68,45 +15,35 @@ require './lua/sub_text'
 require './lua/sub_clock'
 require './lua/sub_special'
 
+--
+-- Make a decision between
+-- './config/config_default.lua' and './config/config_me.lua',
+-- './config/color_default.lua' and './config/color_me.lua'.
+--
 
---
--- NOTE:
---   In terms of the logic for this theme,
---   the default `./config/color_default.lua` and `./config/config_default.lua` are assumed to always exist;
---   however, if `./config/color_me.lua` and/or `./config/config_me.lua` are present,
---   it will be loaded instead, and the default items will not be loaded.
---
-local check_file_exist = function(_full_path)
-  local file = io.open(_full_path, 'r')
-  if file then
-    file:close()
-    return true
-  else
-    return false
-  end
-end
+require './lua/main_pre'
+local file_config_flg, file_color_flg = main_pre_func()
 
---
--- Configuration, default or my customization?
---
-require './config/config_default'
-if true == check_file_exist(current_path .. 'config/config_me.lua') then
+if true == file_config_flg then
   require './config/config_me'
-  display_message_green(" The user's configuration file, `./config/config_me.lua`, exists.")
 else
-  display_message_green(" The user's configuration file, `./config/config_me.lua`, does not exist.")
+  require './config/config_default'
 end
 
---
--- Color Scheme, default or my customization?
---
-require './config/color_default'
-if true == check_file_exist(current_path .. 'config/color_me.lua') then
+if true == file_color_flg then
   require './config/color_me'
-  display_message_green(" The user's configuration file, `./config/color_me.lua`, exists.")
 else
-  display_message_green(" The user's configuration file, `./config/color_me.lua`, does not exist.")
+  require './config/color_default'
 end
+
+
+--
+-- Global settings for capturing mouse events
+--
+local hand_pos_xx = -1
+local hand_pos_yy = -1
+local hand_radius = -1
+local display_flag = false
 
 
 -- -----------------------------------------------------------
@@ -179,6 +116,11 @@ function conky_main()
       array_times[idx_hour24 + 1][idx_minutes + 1] = {}
 
       for idx_seconds = 0, 59, 1 do
+        --
+        -- TODO: 2026-11-16
+        --   The script is not currently running on a second-by-second basis.
+        --   Therefore, an array based on seconds might not be necessary.
+        --
         local tmp_seconds = hhmmss_to_sec(idx_hour24, idx_minutes)
         local tmp_radian = degree_to_radian(360 * (tmp_seconds / const_one_day_seconds))
         array_times[idx_hour24 + 1][idx_minutes + 1][idx_seconds + 1] = {
@@ -220,7 +162,7 @@ function conky_main()
 
 
   --
-  --
+  -- Cleanup
   --
 
   cairo_destroy(cr)
@@ -243,9 +185,12 @@ function conky_on_mouse(event)
   -- TODO: 2026-11-14
   --   Adding behavior triggered by mouse hover
   --
+  -- TODO: 2026-11-16
+  --   When it’s in a visible state,
+  --   implementing logic to have it disappear automatically—for example, after 10 seconds.
+  --
 
-  if event.type == "button_down" and event.button == "left" then
-    -- print("clicked at " .. event.x .. ", " .. event.y)
+  if event.type == 'button_down' and event.button == 'left' then
 
     local dx = event.x - hand_pos_xx
     local dy = event.y - hand_pos_yy
