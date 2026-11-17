@@ -48,13 +48,11 @@ local info_disp_flg = false
 --
 -- Variables that holds a surface for caching purposes
 --
-local bg_surface = nil -- Generated only once at startup
+local bg_surface = nil  -- Generated only once at startup
+local min_surface = nil -- Generation and updating on a per-unit-time basis (e.g., for clock faces)
+local last_minute = nil -- Used to refresh the screen at one-minute intervals.
 local cached_width = 0
 local cached_height = 0
-
--- Cache for elements that update every minute
-local min_surface = nil -- Generation and updating on a per-unit-time basis (e.g., for clock faces)
-local last_minute = nil
 
 
 -- -----------------------------------------------------------
@@ -90,8 +88,8 @@ function conky_main()
   -- Calculate Hand
   --
 
-  local tmp_seconds = hhmmss_to_sec(gConfig.Hand.Marks.Hour24, gConfig.Hand.Marks.Minutes, gConfig.Hand.Marks.Seconds)
-  local hand_radian = degree_to_radian(360 * (tmp_seconds / const_one_day_seconds))
+  local hand_seconds = hhmmss_to_sec(gConfig.Hand.Marks.Hour24, gConfig.Hand.Marks.Minutes, gConfig.Hand.Marks.Seconds)
+  local hand_radian = degree_to_radian(360 * (hand_seconds / const_one_day_seconds))
 
   --
   -- Where does the current time fall on a 24-hour clock?
@@ -101,9 +99,15 @@ function conky_main()
   --     To avoid this, the calculation is intentionally limited to the minute level.
   --   - Lua array indices are 1-based, not 0-based.
   --
+  -- TODO: 2026-11-17
+  --   This loop accounts for the bulk of the processing time.
+  --   There are some clearly unnecessary calculations in here—should we do something about them?
+  --   For example, performing calculations limited to a range of plus or minus 3 hours from the current time.
+  --   Alternatively, it might be fine to display only the preceding hour and the following two hours.
+  --
 
-  local tmp_seconds = hhmmss_to_sec(gParse.Now.Hour24, gParse.Now.Minute)
-  local now_radian = degree_to_radian(360 * (tmp_seconds / const_one_day_seconds))
+  local now_seconds = hhmmss_to_sec(gParse.Now.Hour24, gParse.Now.Minute)
+  local now_radian = degree_to_radian(360 * (now_seconds / const_one_day_seconds))
 
   local array_times = {}
   for idx_hour24 = 0, 23, 1 do
@@ -129,7 +133,7 @@ function conky_main()
 
   --
 
---  local start_ms = measure_start(gConfig.Measurement.Disp_flg)
+  local elapsed_ms_middle = measure_stop(gConfig.Measurement.Disp_flg, start_ms)
 
   --
 
@@ -173,8 +177,6 @@ function conky_main()
       hour24_now_hour, hour24_next_hour, array_times)
 
     last_minute = current_minute
-    -- cached_width = conky_win_w
-    -- cached_height = conky_win_h
   end
 
   --
@@ -214,8 +216,8 @@ function conky_main()
 
   --
 
-  elapsed_ms = measure_stop(gConfig.Measurement.Disp_flg, start_ms)
-  measure_display(gConfig.Measurement.Disp_flg, cr, elapsed_ms)
+  local elapsed_ms_last = measure_stop(gConfig.Measurement.Disp_flg, start_ms)
+  measure_display(gConfig.Measurement.Disp_flg, cr, elapsed_ms_middle, elapsed_ms_last)
 
   --
   -- Cleanup
