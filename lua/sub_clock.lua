@@ -2,7 +2,7 @@
 --
 --
 
-function sub_clock_func(_width, _height, _min_surface,
+function sub_clock_func(_width, _height, _surface,
     _gConst, _gParse, _gConfig, _gColor,
     _const_line_cap, _const_font_slant, _const_font_weight,
     _hour24_now_hour, _hour24_next_hour, _array_times)
@@ -17,14 +17,18 @@ function sub_clock_func(_width, _height, _min_surface,
     return math.rad(tmp_deg)
   end
 
+  --
   -- Discard any existing cache (as a precaution, e.g., for window resizing)
-  if _min_surface ~= nil then
-    cairo_surface_destroy(_min_surface)
+  --
+  if _surface ~= nil then
+    cairo_surface_destroy(_surface)
   end
 
+  --
   -- Create a transparent RGBA surface in memory
-  _min_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, _width, _height)
-  local cr_min = cairo_create(_min_surface)
+  --
+  _surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, _width, _height)
+  local cr = cairo_create(_surface)
 
 
   for idx_hour24 = 1, 24, 1 do
@@ -56,10 +60,9 @@ function sub_clock_func(_width, _height, _min_surface,
       tmp_color = _gColor.Clock24.Hour24.Marks.Next
     end
 
-    draw_line_marks(cr_min, _const_line_cap,
+    draw_line_marks(cr, _const_line_cap,
       _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][1][1].radian,
       tmp_radius, tmp_width, tmp_color)
-
 
     --
     -- 30 Minutes Marks
@@ -73,10 +76,9 @@ function sub_clock_func(_width, _height, _min_surface,
       and _gColor.Clock24.Minutes30.Marks.Now
       or  _gColor.Clock24.Minutes30.Marks.Other
 
-    draw_line_marks(cr_min, _const_line_cap,
+    draw_line_marks(cr, _const_line_cap,
       _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][30 + 1][1].radian,
       _gConfig.Clock24.Minutes30.Marks.Radius, tmp_width, tmp_color)
-
 
     --
     -- 15 Minutes Marks
@@ -92,7 +94,7 @@ function sub_clock_func(_width, _height, _min_surface,
 
     tmp_array = {15, 45}
     for ii = 1, #tmp_array, 1 do
-      draw_line_marks(cr_min, _const_line_cap,
+      draw_line_marks(cr, _const_line_cap,
         _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1][1].radian,
         _gConfig.Clock24.Minutes15.Marks.Radius, tmp_width, tmp_color)
     end
@@ -111,11 +113,10 @@ function sub_clock_func(_width, _height, _min_surface,
 
     tmp_array = {10, 20, 40, 50}
     for ii = 1, #tmp_array, 1 do
-      draw_line_marks(cr_min, _const_line_cap,
+      draw_line_marks(cr, _const_line_cap,
         _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1][1].radian,
         _gConfig.Clock24.Minutes10.Marks.Radius, tmp_width, tmp_color)
     end
-
 
     --
     -- 5 Minutes Marks
@@ -131,11 +132,10 @@ function sub_clock_func(_width, _height, _min_surface,
 
     tmp_array = {5, 25, 35, 55}
     for ii = 1, #tmp_array, 1 do
-      draw_line_marks(cr_min, _const_line_cap,
+      draw_line_marks(cr, _const_line_cap,
         _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1][1].radian,
         _gConfig.Clock24.Minutes05.Marks.Radius, tmp_width, tmp_color)
     end
-
 
     --
     -- 1 Minute Marks
@@ -158,11 +158,10 @@ function sub_clock_func(_width, _height, _min_surface,
       51, 52, 53, 54, 56, 57, 58, 59,
     }
     for ii = 1, #tmp_array, 1 do
-      draw_line_marks(cr_min, _const_line_cap,
+      draw_line_marks(cr, _const_line_cap,
         _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1][1].radian,
         _gConfig.Clock24.Minutes01.Marks.Radius, tmp_width, tmp_color)
     end
-
 
     --
     -- 24 Hours Numbers
@@ -178,9 +177,7 @@ function sub_clock_func(_width, _height, _min_surface,
         yy = _gConfig.Clock24.Center.yy - (math.cos(hour24_radian_base) * _gConfig.Clock24.Radius),
       }
 
-
-    cairo_save(cr_min)
-
+    cairo_save(cr)
 
     -- 24 Hours Numbers, normal setting
 
@@ -209,18 +206,17 @@ function sub_clock_func(_width, _height, _min_surface,
 
     end
 
-    draw_text_hour24(cr_min, _const_font_slant, _const_font_weight,
+    draw_text_hour24(cr, _const_font_slant, _const_font_weight,
       tmp_size, tmp_face,
       string.format("%02d", idx_hour24 - 1),
       hour24_position, hour24_radian_adjust, tmp_adjust,
       tmp_color)
 
-
-    cairo_restore(cr_min)
+    cairo_restore(cr)
   end
 
-  -- Once drawing is complete, destroy only the context (keep the bg_surface!)
-  cairo_destroy(cr_min)
+  -- Once drawing is complete, destroy only the context (keep the surface!)
+  cairo_destroy(cr)
 
-  return _min_surface
+  return _surface
 end

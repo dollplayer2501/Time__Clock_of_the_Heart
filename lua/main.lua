@@ -54,7 +54,7 @@ local cached_height = 0
 
 -- Cache for elements that update every minute
 local min_surface = nil -- Generation and updating on a per-unit-time basis (e.g., for clock faces)
-last_minute = ""
+local last_minute = nil
 
 
 -- -----------------------------------------------------------
@@ -71,6 +71,8 @@ function conky_main()
   local gParse = get_conky_parse()
   local gConfig = get_config(gConst)
   local gColor = get_color()
+
+  local start_ms = measure_start(gConfig.Measurement.Disp_flg)
 
   --
   -- Const
@@ -127,7 +129,7 @@ function conky_main()
 
   --
 
-  local start_ms = measure_start(gConfig.Measurement.Disp_flg)
+--  local start_ms = measure_start(gConfig.Measurement.Disp_flg)
 
   --
 
@@ -184,46 +186,22 @@ function conky_main()
   local cr = cairo_create(surface)
   cairo_rotate(cr, gConfig.Environment.Angle * (math.pi / 180))
 
-
   --
   -- Draw Line, Hand
   --
   -- Instantly apply the cached static background
   --
-
   cairo_set_source_surface(cr, bg_surface, 0, 0)
   cairo_paint(cr)
-
-
-  --
-  -- Draw Line, Hand
-  --
-
---  hand_pos_xx, hand_pos_yy, hand_radius = draw_line_hand(cr, const_line_cap,
---    gConfig.Clock24.Center, gConfig.Clock24.Radius,
---    gConfig.Hand.Radius, hand_radian,
---    gConfig.Hand.Width, gConfig.Hand.Point_size, gColor.Hand.Marks)
-
 
   --
   -- Draw Line and Point, Information
   --
-
   if true == info_disp_flg then
     sub_special_func(cr, gConst, gParse, gConfig, gColor,
       const_line_cap, const_font_slant, const_font_weight,
       hand_radian)
   end
-
-
-  --
-  -- 24 hour clock, Marks and Numbers
-  --
-
---  sub_clock_func(cr, gConst, gParse, gConfig, gColor,
---    const_line_cap, const_font_slant, const_font_weight,
---    hour24_now_hour, hour24_next_hour, array_times)
-
 
   --
   -- 24 hour clock, Marks and Numbers
@@ -231,18 +209,13 @@ function conky_main()
   -- Instantly paste the "1-minute cache"
   -- (this is the only part that takes 59 seconds!)
   --
-
   cairo_set_source_surface(cr, min_surface, 0, 0)
   cairo_paint(cr)
-
-
-
 
   --
 
   elapsed_ms = measure_stop(gConfig.Measurement.Disp_flg, start_ms)
   measure_display(gConfig.Measurement.Disp_flg, cr, elapsed_ms)
-
 
   --
   -- Cleanup
