@@ -33,6 +33,7 @@ In this case—as I will explain later—there is a possibility that the fonts, 
 
 1. Download the source code found here to your local PC in some way.
 1. `sh `[`./start.sh`][start.sh]
+1. When this theme appears, left-click the white circle in the center of the screen.
 
 
 ### 2.2. (Operation has been verified.) For those who wish to customize this theme.
@@ -149,7 +150,8 @@ The general processing steps for the 4th and 5th rows:
 - [ ] Represent 24 hours a day or 365 days a year using an arc.
 - [ ] Once development has reached a relatively stable state, move management to GitHub issues.
 - [x] Improved response, cache surfaces (created via `cairo_image_surface_create`) separately.
-- [ ] Perhaps by optimizing the 24x60x60 loop—for instance, by restricting it to only the necessary iterations?
+- [x] Perhaps by optimizing the 24x60x60 loop—for instance, by restricting it to only the necessary iterations?  
+      **However**, there is still room for refinement—though it is unclear whether this will lead to any dramatic improvement.
 
 
 - - -

@@ -100,11 +100,16 @@ function conky_main()
   --     To avoid this, the calculation is intentionally limited to the minute level.
   --   - Lua array indices are 1-based, not 0-based.
   --
-  -- TODO: 2026-11-17
-  --   This loop accounts for the bulk of the processing time.
-  --   There are some clearly unnecessary calculations in here—should we do something about them?
-  --   For example, performing calculations limited to a range of plus or minus 3 hours from the current time.
-  --   Alternatively, it might be fine to display only the preceding hour and the following two hours.
+  -- TODO: 2026-11-18
+  --   The handling of seconds has been removed.
+  --   I might rewrite the logic so that calculations are performed only for elements that are actually displayed.
+  --   In that case, calculating values ​​that span across multiple days becomes complex.
+  --   Therefore, it might be better to assign specific meanings to the elements of the array:
+  --   indices 1–3 for past time, 4 for the current time, and 5–8 for future time.
+  --   Note that this approach might also require tracking information regarding
+  --   whether an element pertains to the previous day, the current day, or the following day.
+  --   Also, I might add a mechanism to track seconds within a limited range,
+  --   bringing back the functionality where the watch face updates every second (or, for instance, every 10 seconds).
   --
 
   local now_seconds = hhmmss_to_sec(gParse.Now.Hour24, gParse.Now.Minute)
@@ -117,18 +122,11 @@ function conky_main()
     for idx_minutes = 0, 59, 1 do
       array_times[idx_hour24 + 1][idx_minutes + 1] = {}
 
-      for idx_seconds = 0, 59, 1 do
-        --
-        -- TODO: 2026-11-16
-        --   The script is not currently running on a second-by-second basis.
-        --   Therefore, an array based on seconds might not be necessary.
-        --
-        local tmp_seconds = hhmmss_to_sec(idx_hour24, idx_minutes)
-        local tmp_radian = degree_to_radian(360 * (tmp_seconds / const_one_day_seconds))
-        array_times[idx_hour24 + 1][idx_minutes + 1][idx_seconds + 1] = {
-          radian = tmp_radian - now_radian + hand_radian,
-        }
-      end
+      local tmp_seconds = hhmmss_to_sec(idx_hour24, idx_minutes)
+      local tmp_radian = degree_to_radian(360 * (tmp_seconds / const_one_day_seconds))
+      array_times[idx_hour24 + 1][idx_minutes + 1] = {
+        radian = tmp_radian - now_radian + hand_radian,
+      }
     end
   end
 

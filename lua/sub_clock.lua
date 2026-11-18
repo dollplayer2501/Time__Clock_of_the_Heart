@@ -61,7 +61,7 @@ function sub_clock_func(_width, _height, _surface,
     end
 
     draw_line_marks(cr, _const_line_cap,
-      _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][1][1].radian,
+      _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][1].radian,
       tmp_radius, tmp_width, tmp_color)
 
     --
@@ -77,7 +77,7 @@ function sub_clock_func(_width, _height, _surface,
       or  _gColor.Clock24.Minutes30.Marks.Other
 
     draw_line_marks(cr, _const_line_cap,
-      _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][30 + 1][1].radian,
+      _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][30 + 1].radian,
       _gConfig.Clock24.Minutes30.Marks.Radius, tmp_width, tmp_color)
 
     --
@@ -95,7 +95,7 @@ function sub_clock_func(_width, _height, _surface,
     tmp_array = {15, 45}
     for ii = 1, #tmp_array, 1 do
       draw_line_marks(cr, _const_line_cap,
-        _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1][1].radian,
+        _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1].radian,
         _gConfig.Clock24.Minutes15.Marks.Radius, tmp_width, tmp_color)
     end
 
@@ -114,7 +114,7 @@ function sub_clock_func(_width, _height, _surface,
     tmp_array = {10, 20, 40, 50}
     for ii = 1, #tmp_array, 1 do
       draw_line_marks(cr, _const_line_cap,
-        _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1][1].radian,
+        _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1].radian,
         _gConfig.Clock24.Minutes10.Marks.Radius, tmp_width, tmp_color)
     end
 
@@ -133,7 +133,7 @@ function sub_clock_func(_width, _height, _surface,
     tmp_array = {5, 25, 35, 55}
     for ii = 1, #tmp_array, 1 do
       draw_line_marks(cr, _const_line_cap,
-        _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1][1].radian,
+        _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1].radian,
         _gConfig.Clock24.Minutes05.Marks.Radius, tmp_width, tmp_color)
     end
 
@@ -159,7 +159,7 @@ function sub_clock_func(_width, _height, _surface,
     }
     for ii = 1, #tmp_array, 1 do
       draw_line_marks(cr, _const_line_cap,
-        _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1][1].radian,
+        _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1].radian,
         _gConfig.Clock24.Minutes01.Marks.Radius, tmp_width, tmp_color)
     end
 
@@ -168,7 +168,7 @@ function sub_clock_func(_width, _height, _surface,
     --
 
     -- Get display angle
-    local hour24_radian_base = _array_times[idx_hour24][1][1].radian
+    local hour24_radian_base = _array_times[idx_hour24][1].radian
     local hour24_radian_adjust = local_change_angle_of_radian(hour24_radian_base, 90)
 
     -- Get display position
