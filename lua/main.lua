@@ -83,7 +83,7 @@ function conky_main()
   local const_font_weight = gConst.Font.Weight.Normal
 
   local hour24_now_hour = gParse.Now.Hour24
-  local hour24_next_hour = (23 == gParse.Now.Hour24) and 0 or gParse.Now.Hour24 + 1
+  local hour24_next_hour = (gParse.Now.Hour24 + 1) % 24
 
   --
   -- Calculate Hand
