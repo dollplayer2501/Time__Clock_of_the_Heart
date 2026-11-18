@@ -30,7 +30,8 @@ function measure_display(_disp_flg, _cr, _elapsed_ms_middle, _elapsed_ms_last)
     cairo_set_font_size(_cr, 10)
     cairo_set_source_rgba(_cr, 0.3, 1.0, 0.3, 1.0)
     cairo_move_to(_cr, 10, 20)
-    cairo_show_text(_cr, string.format('Render: %.2f ms %.2f ms', _elapsed_ms_middle, _elapsed_ms_last))
+    cairo_show_text(_cr, string.format('Render: %.2f ms %.2f ms, %.2f ms',
+      _elapsed_ms_middle, _elapsed_ms_last, _elapsed_ms_last - _elapsed_ms_middle))
   end
 end
 

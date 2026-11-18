@@ -15,9 +15,11 @@ Note, however, that the fonts used in this theme are highly unlikely to display 
 
 <img src="./screenshot/main..01.png" width=500 />
 
-Left-click the white circle in the center of the screen.
+**Left-click the white circle in the center of the screen.**  
 Doing so will result in the view shown in the image below.
-Left-clicking toggles the visibility of information such as the current time and today's date.
+Left-clicking toggles the visibility of information such as the current time and today's date.  
+By default, it disappears automatically after 20 seconds.
+Alternatively, you can make it disappear by left-clicking with your mouse.
 
 <img src="./screenshot/main..02.png" width=500 />
 
@@ -153,11 +155,11 @@ The general processing steps for the 4th and 5th rows:
 - - -
 
 
-## Motivation for development
+## As a supplement, or as a poem, motivation for development this
 
 - I have a massive, usable workspace measuring 1920x1080 pixels.
 - To the question, "*But how are you supposed to see the time?*", I respond as follows:
-    - You could just look at a (physical) clock.
+    - You could just look at a (physical) clock and calendar.
     - Since I use *Qtile*—a tiling window manager—I can simply open a dedicated workspace for this display.
     - Thanks to transparency settings in *Picom*, I can see the background if I really want to (though it’s admittedly quite difficult).
     - While I am well aware of the current trend toward widget-based displays, this is simply what I want.

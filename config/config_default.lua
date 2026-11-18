@@ -159,6 +159,7 @@ function get_config(_gConst)
     },
 
     Info = {
+      Disp_timer               = 20, -- If set to -1, it will not disappear until a mouse click occurs.
       Update_interval          = 5,
       Point_size               = 4,
       Info = {

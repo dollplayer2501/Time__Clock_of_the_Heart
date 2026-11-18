@@ -44,6 +44,7 @@ local hand_pos_xx = -1
 local hand_pos_yy = -1
 local hand_radius = -1
 local info_disp_flg = false
+local info_disp_timer = -1
 
 --
 -- Variables that holds a surface for caching purposes
@@ -199,7 +200,21 @@ function conky_main()
   --
   -- Draw Line and Point, Information
   --
+  local tmp_flg = false
   if true == info_disp_flg then
+    if 0 >= gConfig.Info.Disp_timer then
+      tmp_flg = true
+    else
+      local elapsed = os.time() - info_disp_timer
+      if elapsed <= gConfig.Info.Disp_timer then
+        tmp_flg = true
+      else
+        info_disp_flg = false
+        info_disp_timer = -1
+      end
+    end
+  end
+  if true == tmp_flg then
     sub_special_func(cr, gConst, gParse, gConfig, gColor,
       const_line_cap, const_font_slant, const_font_weight,
       hand_radian)
@@ -239,13 +254,11 @@ function conky_on_mouse(event)
   --
   -- TODO: 2026-11-12
   --   Should a mouse click toggle the color of this circle?
+  --   2026-11-18: Since it’s only drawn once—at startup—this is going to require a fairly major overhaul.
   --
   -- TODO: 2026-11-14
   --   Adding behavior triggered by mouse hover
-  --
-  -- TODO: 2026-11-16
-  --   When it’s in a visible state,
-  --   implementing logic to have it disappear automatically—for example, after 10 seconds.
+  --   2026-11-18: Same as above. Also, the implementation might turn out to be unexpectedly troublesome.
   --
 
   if event.type == 'button_down' and event.button == 'left' then
@@ -256,8 +269,10 @@ function conky_on_mouse(event)
     if (dx * dx + dy * dy) <= (hand_radius * hand_radius) then
       if true == info_disp_flg then
         info_disp_flg = false
+        info_disp_timer = -1
       else
         info_disp_flg = true
+        info_disp_timer = os.time()
       end
     end
     return true
