@@ -5,7 +5,7 @@
 function sub_clock_func(_width, _height, _surface,
     _gConst, _gParse, _gConfig, _gColor,
     _const_line_cap, _const_font_slant, _const_font_weight,
-    _hour24_now_hour, _hour24_next_hour, _array_times)
+    _array_times, _dic_times)
 
   local local_change_angle_of_radian = function(_now_radian, _change_degree)
     local tmp_deg = math.deg(_now_radian)
@@ -30,8 +30,9 @@ function sub_clock_func(_width, _height, _surface,
   _surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, _width, _height)
   local cr = cairo_create(_surface)
 
+  --
 
-  for idx_hour24 = 1, 24, 1 do
+  for idx = 1, 8, 1 do
 
     --
     -- 24 Hours Marks
@@ -43,7 +44,7 @@ function sub_clock_func(_width, _height, _surface,
     local tmp_width = _gConfig.Clock24.Hour24.Marks.Normal.Width
     local tmp_color = _gColor.Clock24.Hour24.Marks.Normal
 
-    if idx_hour24 - 1 == _hour24_now_hour then
+    if 5 == idx then
 
       -- 24 Hours Marks, now setting
 
@@ -51,7 +52,7 @@ function sub_clock_func(_width, _height, _surface,
       tmp_width = _gConfig.Clock24.Hour24.Marks.Now.Width
       tmp_color = _gColor.Clock24.Hour24.Marks.Now
 
-    elseif idx_hour24 - 1 == _hour24_next_hour then
+    elseif 6 == idx then
 
       -- 24 Hours Marks, next setting
 
@@ -61,41 +62,45 @@ function sub_clock_func(_width, _height, _surface,
     end
 
     draw_line_marks(cr, _const_line_cap,
-      _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][1].radian,
+      _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx][1].radian,
       tmp_radius, tmp_width, tmp_color)
 
     --
     -- 30 Minutes Marks
     --
 
-    local tmp_width = idx_hour24 - 1 == _hour24_now_hour
+    local tmp_width = (5 == idx)
       and _gConfig.Clock24.Minutes30.Marks.Width.Now
       or  _gConfig.Clock24.Minutes30.Marks.Width.Other
 
-    local tmp_color = idx_hour24 - 1 == _hour24_now_hour
+    local tmp_color = (5 == idx)
       and _gColor.Clock24.Minutes30.Marks.Now
       or  _gColor.Clock24.Minutes30.Marks.Other
 
     draw_line_marks(cr, _const_line_cap,
-      _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][30 + 1].radian,
+      _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx][30 + 1].radian,
       _gConfig.Clock24.Minutes30.Marks.Radius, tmp_width, tmp_color)
 
     --
     -- 15 Minutes Marks
     --
+    -- NOTE:
+    --   Follows the same approach as 5 minutes,
+    --   though the logic may not be particularly meaningful.
+    --
 
-    local tmp_width = idx_hour24 - 1 == _hour24_now_hour
+    local tmp_width = (5 == idx)
       and _gConfig.Clock24.Minutes15.Marks.Width.Now
       or  _gConfig.Clock24.Minutes15.Marks.Width.Other
 
-    local tmp_color = idx_hour24 - 1 == _hour24_now_hour
+    local tmp_color = (5 == idx)
       and _gColor.Clock24.Minutes15.Marks.Now
       or  _gColor.Clock24.Minutes15.Marks.Other
 
     tmp_array = {15, 45}
     for ii = 1, #tmp_array, 1 do
       draw_line_marks(cr, _const_line_cap,
-        _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1].radian,
+        _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx][tmp_array[ii] + 1].radian,
         _gConfig.Clock24.Minutes15.Marks.Radius, tmp_width, tmp_color)
     end
 
@@ -103,18 +108,18 @@ function sub_clock_func(_width, _height, _surface,
     -- 10 Minutes Marks
     --
 
-    local tmp_width = idx_hour24 - 1 == _hour24_now_hour
+    local tmp_width = (5 == idx)
       and _gConfig.Clock24.Minutes10.Marks.Width.Now
       or  _gConfig.Clock24.Minutes10.Marks.Width.Other
 
-    local tmp_color = idx_hour24 - 1 == _hour24_now_hour
+    local tmp_color = (5 == idx)
       and _gColor.Clock24.Minutes10.Marks.Now
       or  _gColor.Clock24.Minutes10.Marks.Other
 
     tmp_array = {10, 20, 40, 50}
     for ii = 1, #tmp_array, 1 do
       draw_line_marks(cr, _const_line_cap,
-        _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1].radian,
+        _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx][tmp_array[ii] + 1].radian,
         _gConfig.Clock24.Minutes10.Marks.Radius, tmp_width, tmp_color)
     end
 
@@ -122,18 +127,18 @@ function sub_clock_func(_width, _height, _surface,
     -- 5 Minutes Marks
     --
 
-    local tmp_width = idx_hour24 - 1 == _hour24_now_hour
+    local tmp_width = (5 == idx)
       and _gConfig.Clock24.Minutes05.Marks.Width.Now
       or  _gConfig.Clock24.Minutes05.Marks.Width.Other
 
-    local tmp_color = idx_hour24 - 1 == _hour24_now_hour
+    local tmp_color = (5 == idx)
       and _gColor.Clock24.Minutes05.Marks.Now
       or  _gColor.Clock24.Minutes05.Marks.Other
 
     tmp_array = {5, 25, 35, 55}
     for ii = 1, #tmp_array, 1 do
       draw_line_marks(cr, _const_line_cap,
-        _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1].radian,
+        _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx][tmp_array[ii] + 1].radian,
         _gConfig.Clock24.Minutes05.Marks.Radius, tmp_width, tmp_color)
     end
 
@@ -141,11 +146,11 @@ function sub_clock_func(_width, _height, _surface,
     -- 1 Minute Marks
     --
 
-    local tmp_width = idx_hour24 - 1 == _hour24_now_hour
+    local tmp_width = (5 == idx)
       and _gConfig.Clock24.Minutes01.Marks.Width.Now
       or  _gConfig.Clock24.Minutes01.Marks.Width.Other
 
-    local tmp_color = idx_hour24 - 1 == _hour24_now_hour
+    local tmp_color = (5 == idx)
       and _gColor.Clock24.Minutes01.Marks.Now
       or  _gColor.Clock24.Minutes01.Marks.Other
 
@@ -159,7 +164,7 @@ function sub_clock_func(_width, _height, _surface,
     }
     for ii = 1, #tmp_array, 1 do
       draw_line_marks(cr, _const_line_cap,
-        _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx_hour24][tmp_array[ii] + 1].radian,
+        _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx][tmp_array[ii] + 1].radian,
         _gConfig.Clock24.Minutes01.Marks.Radius, tmp_width, tmp_color)
     end
 
@@ -168,7 +173,7 @@ function sub_clock_func(_width, _height, _surface,
     --
 
     -- Get display angle
-    local hour24_radian_base = _array_times[idx_hour24][1].radian
+    local hour24_radian_base = _array_times[idx][1].radian
     local hour24_radian_adjust = local_change_angle_of_radian(hour24_radian_base, 90)
 
     -- Get display position
@@ -181,12 +186,21 @@ function sub_clock_func(_width, _height, _surface,
 
     -- 24 Hours Numbers, normal setting
 
+    --
+    -- TODO: 2026-11-19
+    --   Just jotting down an idea for a somewhat pointless implementation:
+    --   make the text for the upcoming time increment larger at the 30, 40, and 50-minute marks—or, alternatively,
+    --   have the text gradually increase in size in 10-minute intervals.
+    --   In either case, the approach could simply involve defining a minimum and maximum font size,
+    --   then calculating the specific size for any given moment.
+    --
+
     local tmp_size = _gConfig.Clock24.Hour24.Number.Normal.Size
     local tmp_face = _gConfig.Clock24.Hour24.Number.Normal.Face
     local tmp_adjust = _gConfig.Clock24.Hour24.Number.Normal.Adjust
     local tmp_color = _gColor.Clock24.Hour24.Number.Normal
 
-    if idx_hour24 - 1 == _hour24_now_hour then
+    if 5 == idx then
 
       -- 24 Hours Numbers, now setting
 
@@ -195,7 +209,7 @@ function sub_clock_func(_width, _height, _surface,
       tmp_adjust = _gConfig.Clock24.Hour24.Number.Now.Adjust
       tmp_color = _gColor.Clock24.Hour24.Number.Now
 
-    elseif idx_hour24 - 1 == _hour24_next_hour then
+    elseif 6 == idx then
 
       -- 24 Hours Numbers, next setting
 
@@ -208,7 +222,7 @@ function sub_clock_func(_width, _height, _surface,
 
     draw_text_hour24(cr, _const_font_slant, _const_font_weight,
       tmp_size, tmp_face,
-      string.format("%02d", idx_hour24 - 1),
+      string.format("%02d", _dic_times[idx].tt),
       hour24_position, hour24_radian_adjust, tmp_adjust,
       tmp_color)
 

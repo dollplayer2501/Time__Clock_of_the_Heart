@@ -82,8 +82,61 @@ function conky_main()
   local const_font_slant = gConst.Font.Slant.Normal
   local const_font_weight = gConst.Font.Weight.Normal
 
-  local hour24_now_hour = gParse.Now.Hour24
-  local hour24_next_hour = (gParse.Now.Hour24 + 1) % 24
+  --
+  -- Calculate Time, hour and relative day
+  --
+  -- NOTE:
+  --   The following are being obtained:
+  --   - The current time, as well as the times 4 hours prior and 3 hours ahead.
+  --   - Do these span across different days?  --
+  --   3 and 4 are fixed values, as this is the only range that gets displayed.
+  --
+  -- TODO: 2026-11-19
+  --   - Using literals feels wrong.
+  --   - Should I rewrite it to be more efficient?
+  --
+
+  local hour24_now_hh = gParse.Now.Hour24
+  -- NOTE:
+  --   `*_dd = 0`  is the current day,
+  --   `*_dd = -1` is the previous day.
+  --   `*_dd = 1`  is the following day,
+  local hour24_now_dd = 0
+
+  --
+  -- Time elapsed so far (up to 4 hours ago)
+  -- If the value is greater than the current time, it refers to the previous day
+  --
+  local hour24_prev_1_hh = (hour24_now_hh - 1) % 24
+  local hour24_prev_1_dd = (hour24_now_hh < hour24_prev_1_hh) and -1 or 0
+  local hour24_prev_2_hh = (hour24_now_hh - 2) % 24
+  local hour24_prev_2_dd = (hour24_now_hh < hour24_prev_2_hh) and -1 or 0
+  local hour24_prev_3_hh = (hour24_now_hh - 3) % 24
+  local hour24_prev_3_dd = (hour24_now_hh < hour24_prev_3_hh) and -1 or 0
+  local hour24_prev_4_hh = (hour24_now_hh - 4) % 24
+  local hour24_prev_4_dd = (hour24_now_hh < hour24_prev_4_hh) and -1 or 0
+
+  --
+  -- The time period ahead, up to 3 hours from now
+  -- If the value is less than the current time, it refers to the following day
+  --
+  local hour24_next_1_hh = (hour24_now_hh + 1) % 24
+  local hour24_next_1_dd = (hour24_now_hh > hour24_next_1_hh) and 1 or 0
+  local hour24_next_2_hh = (hour24_now_hh + 2) % 24
+  local hour24_next_2_dd = (hour24_now_hh > hour24_next_2_hh) and 1 or 0
+  local hour24_next_3_hh = (hour24_now_hh + 3) % 24
+  local hour24_next_3_dd = (hour24_now_hh > hour24_next_3_hh) and 1 or 0
+
+  local dic_times = {
+      { dd = hour24_prev_4_dd, tt = hour24_prev_4_hh, }, -- 1
+      { dd = hour24_prev_3_dd, tt = hour24_prev_3_hh, }, -- 2
+      { dd = hour24_prev_2_dd, tt = hour24_prev_2_hh, }, -- 3
+      { dd = hour24_prev_1_dd, tt = hour24_prev_1_hh, }, -- 4
+      { dd = hour24_now_dd,    tt = hour24_now_hh,    }, -- 5: Now
+      { dd = hour24_next_1_dd, tt = hour24_next_1_hh, }, -- 6: Next
+      { dd = hour24_next_2_dd, tt = hour24_next_2_hh, }, -- 7
+      { dd = hour24_next_3_dd, tt = hour24_next_3_hh, }, -- 8
+    }
 
   --
   -- Calculate Hand
@@ -100,31 +153,24 @@ function conky_main()
   --     To avoid this, the calculation is intentionally limited to the minute level.
   --   - Lua array indices are 1-based, not 0-based.
   --
-  -- TODO: 2026-11-18
-  --   The handling of seconds has been removed.
-  --   I might rewrite the logic so that calculations are performed only for elements that are actually displayed.
-  --   In that case, calculating values ​​that span across multiple days becomes complex.
-  --   Therefore, it might be better to assign specific meanings to the elements of the array:
-  --   indices 1–3 for past time, 4 for the current time, and 5–8 for future time.
-  --   Note that this approach might also require tracking information regarding
-  --   whether an element pertains to the previous day, the current day, or the following day.
-  --   Also, I might add a mechanism to track seconds within a limited range,
-  --   bringing back the functionality where the watch face updates every second (or, for instance, every 10 seconds).
+  -- TODO: 2026-11-19
+  --   Or, give it a try?
+  --   Update the clock face in 10-second or 30-second increments.
+  --   Instead of 1-second intervals, only the radian positions corresponding to 10-second intervals are required.
   --
 
   local now_seconds = hhmmss_to_sec(gParse.Now.Hour24, gParse.Now.Minute)
   local now_radian = degree_to_radian(360 * (now_seconds / const_one_day_seconds))
 
   local array_times = {}
-  for idx_hour24 = 0, 23, 1 do
-    array_times[idx_hour24 + 1] = {}
-
+  for idx = 1, 8, 1 do
+    array_times[idx] = {}
     for idx_minutes = 0, 59, 1 do
-      array_times[idx_hour24 + 1][idx_minutes + 1] = {}
+      array_times[idx][idx_minutes + 1] = {}
 
-      local tmp_seconds = hhmmss_to_sec(idx_hour24, idx_minutes)
+      local tmp_seconds = hhmmss_to_sec(dic_times[idx].tt, idx_minutes)
       local tmp_radian = degree_to_radian(360 * (tmp_seconds / const_one_day_seconds))
-      array_times[idx_hour24 + 1][idx_minutes + 1] = {
+      array_times[idx][idx_minutes + 1] = {
         radian = tmp_radian - now_radian + hand_radian,
       }
     end
@@ -173,7 +219,7 @@ function conky_main()
     min_surface = sub_clock_func(conky_win_w, conky_win_h, min_surface,
       gConst, gParse, gConfig, gColor,
       const_line_cap, const_font_slant, const_font_weight,
-      hour24_now_hour, hour24_next_hour, array_times)
+      array_times, dic_times)
 
     last_minute = current_minute
   end
@@ -199,6 +245,7 @@ function conky_main()
   -- Draw Line and Point, Information
   --
   local tmp_flg = false
+
   if true == info_disp_flg then
     if 0 >= gConfig.Info.Disp_timer then
       tmp_flg = true
@@ -212,6 +259,7 @@ function conky_main()
       end
     end
   end
+
   if true == tmp_flg then
     sub_special_func(cr, gConst, gParse, gConfig, gColor,
       const_line_cap, const_font_slant, const_font_weight,
@@ -257,6 +305,7 @@ function conky_on_mouse(event)
   -- TODO: 2026-11-14
   --   Adding behavior triggered by mouse hover
   --   2026-11-18: Same as above. Also, the implementation might turn out to be unexpectedly troublesome.
+  --   2026-11-19: Add a border in an accent color around this white ring?
   --
 
   if event.type == 'button_down' and event.button == 'left' then

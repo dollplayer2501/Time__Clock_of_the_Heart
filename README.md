@@ -128,7 +128,19 @@ The general processing steps for the 4th and 5th rows:
    This result is being piped to [`./python/login_elapsed.py`][login_elapsed.py].
 
 
-## 4. TODO
+## 4. Note
+
+
+### 4.1. Regarding the update interval.
+
+I currently have the `update_interval` in [`conky.config.lua`][conky.config.lua] set to `1.00`.  
+With this setting, if you display seconds, it is highly likely that some seconds will be skipped.
+In practice, you may need to shorten the update interval to around `0.25` to ensure a smooth display.  
+(Note: This is based on my own environment, using an AMD Ryzen 5 8600G APU.)
+
+
+## 5. TODO
+
 
 - [x] [HIGH] A review of the script `require` mechanism, along with a major overhaul of how user-specific configurations and color scheme files are set up.
 - [x] Should I also include the Python scripts used within this script?  
@@ -151,7 +163,9 @@ The general processing steps for the 4th and 5th rows:
 - [ ] Once development has reached a relatively stable state, move management to GitHub issues.
 - [x] Improved response, cache surfaces (created via `cairo_image_surface_create`) separately.
 - [x] Perhaps by optimizing the 24x60x60 loop—for instance, by restricting it to only the necessary iterations?  
-      **However**, there is still room for refinement—though it is unclear whether this will lead to any dramatic improvement.
+      **However**, there is still room for refinement—though it is unclear whether this will lead to any dramatic improvement.  
+      Changed to a method that only performs calculations for the visible portion.  
+      The possibility of updating the watch face in 10-second or 30-second increments, rather than in 1-minute increments.
 
 
 - - -
@@ -181,6 +195,7 @@ See also the following—specifically, my *dotfiles*:
 
 
 
+[conky.config.lua]: ./conky.config.lua
 [config_default.lua]: ./config/config_default.lua
 [color_default.lua]: ./config/color_default.lua
 [start.sh]: ./start.sh
