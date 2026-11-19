@@ -186,15 +186,6 @@ function sub_clock_func(_width, _height, _surface,
 
     -- 24 Hours Numbers, normal setting
 
-    --
-    -- TODO: 2026-11-19
-    --   Just jotting down an idea for a somewhat pointless implementation:
-    --   make the text for the upcoming time increment larger at the 30, 40, and 50-minute marks—or, alternatively,
-    --   have the text gradually increase in size in 10-minute intervals.
-    --   In either case, the approach could simply involve defining a minimum and maximum font size,
-    --   then calculating the specific size for any given moment.
-    --
-
     local tmp_size = _gConfig.Clock24.Hour24.Number.Normal.Size
     local tmp_face = _gConfig.Clock24.Hour24.Number.Normal.Face
     local tmp_adjust = _gConfig.Clock24.Hour24.Number.Normal.Adjust
@@ -204,7 +195,9 @@ function sub_clock_func(_width, _height, _surface,
 
       -- 24 Hours Numbers, now setting
 
-      tmp_size = _gConfig.Clock24.Hour24.Number.Now.Size
+      local tmp_delta = _gConfig.Clock24.Hour24.Number.Now.Size.Max - _gConfig.Clock24.Hour24.Number.Now.Size.Min
+      tmp_size = _gConfig.Clock24.Hour24.Number.Now.Size.Max - (tmp_delta * (_gParse.Now.Minute / 60))
+
       tmp_face = _gConfig.Clock24.Hour24.Number.Now.Face
       tmp_adjust = _gConfig.Clock24.Hour24.Number.Now.Adjust
       tmp_color = _gColor.Clock24.Hour24.Number.Now
@@ -213,7 +206,9 @@ function sub_clock_func(_width, _height, _surface,
 
       -- 24 Hours Numbers, next setting
 
-      tmp_size = _gConfig.Clock24.Hour24.Number.Next.Size
+      local tmp_delta = _gConfig.Clock24.Hour24.Number.Next.Size.Max - _gConfig.Clock24.Hour24.Number.Next.Size.Min
+      tmp_size = _gConfig.Clock24.Hour24.Number.Next.Size.Min + (tmp_delta * (_gParse.Now.Minute / 60))
+
       tmp_face = _gConfig.Clock24.Hour24.Number.Next.Face
       tmp_adjust = _gConfig.Clock24.Hour24.Number.Next.Adjust
       tmp_color = _gColor.Clock24.Hour24.Number.Next

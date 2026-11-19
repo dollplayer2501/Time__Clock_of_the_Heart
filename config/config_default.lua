@@ -67,7 +67,10 @@ function get_config(_gConst)
         },
         Number = {
           Now = {
-            Size               = 700,
+            Size = {
+              Max              = 810,
+              Min              = 450,
+            },
             Face               = _gConst.Font.Face.Ptolemy.Regular,
           Adjust = {
               xx               = -100,
@@ -75,7 +78,10 @@ function get_config(_gConst)
             },
           },
           Next = {
-            Size               = 300,
+            Size = {
+              Max              = 630,
+              Min              = 180,
+            },
             Face               = _gConst.Font.Face.Ptolemy.Regular,
             Adjust = {
               xx               = 0,
