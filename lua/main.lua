@@ -128,11 +128,11 @@ function conky_main()
   local hour24_future_3_dd = (hour24_now_hh > hour24_future_3_hh) and 1 or 0
 
   local dic_times = {
-      { dd = hour24_past_4_dd,   tt = hour24_past_4_hh, },   -- 1
-      { dd = hour24_past_3_dd,   tt = hour24_past_3_hh, },   -- 2
-      { dd = hour24_past_2_dd,   tt = hour24_past_2_hh, },   -- 3
-      { dd = hour24_past_1_dd,   tt = hour24_past_1_hh, },   -- 4
-      { dd = hour24_now_dd,      tt = hour24_now_hh,    },   -- 5: Now
+      { dd = hour24_past_4_dd,   tt = hour24_past_4_hh,   }, -- 1
+      { dd = hour24_past_3_dd,   tt = hour24_past_3_hh,   }, -- 2
+      { dd = hour24_past_2_dd,   tt = hour24_past_2_hh,   }, -- 3
+      { dd = hour24_past_1_dd,   tt = hour24_past_1_hh,   }, -- 4
+      { dd = hour24_now_dd,      tt = hour24_now_hh,      }, -- 5: Now
       { dd = hour24_future_1_dd, tt = hour24_future_1_hh, }, -- 6: Next
       { dd = hour24_future_2_dd, tt = hour24_future_2_hh, }, -- 7
       { dd = hour24_future_3_dd, tt = hour24_future_3_hh, }, -- 8
