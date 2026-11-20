@@ -99,43 +99,43 @@ function conky_main()
   local hour24_now_hh = gParse.Now.Hour24
   -- NOTE:
   --   `*_dd = 0`  is the current day,
-  --   `*_dd = -1` is the previous day.
-  --   `*_dd = 1`  is the following day,
+  --   `*_dd = -1` is the past day.
+  --   `*_dd = 1`  is the future day,
   local hour24_now_dd = 0
 
   --
   -- Time elapsed so far (up to 4 hours ago)
   -- If the value is greater than the current time, it refers to the previous day
   --
-  local hour24_prev_1_hh = (hour24_now_hh - 1) % 24
-  local hour24_prev_1_dd = (hour24_now_hh < hour24_prev_1_hh) and -1 or 0
-  local hour24_prev_2_hh = (hour24_now_hh - 2) % 24
-  local hour24_prev_2_dd = (hour24_now_hh < hour24_prev_2_hh) and -1 or 0
-  local hour24_prev_3_hh = (hour24_now_hh - 3) % 24
-  local hour24_prev_3_dd = (hour24_now_hh < hour24_prev_3_hh) and -1 or 0
-  local hour24_prev_4_hh = (hour24_now_hh - 4) % 24
-  local hour24_prev_4_dd = (hour24_now_hh < hour24_prev_4_hh) and -1 or 0
+  local hour24_past_1_hh = (hour24_now_hh - 1) % 24
+  local hour24_past_1_dd = (hour24_now_hh < hour24_past_1_hh) and -1 or 0
+  local hour24_past_2_hh = (hour24_now_hh - 2) % 24
+  local hour24_past_2_dd = (hour24_now_hh < hour24_past_2_hh) and -1 or 0
+  local hour24_past_3_hh = (hour24_now_hh - 3) % 24
+  local hour24_past_3_dd = (hour24_now_hh < hour24_past_3_hh) and -1 or 0
+  local hour24_past_4_hh = (hour24_now_hh - 4) % 24
+  local hour24_past_4_dd = (hour24_now_hh < hour24_past_4_hh) and -1 or 0
 
   --
   -- The time period ahead, up to 3 hours from now
   -- If the value is less than the current time, it refers to the following day
   --
-  local hour24_next_1_hh = (hour24_now_hh + 1) % 24
-  local hour24_next_1_dd = (hour24_now_hh > hour24_next_1_hh) and 1 or 0
-  local hour24_next_2_hh = (hour24_now_hh + 2) % 24
-  local hour24_next_2_dd = (hour24_now_hh > hour24_next_2_hh) and 1 or 0
-  local hour24_next_3_hh = (hour24_now_hh + 3) % 24
-  local hour24_next_3_dd = (hour24_now_hh > hour24_next_3_hh) and 1 or 0
+  local hour24_future_1_hh = (hour24_now_hh + 1) % 24
+  local hour24_future_1_dd = (hour24_now_hh > hour24_future_1_hh) and 1 or 0
+  local hour24_future_2_hh = (hour24_now_hh + 2) % 24
+  local hour24_future_2_dd = (hour24_now_hh > hour24_future_2_hh) and 1 or 0
+  local hour24_future_3_hh = (hour24_now_hh + 3) % 24
+  local hour24_future_3_dd = (hour24_now_hh > hour24_future_3_hh) and 1 or 0
 
   local dic_times = {
-      { dd = hour24_prev_4_dd, tt = hour24_prev_4_hh, }, -- 1
-      { dd = hour24_prev_3_dd, tt = hour24_prev_3_hh, }, -- 2
-      { dd = hour24_prev_2_dd, tt = hour24_prev_2_hh, }, -- 3
-      { dd = hour24_prev_1_dd, tt = hour24_prev_1_hh, }, -- 4
-      { dd = hour24_now_dd,    tt = hour24_now_hh,    }, -- 5: Now
-      { dd = hour24_next_1_dd, tt = hour24_next_1_hh, }, -- 6: Next
-      { dd = hour24_next_2_dd, tt = hour24_next_2_hh, }, -- 7
-      { dd = hour24_next_3_dd, tt = hour24_next_3_hh, }, -- 8
+      { dd = hour24_past_4_dd,   tt = hour24_past_4_hh, },   -- 1
+      { dd = hour24_past_3_dd,   tt = hour24_past_3_hh, },   -- 2
+      { dd = hour24_past_2_dd,   tt = hour24_past_2_hh, },   -- 3
+      { dd = hour24_past_1_dd,   tt = hour24_past_1_hh, },   -- 4
+      { dd = hour24_now_dd,      tt = hour24_now_hh,    },   -- 5: Now
+      { dd = hour24_future_1_dd, tt = hour24_future_1_hh, }, -- 6: Next
+      { dd = hour24_future_2_dd, tt = hour24_future_2_hh, }, -- 7
+      { dd = hour24_future_3_dd, tt = hour24_future_3_hh, }, -- 8
     }
 
   --
