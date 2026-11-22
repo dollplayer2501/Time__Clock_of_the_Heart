@@ -256,39 +256,12 @@ function conky_main()
   end
 
   --
-  -- TODO: [Provisional] Second-hand display mechanism
+  -- Second-hand display mechanism
   --
-
   if false == info_disp_main_flg then
-
-    local current_second_past = gParse.Now.Second
-    local hand_base_past = gParse.Now.Minute
-    local tmp_index_L_past = 5
-    local tmp_index_S_past = hand_base_past - current_second_past
-    if hand_base_past < current_second_past then
-      tmp_index_L_past = 4
-      tmp_index_S_past = 60 - (current_second_past - hand_base_past)
-    end
-
-    local tmp_radian_past = array_times[tmp_index_L_past][tmp_index_S_past + 1].radian
-    local tmp_index_past = array_times[tmp_index_L_past][tmp_index_S_past + 1].index
-
-    local tmp_index_future = tmp_index_past + 60
-    local tmp_radian_future = nil
-    for idx = 1, 8, 1 do
-      for idx_minutes = 0, 59, 1 do
-        if tmp_index_future == array_times[idx][idx_minutes + 1].index then
-          tmp_radian_future = array_times[idx][idx_minutes + 1].radian
-          goto continue
-        end
-      end
-    end
-    ::continue::
-
-    drawing_ring(cr,
-      gConfig.Clock24.Center.xx, gConfig.Clock24.Center.yy,
-      gConfig.Clock24.Radius + gConfig.Clock24.Ring.Seconds60.Radius_adjust,
-      tmp_radian_past - (math.pi / 2), tmp_radian_future - (math.pi / 2),
+    sub_clock_ring(cr,
+      gParse.Now.Second, gParse.Now.Minute, array_times,
+      gConfig.Clock24.Center, gConfig.Clock24.Radius, gConfig.Clock24.Ring.Seconds60.Radius_adjust,
       gConfig.Clock24.Ring.Seconds60.Width, const_line_cap,
       gColor.Clock24.Ring.Seconds60)
   end

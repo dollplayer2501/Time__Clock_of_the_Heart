@@ -2,6 +2,10 @@
 --
 --
 
+--
+-- NOTE:
+--   This function performs an update only once per minute.
+--
 function sub_clock_func(_width, _height, _surface,
     _gConst, _gParse, _gConfig, _gColor,
     _const_line_cap, _const_font_slant, _const_font_weight,
@@ -229,3 +233,42 @@ function sub_clock_func(_width, _height, _surface,
 
   return _surface
 end
+
+
+function sub_clock_ring(_cr,
+    _now_second, _now_minute, _array_times,
+    _Clock24_Center_, _Clock24_Radius,
+    _radius_adjust, _width, _const_line_cap, _color)
+
+  local current_second_past = _now_second
+  local hand_base_past = _now_minute
+  local tmp_index_L_past = 5
+  local tmp_index_S_past = hand_base_past - current_second_past
+  if hand_base_past < current_second_past then
+    tmp_index_L_past = 4
+    tmp_index_S_past = 60 - (current_second_past - hand_base_past)
+  end
+
+  local tmp_radian_past = _array_times[tmp_index_L_past][tmp_index_S_past + 1].radian
+  local tmp_index_past = _array_times[tmp_index_L_past][tmp_index_S_past + 1].index
+
+  local tmp_index_future = tmp_index_past + 60
+  local tmp_radian_future = nil
+  for idx = 1, 8, 1 do
+    for idx_minutes = 0, 59, 1 do
+      if tmp_index_future == _array_times[idx][idx_minutes + 1].index then
+        tmp_radian_future = _array_times[idx][idx_minutes + 1].radian
+        goto continue
+      end
+    end
+  end
+  ::continue::
+
+  drawing_ring(_cr,
+    _Clock24_Center_.xx, _Clock24_Center_.yy,
+    _Clock24_Radius + _radius_adjust,
+    tmp_radian_past - (math.pi / 2), tmp_radian_future - (math.pi / 2),
+    _width, _const_line_cap,
+    _color)
+end
+
