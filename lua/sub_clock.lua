@@ -235,10 +235,23 @@ function sub_clock_func(_width, _height, _surface,
 end
 
 
+--
+--
+--
 function sub_clock_ring(_cr,
     _now_second, _now_minute, _array_times,
     _Clock24_Center_, _Clock24_Radius,
     _radius_adjust, _width, _const_line_cap, _color)
+
+  --
+  -- NOTE:
+  --   Basic approach:
+  --   1. The starting point of the time that has already elapsed is determined from the array.
+  --   2. The end point of the upcoming period is determined based on the overall indices of the array.
+  --   Consequently,
+  --   there is no need to explicitly account for cases that span across days,
+  --   as the array itself is structured to encompass such transitions.
+  --
 
   local current_second_past = _now_second
   local hand_base_past = _now_minute
@@ -248,6 +261,8 @@ function sub_clock_ring(_cr,
     tmp_index_L_past = 4
     tmp_index_S_past = 60 - (current_second_past - hand_base_past)
   end
+
+  --
 
   local tmp_radian_past = _array_times[tmp_index_L_past][tmp_index_S_past + 1].radian
   local tmp_index_past = _array_times[tmp_index_L_past][tmp_index_S_past + 1].index
@@ -263,6 +278,8 @@ function sub_clock_ring(_cr,
     end
   end
   ::continue::
+
+  --
 
   drawing_ring(_cr,
     _Clock24_Center_.xx, _Clock24_Center_.yy,
