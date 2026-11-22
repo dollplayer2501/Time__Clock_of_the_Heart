@@ -163,6 +163,7 @@ function conky_main()
   local now_radian = degree_to_radian(360 * (now_seconds / const_one_day_seconds))
 
   local array_times = {}
+  local count = 0
   for idx = 1, 8, 1 do
     array_times[idx] = {}
     for idx_minutes = 0, 59, 1 do
@@ -170,8 +171,10 @@ function conky_main()
 
       local tmp_seconds = hhmmss_to_sec(dic_times[idx].tt, idx_minutes)
       local tmp_radian = degree_to_radian(360 * (tmp_seconds / const_one_day_seconds))
+      count = count + 1
       array_times[idx][idx_minutes + 1] = {
         radian = tmp_radian - now_radian + hand_radian,
+        index = count,
       }
     end
   end
@@ -232,6 +235,77 @@ function conky_main()
   if not surface then return end
   local cr = cairo_create(surface)
   cairo_rotate(cr, gConfig.Environment.Angle * (math.pi / 180))
+
+
+
+
+
+  local tmp_flg = false
+
+  if true == info_disp_flg then
+    if 0 >= gConfig.Info.Disp_timer then
+      tmp_flg = true
+    else
+      local elapsed = os.time() - info_disp_timer
+      if elapsed <= gConfig.Info.Disp_timer then
+        tmp_flg = true
+      else
+        info_disp_flg = false
+        info_disp_timer = -1
+      end
+    end
+  end
+
+  if false == tmp_flg then
+
+  local current_second_past = gParse.Now.Second
+  local hand_base_past = gParse.Now.Minute
+  local tmp_index_L_past = 5
+  local tmp_index_S_past = hand_base_past - current_second_past
+  if hand_base_past < current_second_past then
+    tmp_index_L_past = 4
+    tmp_index_S_past = 60 - (current_second_past - hand_base_past)
+  end
+
+  local tmp_radian_past = array_times[tmp_index_L_past][tmp_index_S_past + 1].radian
+  local tmp_index_past = array_times[tmp_index_L_past][tmp_index_S_past + 1].index
+  -- local tmp_radius = gConfig.Clock24.Radius
+  -- local tmp_xx = gConfig.Clock24.Center.xx + (math.sin(tmp_radian_past) * tmp_radius)
+  -- local tmp_yy = gConfig.Clock24.Center.yy - (math.cos(tmp_radian_past) * tmp_radius)
+  -- drawing_point(cr, tmp_xx, tmp_yy, 4, setting_color_hex_to_rgba('#ff00ff', 1.0))
+
+  local tmp_index_future = tmp_index_past + 60
+  local tmp_radian_future = nil
+  for idx = 1, 8, 1 do
+    for idx_minutes = 0, 59, 1 do
+      if tmp_index_future == array_times[idx][idx_minutes + 1].index then
+        -- print(array_times[idx][idx_minutes + 1].index)
+        tmp_radian_future = array_times[idx][idx_minutes + 1].radian
+        goto continue
+      end
+    end
+  end
+  ::continue::
+
+  -- local tmp_radius = gConfig.Clock24.Radius
+  -- local tmp_xx = gConfig.Clock24.Center.xx + (math.sin(tmp_radian_future) * tmp_radius)
+  -- local tmp_yy = gConfig.Clock24.Center.yy - (math.cos(tmp_radian_future) * tmp_radius)
+  -- drawing_point(cr, tmp_xx, tmp_yy, 4, setting_color_hex_to_rgba('#ffff00', 1.0))
+
+
+  drawing_ring(cr,
+    gConfig.Clock24.Center.xx, gConfig.Clock24.Center.yy, gConfig.Clock24.Radius + 2,
+    tmp_radian_past - (math.pi / 2), tmp_radian_future - (math.pi / 2),
+    2, const_line_cap, setting_color_hex_to_rgba('#00ff00', 0.8))
+
+  end
+
+
+
+
+
+
+
 
   --
   -- Draw Line, Hand
