@@ -159,6 +159,12 @@ function get_config(_gConst)
           },
         },
       },
+      Ring = {
+        Seconds60 = {
+          Radius_adjust        = 0,
+          Width                = 2,
+        },
+      },
     },
 
     Info = {

@@ -56,6 +56,9 @@ function get_color()
           Other                     = setting_color_hex_to_rgba(sub1_color, 1.0),
         },
       },
+      Ring = {
+        Seconds60                   = setting_color_hex_to_rgba(main1_color, 1.0),
+      },
     },
     Info = {
       Point                         = setting_color_hex_to_rgba(sub2_color, 1.0),

@@ -43,7 +43,7 @@ end
 local hand_pos_xx = -1
 local hand_pos_yy = -1
 local hand_radius = -1
-local info_disp_flg = false
+local info_disp_mouse_flg = false
 local info_disp_timer = -1
 
 --
@@ -236,76 +236,62 @@ function conky_main()
   local cr = cairo_create(surface)
   cairo_rotate(cr, gConfig.Environment.Angle * (math.pi / 180))
 
+  --
+  -- The final decision on whether or not to display text information.
+  --
 
-
-
-
-  local tmp_flg = false
-
-  if true == info_disp_flg then
+  local info_disp_main_flg = false
+  if true == info_disp_mouse_flg then
     if 0 >= gConfig.Info.Disp_timer then
-      tmp_flg = true
+      info_disp_main_flg = true
     else
       local elapsed = os.time() - info_disp_timer
       if elapsed <= gConfig.Info.Disp_timer then
-        tmp_flg = true
+        info_disp_main_flg = true
       else
-        info_disp_flg = false
+        info_disp_mouse_flg = false
         info_disp_timer = -1
       end
     end
   end
 
-  if false == tmp_flg then
+  --
+  -- TODO: [Provisional] Second-hand display mechanism
+  --
 
-  local current_second_past = gParse.Now.Second
-  local hand_base_past = gParse.Now.Minute
-  local tmp_index_L_past = 5
-  local tmp_index_S_past = hand_base_past - current_second_past
-  if hand_base_past < current_second_past then
-    tmp_index_L_past = 4
-    tmp_index_S_past = 60 - (current_second_past - hand_base_past)
-  end
+  if false == info_disp_main_flg then
 
-  local tmp_radian_past = array_times[tmp_index_L_past][tmp_index_S_past + 1].radian
-  local tmp_index_past = array_times[tmp_index_L_past][tmp_index_S_past + 1].index
-  -- local tmp_radius = gConfig.Clock24.Radius
-  -- local tmp_xx = gConfig.Clock24.Center.xx + (math.sin(tmp_radian_past) * tmp_radius)
-  -- local tmp_yy = gConfig.Clock24.Center.yy - (math.cos(tmp_radian_past) * tmp_radius)
-  -- drawing_point(cr, tmp_xx, tmp_yy, 4, setting_color_hex_to_rgba('#ff00ff', 1.0))
+    local current_second_past = gParse.Now.Second
+    local hand_base_past = gParse.Now.Minute
+    local tmp_index_L_past = 5
+    local tmp_index_S_past = hand_base_past - current_second_past
+    if hand_base_past < current_second_past then
+      tmp_index_L_past = 4
+      tmp_index_S_past = 60 - (current_second_past - hand_base_past)
+    end
 
-  local tmp_index_future = tmp_index_past + 60
-  local tmp_radian_future = nil
-  for idx = 1, 8, 1 do
-    for idx_minutes = 0, 59, 1 do
-      if tmp_index_future == array_times[idx][idx_minutes + 1].index then
-        -- print(array_times[idx][idx_minutes + 1].index)
-        tmp_radian_future = array_times[idx][idx_minutes + 1].radian
-        goto continue
+    local tmp_radian_past = array_times[tmp_index_L_past][tmp_index_S_past + 1].radian
+    local tmp_index_past = array_times[tmp_index_L_past][tmp_index_S_past + 1].index
+
+    local tmp_index_future = tmp_index_past + 60
+    local tmp_radian_future = nil
+    for idx = 1, 8, 1 do
+      for idx_minutes = 0, 59, 1 do
+        if tmp_index_future == array_times[idx][idx_minutes + 1].index then
+          tmp_radian_future = array_times[idx][idx_minutes + 1].radian
+          goto continue
+        end
       end
     end
+    ::continue::
+
+    drawing_ring(cr,
+      gConfig.Clock24.Center.xx, gConfig.Clock24.Center.yy,
+      gConfig.Clock24.Radius + gConfig.Clock24.Ring.Seconds60.Radius_adjust,
+      tmp_radian_past - (math.pi / 2), tmp_radian_future - (math.pi / 2),
+      gConfig.Clock24.Ring.Seconds60.Width, const_line_cap,
+      gColor.Clock24.Ring.Seconds60)
   end
-  ::continue::
-
-  -- local tmp_radius = gConfig.Clock24.Radius
-  -- local tmp_xx = gConfig.Clock24.Center.xx + (math.sin(tmp_radian_future) * tmp_radius)
-  -- local tmp_yy = gConfig.Clock24.Center.yy - (math.cos(tmp_radian_future) * tmp_radius)
-  -- drawing_point(cr, tmp_xx, tmp_yy, 4, setting_color_hex_to_rgba('#ffff00', 1.0))
-
-
-  drawing_ring(cr,
-    gConfig.Clock24.Center.xx, gConfig.Clock24.Center.yy, gConfig.Clock24.Radius + 2,
-    tmp_radian_past - (math.pi / 2), tmp_radian_future - (math.pi / 2),
-    2, const_line_cap, setting_color_hex_to_rgba('#00ff00', 0.8))
-
-  end
-
-
-
-
-
-
-
 
   --
   -- Draw Line, Hand
@@ -318,23 +304,7 @@ function conky_main()
   --
   -- Draw Line and Point, Information
   --
-  local tmp_flg = false
-
-  if true == info_disp_flg then
-    if 0 >= gConfig.Info.Disp_timer then
-      tmp_flg = true
-    else
-      local elapsed = os.time() - info_disp_timer
-      if elapsed <= gConfig.Info.Disp_timer then
-        tmp_flg = true
-      else
-        info_disp_flg = false
-        info_disp_timer = -1
-      end
-    end
-  end
-
-  if true == tmp_flg then
+  if true == info_disp_main_flg then
     sub_special_func(cr, gConst, gParse, gConfig, gColor,
       const_line_cap, const_font_slant, const_font_weight,
       hand_radian)
@@ -388,11 +358,11 @@ function conky_on_mouse(event)
     local dy = event.y - hand_pos_yy
 
     if (dx * dx + dy * dy) <= (hand_radius * hand_radius) then
-      if true == info_disp_flg then
-        info_disp_flg = false
+      if true == info_disp_mouse_flg then
+        info_disp_mouse_flg = false
         info_disp_timer = -1
       else
-        info_disp_flg = true
+        info_disp_mouse_flg = true
         info_disp_timer = os.time()
       end
     end
