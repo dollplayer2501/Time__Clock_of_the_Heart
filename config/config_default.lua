@@ -25,7 +25,7 @@ function get_config(_gConst)
         -- Assuming a 24-hour clock where the peak is at the zero position,
         -- at what specific time—hours, minutes should the current time be set?
         Hour24                 = 12,
-        Minutes                = 43,
+        Minute                 = 43,
       },
       Radius = {
         From                   = -400,

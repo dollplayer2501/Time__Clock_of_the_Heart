@@ -142,7 +142,7 @@ function conky_main()
   -- Calculate Hand
   --
 
-  local hand_seconds = hhmmss_to_sec(gConfig.Hand.Marks.Hour24, gConfig.Hand.Marks.Minutes, gConfig.Hand.Marks.Seconds)
+  local hand_seconds = hhmmss_to_sec(gConfig.Hand.Marks.Hour24, gConfig.Hand.Marks.Minute, gConfig.Hand.Marks.Seconds)
   local hand_radian = degree_to_radian(360 * (hand_seconds / const_one_day_seconds))
 
   --

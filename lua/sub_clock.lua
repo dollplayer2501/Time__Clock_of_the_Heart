@@ -8,7 +8,7 @@
 --
 function sub_clock_func(_width, _height, _surface,
     _gConst, _gParse, _gConfig, _gColor,
-    _const_line_cap, _const_font_slant, _const_font_weight,
+    _line_cap, _font_slant, _font_weight,
     _array_times, _dic_times)
 
   local local_change_angle_of_radian = function(_now_radian, _change_degree)
@@ -65,7 +65,7 @@ function sub_clock_func(_width, _height, _surface,
       tmp_color = _gColor.Clock24.Hour24.Marks.Next
     end
 
-    draw_line_marks(cr, _const_line_cap,
+    draw_line_marks(cr, _line_cap,
       _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx][1].radian,
       tmp_radius, tmp_width, tmp_color)
 
@@ -81,7 +81,7 @@ function sub_clock_func(_width, _height, _surface,
       and _gColor.Clock24.Minutes30.Marks.Now
       or  _gColor.Clock24.Minutes30.Marks.Other
 
-    draw_line_marks(cr, _const_line_cap,
+    draw_line_marks(cr, _line_cap,
       _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx][30 + 1].radian,
       _gConfig.Clock24.Minutes30.Marks.Radius, tmp_width, tmp_color)
 
@@ -103,7 +103,7 @@ function sub_clock_func(_width, _height, _surface,
 
     tmp_array = {15, 45}
     for ii = 1, #tmp_array, 1 do
-      draw_line_marks(cr, _const_line_cap,
+      draw_line_marks(cr, _line_cap,
         _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx][tmp_array[ii] + 1].radian,
         _gConfig.Clock24.Minutes15.Marks.Radius, tmp_width, tmp_color)
     end
@@ -122,7 +122,7 @@ function sub_clock_func(_width, _height, _surface,
 
     tmp_array = {10, 20, 40, 50}
     for ii = 1, #tmp_array, 1 do
-      draw_line_marks(cr, _const_line_cap,
+      draw_line_marks(cr, _line_cap,
         _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx][tmp_array[ii] + 1].radian,
         _gConfig.Clock24.Minutes10.Marks.Radius, tmp_width, tmp_color)
     end
@@ -141,7 +141,7 @@ function sub_clock_func(_width, _height, _surface,
 
     tmp_array = {5, 25, 35, 55}
     for ii = 1, #tmp_array, 1 do
-      draw_line_marks(cr, _const_line_cap,
+      draw_line_marks(cr, _line_cap,
         _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx][tmp_array[ii] + 1].radian,
         _gConfig.Clock24.Minutes05.Marks.Radius, tmp_width, tmp_color)
     end
@@ -167,7 +167,7 @@ function sub_clock_func(_width, _height, _surface,
       51, 52, 53, 54, 56, 57, 58, 59,
     }
     for ii = 1, #tmp_array, 1 do
-      draw_line_marks(cr, _const_line_cap,
+      draw_line_marks(cr, _line_cap,
         _gConfig.Clock24.Center, _gConfig.Clock24.Radius, _array_times[idx][tmp_array[ii] + 1].radian,
         _gConfig.Clock24.Minutes01.Marks.Radius, tmp_width, tmp_color)
     end
@@ -219,9 +219,9 @@ function sub_clock_func(_width, _height, _surface,
 
     end
 
-    draw_text_hour24(cr, _const_font_slant, _const_font_weight,
+    draw_text_hour24(cr, _font_slant, _font_weight,
       tmp_size, tmp_face,
-      string.format("%02d", _dic_times[idx].tt),
+      string.format('%02d', _dic_times[idx].tt),
       hour24_position, hour24_radian_adjust, tmp_adjust,
       tmp_color)
 
@@ -240,8 +240,8 @@ end
 --
 function sub_clock_ring(_cr,
     _now_second, _now_minute, _array_times,
-    _Clock24_Center_, _Clock24_Radius,
-    _radius_adjust, _width, _const_line_cap, _color)
+    _clock24_center_, _clock24_radius,
+    _radius_adjust, _width, _line_cap, _color)
 
   --
   -- NOTE:
@@ -282,10 +282,10 @@ function sub_clock_ring(_cr,
   --
 
   drawing_ring(_cr,
-    _Clock24_Center_.xx, _Clock24_Center_.yy,
-    _Clock24_Radius + _radius_adjust,
+    _clock24_center_.xx, _clock24_center_.yy,
+    _clock24_radius + _radius_adjust,
     tmp_radian_past - (math.pi / 2), tmp_radian_future - (math.pi / 2),
-    _width, _const_line_cap,
+    _width, _line_cap,
     _color)
 end
 

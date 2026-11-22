@@ -3,11 +3,11 @@
 --
 
 
-function draw_text_hour24(_cr, _const_font_slant, _const_font_weight,
+function draw_text_hour24(_cr, _font_slant, _font_weight,
     _font_size, _font_face, _display_string,
     _display_position_, _display_radian, _font_adjust_, _font_color)
 
-  local tmp_extents = getting_text_width(_cr, _const_font_slant, _const_font_weight,
+  local tmp_extents = getting_text_width(_cr, _font_slant, _font_weight,
       _font_size, _font_face, _display_string)
   local tmp_shift_xx = -1 * tmp_extents.width  / 2 - tmp_extents.x_bearing
   local tmp_shift_yy = -1 * tmp_extents.height / 2 - tmp_extents.y_bearing
@@ -21,7 +21,7 @@ function draw_text_hour24(_cr, _const_font_slant, _const_font_weight,
 end
 
 
-function draw_text_time_hhmm(_cr, _const_font_slant, _const_font_weight,
+function draw_text_time_hhmm(_cr, _font_slant, _font_weight,
     _font_size, _font_face, _display_string,
     _display_position_, _display_radian,
     _font_adjust_, _font_color)
@@ -32,11 +32,11 @@ function draw_text_time_hhmm(_cr, _const_font_slant, _const_font_weight,
   cairo_move_to(_cr, _font_adjust_.xx, _font_adjust_.yy)
 
   setting_source_rgba(_cr, _font_color)
-  cairo_select_font_face(_cr, _font_face, _const_font_slant, _const_font_weight)
+  cairo_select_font_face(_cr, _font_face, _font_slant, _font_weight)
   cairo_set_font_size(_cr, _font_size)
   cairo_show_text(_cr, _display_string)
 
-  return getting_text_width(_cr, _const_font_slant, _const_font_weight,
+  return getting_text_width(_cr, _font_slant, _font_weight,
       _font_size, _font_face, _display_string)
 end
 

@@ -110,11 +110,11 @@ end
 --
 -- get text width
 --
-function getting_text_width(_cr, _const_font_slant, _const_font_weight,
+function getting_text_width(_cr, _font_slant, _font_weight,
     _font_size, _font_face, _display_string)
 
   cairo_set_font_size(_cr, _font_size)
-  cairo_select_font_face(_cr, _font_face, _const_font_slant, _const_font_weight)
+  cairo_select_font_face(_cr, _font_face, _font_slant, _font_weight)
 
   local tmp_extents = cairo_text_extents_t:create()
   cairo_text_extents(_cr, _display_string, tmp_extents)

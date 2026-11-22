@@ -8,7 +8,7 @@ end
 
 
 function sub_special_func(_cr, _gConst, _gParse, _gConfig, _gColor,
-    _const_line_cap, _const_font_slant, _const_font_weight,
+    _line_cap, _font_slant, _font_weight,
     _hand_radian)
 
   --
@@ -43,7 +43,7 @@ function sub_special_func(_cr, _gConst, _gParse, _gConfig, _gColor,
   -- Draw Line and Point
   --
 
-  draw_line_info(_cr, _const_line_cap,
+  draw_line_info(_cr, _line_cap,
     _gConfig.Clock24.Center, _gConfig.Clock24.Radius,
     info_point_i, info_point_h, info_point_m,
     _gConfig.Info.Point_size, _gConfig.Info.Line.Width,
@@ -60,7 +60,7 @@ function sub_special_func(_cr, _gConst, _gParse, _gConfig, _gColor,
   -- Time, HH:MM
 
   local tmp_string = _gParse.Now.time_short
-  local extents_hhmm = draw_text_time_hhmm(_cr, _const_font_slant, _const_font_weight,
+  local extents_hhmm = draw_text_time_hhmm(_cr, _font_slant, _font_weight,
     _gConfig.Info.Text.Time_hhmm.Size, _gConfig.Info.Text.Face, tmp_string,
     info_point_i, degree_to_radian(_gConfig.Info.Text.Angle_degree),
     _gConfig.Info.Text.Time_hhmm.Adjust, _gColor.Info.Text)
