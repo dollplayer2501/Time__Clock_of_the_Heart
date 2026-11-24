@@ -262,7 +262,7 @@ function conky_main()
     sub_clock_ring(cr,
       gParse.Now.Second, gParse.Now.Minute, array_times,
       gConfig.Clock24.Center, gConfig.Clock24.Radius, gConfig.Clock24.Ring.Seconds60.Radius_adjust,
-      gConfig.Clock24.Ring.Seconds60.Width, const_line_cap,
+      gConfig.Clock24.Ring.Seconds60.Width, gConfig.Clock24.Ring.Seconds60.Radius, const_line_cap,
       gColor.Clock24.Ring.Seconds60)
   end
 

@@ -241,7 +241,7 @@ end
 function sub_clock_ring(_cr,
     _now_second, _now_minute, _array_times,
     _clock24_center_, _clock24_radius,
-    _radius_adjust, _width, _line_cap, _color)
+    _radius_adjust, _width, _radius_, _line_cap, _color)
 
   --
   -- NOTE:
@@ -287,5 +287,37 @@ function sub_clock_ring(_cr,
     tmp_radian_past - (math.pi / 2), tmp_radian_future - (math.pi / 2),
     _width, _line_cap,
     _color)
+
+  local past_pos_start = {
+      xx = _clock24_center_.xx + (math.sin(tmp_radian_past) * (_clock24_radius + _radius_.From)),
+      yy = _clock24_center_.yy - (math.cos(tmp_radian_past) * (_clock24_radius + _radius_.From)),
+    }
+
+  local past_pos_end = {
+      xx = _clock24_center_.xx + (math.sin(tmp_radian_past) * (_clock24_radius + _radius_.To)),
+      yy = _clock24_center_.yy - (math.cos(tmp_radian_past) * (_clock24_radius + _radius_.To)),
+    }
+
+  drawing_line(_cr,
+    past_pos_start.xx, past_pos_start.yy, past_pos_end.xx, past_pos_end.yy,
+    _width / 2, _line_cap,
+    _color)
+
+  local future_pos_start = {
+      xx = _clock24_center_.xx + (math.sin(tmp_radian_future) * (_clock24_radius + _radius_.From)),
+      yy = _clock24_center_.yy - (math.cos(tmp_radian_future) * (_clock24_radius + _radius_.From)),
+    }
+
+  local future_pos_end = {
+      xx = _clock24_center_.xx + (math.sin(tmp_radian_future) * (_clock24_radius + _radius_.To)),
+      yy = _clock24_center_.yy - (math.cos(tmp_radian_future) * (_clock24_radius + _radius_.To)),
+    }
+
+  drawing_line(_cr,
+    future_pos_end.xx, future_pos_end.yy,
+    future_pos_start.xx, future_pos_start.yy,
+    _width / 2, _line_cap,
+    _color)
+
 end
 

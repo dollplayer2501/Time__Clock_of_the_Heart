@@ -163,6 +163,10 @@ function get_config(_gConst)
         Seconds60 = {
           Radius_adjust        = 0,
           Width                = 2,
+          Radius = {
+            From               = -40,
+            To                 = 20,
+          },
         },
       },
     },
