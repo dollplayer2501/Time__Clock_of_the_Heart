@@ -75,6 +75,17 @@ function setting_source_rgba(_cr, _color)
 end
 
 
+--
+--
+--
+function getting_two_points(_center_, _radian, _radius)
+  return {
+    xx = _center_.xx + (math.sin(_radian) * _radius),
+    yy = _center_.yy - (math.cos(_radian) * _radius),
+  }
+end
+
+
 ---
 --- draw point
 ---

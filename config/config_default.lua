@@ -164,8 +164,8 @@ function get_config(_gConst)
           Radius_adjust        = 0,
           Width                = 2,
           Radius = {
-            From               = -40,
-            To                 = 20,
+            From               = -20,
+            To                 = 10,
           },
         },
       },

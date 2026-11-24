@@ -153,5 +153,6 @@ function sub_special_func(_cr, _gConst, _gParse, _gConfig, _gColor,
 
   end
 
+
   cairo_restore(_cr)
 end
